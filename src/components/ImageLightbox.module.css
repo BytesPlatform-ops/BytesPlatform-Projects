@@ -1,0 +1,312 @@
+/* ------------------------------------------------------------------
+   Fullscreen project image viewer
+   --accent arrives inline from the project.
+   ------------------------------------------------------------------ */
+
+.root {
+  --bar-h: 76px;
+  --top-h: 68px;
+  --dur: 0.45s;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-rows: var(--top-h) minmax(0, 1fr) var(--bar-h);
+  justify-items: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  color: #fff;
+  overscroll-behavior: contain;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(5, 7, 11, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+/* ---- Image ---------------------------------------------------------- */
+
+.stage {
+  grid-row: 2;
+  width: 88vw;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  container-type: size;
+}
+
+/* Largest box with the image's own ratio that fits the stage: no crop, no distortion */
+.figure {
+  margin: 0;
+  width: min(100cqw, 100cqh * var(--ratio));
+  aspect-ratio: var(--ratio);
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Thumbnail stand-in (set inline) while the large image loads */
+  background: #0a0c10 center / 100% 100% no-repeat;
+  transform: translateY(10px) scale(0.96);
+  opacity: 0;
+  transition:
+    transform var(--dur) var(--ease),
+    opacity var(--dur) var(--ease);
+}
+
+/* Hairline ring drawn inside, so the expand clip-path never cuts it off */
+.figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+/* Expanding from a thumbnail: the figure is driven by the FLIP animation */
+.root[data-flip] .figure {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  animation: imgIn 0.32s var(--ease);
+}
+
+@keyframes imgIn {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---- Controls ------------------------------------------------------- */
+
+.btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease),
+    opacity var(--dur) var(--ease);
+}
+.btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.close {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 12px);
+  right: calc(env(safe-area-inset-right) + 16px);
+}
+
+.bar {
+  grid-row: 3;
+  width: 88vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.label {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.labelTitle {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.labelSep {
+  margin: 0 8px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.labelMeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.counter {
+  flex: none;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.caption {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label,
+.close,
+.nav {
+  opacity: 0;
+}
+
+/* ---- Open state ----------------------------------------------------- */
+
+.root[data-state="open"] .backdrop,
+.root[data-state="open"] .label,
+.root[data-state="open"] .close,
+.root[data-state="open"] .nav {
+  opacity: 1;
+}
+.root[data-state="open"] .figure {
+  opacity: 1;
+  transform: none;
+}
+.root[data-state="closed"] {
+  pointer-events: none;
+}
+.label {
+  transition: opacity var(--dur) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+  .close:hover {
+    transform: rotate(90deg);
+  }
+  .prev:hover {
+    transform: translateX(-2px);
+  }
+  .next:hover {
+    transform: translateX(2px);
+  }
+  .root[data-state="open"] .prev:hover,
+  .root[data-state="open"] .next:hover {
+    border-color: var(--accent);
+  }
+}
+
+/* Desktop: Previous / Next sit in the side gutters, vertically centred */
+@media (min-width: 1024px) {
+  .nav {
+    position: absolute;
+    top: 50%;
+    margin-top: -26px;
+    width: 52px;
+    height: 52px;
+  }
+  .prev {
+    left: max(16px, calc(3vw - 26px));
+  }
+  .next {
+    right: max(16px, calc(3vw - 26px));
+  }
+}
+
+/* Tablet and mobile: full-width image, arrows flank the label */
+@media (max-width: 1023px) {
+  .root {
+    --top-h: 64px;
+    --bar-h: 84px;
+  }
+  .stage,
+  .bar {
+    width: calc(100vw - 32px);
+  }
+  .bar {
+    justify-content: space-between;
+  }
+  .nav {
+    flex: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .root {
+    --top-h: 60px;
+  }
+  .figure {
+    border-radius: 8px;
+  }
+  .close {
+    top: calc(env(safe-area-inset-top) + 8px);
+    right: calc(env(safe-area-inset-right) + 12px);
+    width: 44px;
+    height: 44px;
+  }
+  .btn {
+    width: 44px;
+    height: 44px;
+  }
+  .labelTitle {
+    font-size: 13px;
+  }
+  .labelSep {
+    margin: 0 6px;
+  }
+  .labelMeta {
+    font-size: 9.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    --dur: 0.01s;
+  }
+  .figure {
+    transform: none;
+  }
+  .img {
+    animation: none;
+  }
+}

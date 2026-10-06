@@ -1,0 +1,270 @@
+/* ---- Shared type ------------------------------------------------------ */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.eyebrowDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.h1 {
+  margin-top: 26px;
+  font-size: clamp(46px, 8.2vw, 124px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  font-weight: 600;
+  max-width: 14ch;
+}
+
+.h1 em {
+  font-style: normal;
+  color: var(--muted);
+}
+
+.h2 {
+  font-size: clamp(38px, 5.4vw, 80px);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+}
+
+/* ---- Hero ------------------------------------------------------------- */
+
+.hero {
+  padding-top: clamp(56px, 9vw, 128px);
+  padding-bottom: clamp(56px, 7vw, 104px);
+}
+
+.heroFoot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: end;
+  margin-top: clamp(40px, 6vw, 88px);
+}
+
+.lede {
+  font-size: clamp(18px, 1.6vw, 24px);
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 30ch;
+}
+
+.indexList {
+  border-top: 1px solid var(--line);
+}
+
+.indexItem {
+  --accent: var(--brand);
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1.2fr) minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.indexItem .mono {
+  color: var(--muted);
+}
+
+.indexItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-med) var(--ease);
+}
+
+.indexName {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: transform var(--t-med) var(--ease);
+}
+
+.indexSector {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.indexItem i {
+  font-style: normal;
+  color: var(--muted);
+  justify-self: end;
+  transition:
+    transform var(--t-med) var(--ease),
+    color var(--t-fast);
+}
+
+/* ---- Intro ------------------------------------------------------------ */
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 7vw, 120px);
+  padding-top: clamp(56px, 7vw, 104px);
+  padding-bottom: clamp(72px, 9vw, 136px);
+  border-top: 1px solid var(--line);
+}
+
+.introLead .h2 {
+  margin-top: 20px;
+}
+
+.introText {
+  margin-top: 24px;
+  font-size: clamp(17px, 1.35vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 48ch;
+}
+
+.disciplines {
+  border-top: 1px solid var(--line);
+}
+
+.discipline {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 16px;
+  padding: clamp(18px, 2vw, 26px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.disciplineIndex {
+  color: var(--muted);
+  padding-top: 8px;
+}
+
+.disciplineTitle {
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.disciplineTitle span {
+  position: relative;
+  display: inline-block;
+  transition: transform var(--t-med) var(--ease);
+}
+.disciplineTitle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-med) var(--ease);
+}
+
+.disciplineBody {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* ---- Section head ----------------------------------------------------- */
+
+.sectionHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: end;
+  padding-bottom: clamp(20px, 2.6vw, 36px);
+}
+
+.sectionNote {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 50ch;
+  justify-self: end;
+}
+
+/* ---- Hover (fine pointers only) -------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .indexItem:hover::before {
+    transform: scaleX(1);
+  }
+  .indexItem:hover .indexName {
+    transform: translateX(6px);
+  }
+  .indexItem:hover i {
+    transform: translateY(3px);
+    color: var(--accent);
+  }
+  .discipline:hover .disciplineTitle span {
+    transform: translateX(6px);
+  }
+  .discipline:hover .disciplineTitle span::after {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- Responsive ------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+  .heroFoot {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .lede {
+    max-width: 44ch;
+  }
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .sectionHead {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .sectionNote {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 767px) {
+  .h1 {
+    font-size: clamp(42px, 12.5vw, 60px);
+    max-width: none;
+  }
+  .indexItem {
+    grid-template-columns: 28px minmax(0, 1fr) 20px;
+    min-height: 56px;
+  }
+  .indexSector {
+    display: none;
+  }
+  .discipline {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+}

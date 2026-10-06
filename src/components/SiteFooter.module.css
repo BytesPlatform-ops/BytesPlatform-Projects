@@ -1,0 +1,129 @@
+.footer {
+  background: var(--ink);
+  color: #fff;
+  margin-top: clamp(80px, 10vw, 140px);
+}
+
+.inner {
+  padding-top: clamp(72px, 9vw, 128px);
+  padding-bottom: 40px;
+}
+
+.ctaBlock {
+  display: grid;
+  gap: 28px;
+  padding-bottom: clamp(56px, 7vw, 96px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.cta {
+  font-size: clamp(44px, 8vw, 120px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 500;
+  width: fit-content;
+  min-height: 56px;
+}
+
+.ctaLink > span:first-child {
+  position: relative;
+}
+.ctaLink > span:first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-med) var(--ease);
+}
+
+.ctaCircle {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--ink);
+  font-size: 20px;
+  transition:
+    transform var(--t-med) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 32px;
+  padding: 48px 0;
+}
+
+.cols .mono {
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 14px;
+}
+
+.small {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 360px;
+}
+
+.small a {
+  display: inline-block;
+  min-height: 28px;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--t-fast);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctaLink:hover > span:first-child::after {
+    transform: scaleX(1);
+  }
+  .ctaLink:hover .ctaCircle {
+    transform: translate(4px, -4px) rotate(-8deg);
+    background: var(--brand);
+    color: #fff;
+  }
+  .small a:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+@media (max-width: 768px) {
+  .small a {
+    min-height: 44px;
+    line-height: 44px;
+  }
+  .cols {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
