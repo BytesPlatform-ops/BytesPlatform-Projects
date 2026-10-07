@@ -190,6 +190,110 @@
   max-width: 52ch;
 }
 
+/* About: accent rule, line reveal, row motion */
+
+.introEyebrow {
+  gap: 12px;
+}
+
+/* Short brand rule beside the eyebrow; it stretches when the section is hovered */
+.introRule {
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand);
+  transform-origin: left;
+  transition: width var(--t-med) var(--ease);
+}
+
+.introTitle .line {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders inside the mask */
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.introTitle .line > span {
+  display: block;
+}
+
+.discipline {
+  position: relative;
+  isolation: isolate;
+}
+/* Soft brand wash that slides in under a hovered row */
+.discipline::before {
+  content: "";
+  position: absolute;
+  /* Bleeds left only: a right-side overflow would add a horizontal scroll */
+  inset: 0 0 0 -12px;
+  z-index: -1;
+  border-radius: 12px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 7%, transparent), transparent 75%);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity var(--t-med) var(--ease),
+    transform var(--t-med) var(--ease);
+}
+/* Accent line that travels along the row's top border */
+.discipline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-slow) var(--ease);
+}
+.disciplineIndex {
+  transition: color var(--t-fast) var(--ease);
+}
+.disciplineBody {
+  transition: color var(--t-fast) var(--ease);
+}
+
+/* Entrance, only when the section was below the fold (see RevealObserver) */
+:global(.reveal-ready:not(.reveal-in)) .introRule {
+  transform: scaleX(0);
+}
+:global(.reveal-ready:not(.reveal-in)) .introTitle .line > span {
+  transform: translateY(105%);
+}
+:global(.reveal-ready:not(.reveal-in)) .introText {
+  opacity: 0;
+  transform: translateY(14px);
+}
+:global(.reveal-ready:not(.reveal-in)) .discipline {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+:global(.reveal-in) .introRule {
+  transition:
+    transform var(--t-slow) var(--ease) 0.1s,
+    width var(--t-med) var(--ease);
+}
+:global(.reveal-in) .introTitle .line > span {
+  transition: transform 1s var(--ease) 0.12s;
+}
+:global(.reveal-in) .introTitle .line + .line > span {
+  transition-delay: 0.22s;
+}
+:global(.reveal-in) .introText {
+  transition:
+    opacity var(--t-slow) var(--ease) 0.34s,
+    transform var(--t-slow) var(--ease) 0.34s;
+}
+:global(.reveal-in) .discipline {
+  transition:
+    opacity 0.8s var(--ease) calc(0.28s + var(--i) * 0.08s),
+    transform 0.8s var(--ease) calc(0.28s + var(--i) * 0.08s);
+}
+
 /* ---- Section head ----------------------------------------------------- */
 
 .sectionHead {
@@ -220,6 +324,22 @@
   .indexItem:hover i {
     transform: translateY(3px);
     color: var(--accent);
+  }
+  .intro:hover .introRule {
+    width: 52px;
+  }
+  .discipline:hover::before {
+    opacity: 1;
+    transform: none;
+  }
+  .discipline:hover::after {
+    transform: scaleX(1);
+  }
+  .discipline:hover .disciplineIndex {
+    color: var(--brand);
+  }
+  .discipline:hover .disciplineBody {
+    color: var(--ink-2);
   }
   .discipline:hover .disciplineTitle span {
     transform: translateX(6px);
@@ -266,5 +386,27 @@
   }
   .discipline {
     grid-template-columns: 36px minmax(0, 1fr);
+    padding: 16px 0;
+  }
+
+  /* Phones: headings carry the section; the long explanations stay on desktop */
+  .introText,
+  .disciplineBody,
+  .sectionNote {
+    display: none;
+  }
+  .intro {
+    gap: 28px;
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+  .disciplineIndex {
+    padding-top: 6px;
+  }
+  .disciplineTitle {
+    font-size: 21px;
+  }
+  .lede {
+    font-size: 17px;
   }
 }

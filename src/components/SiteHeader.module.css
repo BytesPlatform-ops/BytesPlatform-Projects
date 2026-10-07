@@ -139,17 +139,8 @@
 .burger span::after {
   top: 6px;
 }
-.burger span[data-open="true"] {
-  background: transparent;
-}
-.burger span[data-open="true"]::before {
-  transform: translateY(6px) rotate(45deg);
-}
-.burger span[data-open="true"]::after {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
-.sheet {
+/* Drawer (portalled to <body>, so it is never clipped by the header) */
+.drawerRoot {
   display: none;
 }
 
@@ -180,40 +171,110 @@
   .burger {
     display: grid;
   }
-  .sheet {
+  /* Mobile menu: right-hand drawer over a dimmed, blurred backdrop */
+  .drawerRoot {
     display: block;
     position: fixed;
-    inset: 68px 0 0 0;
-    background: var(--bg);
-    padding: 28px var(--pad) 40px;
-    opacity: 0;
+    inset: 0;
+    z-index: 200;
     pointer-events: none;
-    transform: translateY(-8px);
-    transition:
-      opacity var(--t-fast) var(--ease),
-      transform var(--t-fast) var(--ease);
+    visibility: hidden;
+    transition: visibility 0s linear var(--t-med);
   }
-  .sheet[data-open="true"] {
-    opacity: 1;
+  .drawerRoot[data-open="true"] {
     pointer-events: auto;
-    transform: none;
+    visibility: visible;
+    transition: none;
   }
-  .sheet nav {
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 13, 17, 0.42);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity var(--t-med) var(--ease);
+  }
+  .drawerRoot[data-open="true"] .backdrop {
+    opacity: 1;
+  }
+  .drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(88vw, 400px);
     display: flex;
     flex-direction: column;
+    padding: 0 24px max(28px, env(safe-area-inset-bottom));
+    background: var(--bg);
+    box-shadow: -24px 0 60px -20px rgba(11, 13, 17, 0.35);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(104%);
+    transition: transform var(--t-med) var(--ease);
+  }
+  .drawerRoot[data-open="true"] .drawer {
+    transform: none;
+  }
+  .drawerHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    flex: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .close {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .close span::before,
+  .close span::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 18px;
+    height: 1.5px;
+    margin: -0.75px 0 0 -9px;
+    background: var(--ink);
+  }
+  .close span::before {
+    transform: rotate(45deg);
+  }
+  .close span::after {
+    transform: rotate(-45deg);
+  }
+  .close:focus-visible,
+  .sheetLink:focus-visible,
+  .sheetCta:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  .drawerNav {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0 32px;
   }
   .sheetLink {
     display: flex;
     align-items: baseline;
-    gap: 16px;
-    padding: 18px 0;
+    gap: 14px;
+    min-height: 64px;
+    padding: 20px 0 16px;
     border-bottom: 1px solid var(--line);
-    font-size: clamp(30px, 8vw, 40px);
+    font-size: 28px;
     font-weight: 600;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.035em;
     line-height: 1;
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(16px);
     transition:
       opacity var(--t-med) var(--ease),
       transform var(--t-med) var(--ease);
@@ -221,12 +282,13 @@
   .sheetLink .mono {
     color: var(--muted);
   }
-  .sheet[data-open="true"] .sheetLink {
+  .drawerRoot[data-open="true"] .sheetLink {
     opacity: 1;
     transform: none;
   }
   .sheetCta {
-    margin-top: 28px;
+    margin-top: auto;
+    flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;

@@ -29,18 +29,39 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 /** The thumbnail <img> currently showing `src` inside a source element */
 function findThumb(source: HTMLElement, src: string) {
   return (
-    Array.from(source.querySelectorAll("img")).find((img) => decodeURIComponent(img.currentSrc || img.src).includes(src)) ??
-    source.querySelector("img")
+    // Skip the decorative blurred backdrop: the sharp screenshot is the one to expand from
+    Array.from(source.querySelectorAll<HTMLImageElement>("img:not([aria-hidden])")).find((img) =>
+      decodeURIComponent(img.currentSrc || img.src).includes(src),
+    ) ?? source.querySelector<HTMLImageElement>("img:not([aria-hidden])")
   );
 }
 
+/** Where an object-fit: contain image actually paints inside its box */
+function containedRect(img: HTMLImageElement, box: DOMRect) {
+  const { naturalWidth: nw, naturalHeight: nh } = img;
+  if (!nw || !nh) return box;
+  const k = Math.min(box.width / nw, box.height / nh);
+  const w = nw * k;
+  const h = nh * k;
+  const [px, py] = getComputedStyle(img)
+    .objectPosition.split(" ")
+    .map((v) => parseFloat(v) / 100);
+  const left = box.left + (box.width - w) * (Number.isFinite(px) ? px : 0.5);
+  const top = box.top + (box.height - h) * (Number.isFinite(py) ? py : 0.5);
+  return new DOMRect(left, top, w, h);
+}
+
 /**
- * FLIP keyframes from a cropped (object-fit: cover) thumbnail to the full
- * viewer figure. The figure is scaled to cover the thumbnail and clipped to
- * the thumbnail's visible crop, so the first frame matches it exactly.
+ * FLIP keyframes from a thumbnail to the full viewer figure. The figure is
+ * scaled to cover the thumbnail's visible image and clipped to it, so the
+ * first frame matches it exactly. A contained thumbnail starts from the
+ * screenshot itself, not the blurred area around it.
  */
 function expandFrames(source: HTMLElement, fig: HTMLElement, src: string): Keyframe[] | null {
-  const s = source.getBoundingClientRect();
+  const thumb = findThumb(source, src);
+  const box = source.getBoundingClientRect();
+  const contained = !!thumb && getComputedStyle(thumb).objectFit === "contain";
+  const s = contained ? containedRect(thumb, box) : box;
   const stage = fig.parentElement?.getBoundingClientRect();
   const w = fig.offsetWidth;
   const h = fig.offsetHeight;
@@ -49,8 +70,7 @@ function expandFrames(source: HTMLElement, fig: HTMLElement, src: string): Keyfr
   const fx = stage.left + (stage.width - w) / 2;
   const fy = stage.top + (stage.height - h) / 2;
 
-  const thumb = findThumb(source, src);
-  const [px, py] = (thumb ? getComputedStyle(thumb).objectPosition : "50% 0%")
+  const [px, py] = (thumb && !contained ? getComputedStyle(thumb).objectPosition : "50% 0%")
     .split(" ")
     .map((v) => parseFloat(v) / 100);
 
@@ -60,7 +80,9 @@ function expandFrames(source: HTMLElement, fig: HTMLElement, src: string): Keyfr
   const ox = (w - cw) * (Number.isFinite(px) ? px : 0.5);
   const oy = (h - ch) * (Number.isFinite(py) ? py : 0);
   const frame = source.closest("figure");
-  const r0 = frame ? parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0 : 0;
+  // A contained screenshot only has the frame's rounded corners where it fills the frame
+  const fills = !contained || (Math.abs(s.width - box.width) < 1 && Math.abs(s.height - box.height) < 1);
+  const r0 = frame && fills ? parseFloat(getComputedStyle(frame).borderTopLeftRadius) || 0 : 0;
   const r1 = parseFloat(getComputedStyle(fig).borderTopLeftRadius) || 0;
 
   return [

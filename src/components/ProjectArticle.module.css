@@ -136,6 +136,11 @@
   max-width: 34ch;
 }
 
+/* Phone-only short description (desktop shows the full summary below) */
+.brief {
+  display: none;
+}
+
 .meta {
   margin: 0;
   display: grid;
@@ -227,7 +232,7 @@
   transition: transform var(--t-ui) var(--ease);
 }
 
-/* The leading CTA (Quantiva's app): filled, slightly larger */
+/* The leading CTAs (Quantiva's store apps): filled, slightly larger */
 .accessStrong {
   height: 42px;
   padding-left: 18px;
@@ -247,26 +252,6 @@
   color: var(--ink);
 }
 
-.accessAlt {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 38px;
-  padding: 0 4px;
-  font-size: 12.5px;
-  color: var(--muted);
-  transition: color var(--t-ui) var(--ease);
-}
-.accessAlt span {
-  text-decoration: underline;
-  text-decoration-color: var(--line-strong);
-  text-underline-offset: 3px;
-}
-.accessAlt i {
-  font-style: normal;
-  color: var(--accent);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .accessLink:hover {
     border-color: var(--accent);
@@ -281,12 +266,8 @@
     border-color: var(--accent);
     color: var(--ink);
   }
-  .accessAlt:hover {
-    color: var(--ink);
-  }
 }
-.accessLink:focus-visible,
-.accessAlt:focus-visible {
+.accessLink:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -611,5 +592,75 @@
   .primary {
     justify-content: space-between;
     height: 56px;
+  }
+
+  /* ---- Phones: a lighter read. Desktop keeps the full write-up. ------
+     Each project shows its short category, title, one-line headline,
+     store / website links, gallery, metrics and CTAs. Long explanatory
+     copy is left to the case study. */
+  .project {
+    padding-top: 32px;
+    margin-bottom: 64px;
+  }
+  .sectorRest,
+  .metaDetail,
+  .accessNote,
+  .metaLink,
+  .copy,
+  .asideLabel,
+  .tags,
+  .disclosure {
+    display: none;
+  }
+  .head {
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+  .headline {
+    margin-top: 12px;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+  .brief {
+    display: block;
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 46ch;
+  }
+  /* Only the store / website buttons remain in the metadata */
+  .meta {
+    display: block;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .meta:not(:has(.access)) {
+    display: none;
+  }
+  .access dd + dd {
+    margin-top: 0;
+  }
+  .accessLinks {
+    gap: 8px;
+  }
+  .accessLink,
+  .accessStrong {
+    min-height: 44px;
+    height: auto;
+  }
+  .body {
+    padding-top: 20px;
+  }
+  .aside {
+    gap: 0;
+  }
+  .ctas {
+    margin-top: 0;
+    gap: 4px;
+  }
+  .ctas .textLink {
+    min-height: 48px;
+    justify-content: center;
   }
 }

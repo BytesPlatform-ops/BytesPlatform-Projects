@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type { Project, ProjectImage, ProjectImageRole, SwapStyle } from "@/data/projects";
 import GalleryCursor from "./GalleryCursor";
 import ImageLightbox from "./ImageLightbox";
@@ -16,8 +17,8 @@ interface Props {
 const SLOT_CLASS = [styles.main, styles.feature, styles.secondary, styles.mobile];
 const INITIAL: ProjectImageRole[] = ["desktop", "feature", "secondary", "mobile"];
 
-/** Desktop swap: slower and more cinematic than the text / CTA hovers (--t-ui) */
-const SWAP_MS = 1800;
+/** Desktop swap: smooth but brisk, still slower than the text / CTA hovers (--t-ui) */
+const SWAP_MS = 1100;
 /**
  * Soft ease-in-out for the image replacement. The page curve (0.22, 1, 0.36, 1)
  * does most of its movement in the first fifth of the time, so even a long swap
@@ -25,7 +26,7 @@ const SWAP_MS = 1800;
  */
 const EASE = "cubic-bezier(0.45, 0, 0.2, 1)";
 /** Touch swap: shorter, and without directional effects */
-const TAP_SWAP_MS = 1000;
+const TAP_SWAP_MS = 700;
 /** Hover intent: a thumbnail has to be hovered this long before it swaps */
 const INTENT_MS = 150;
 /** Sample count for the hand-eased keyframes */
@@ -40,6 +41,8 @@ type Box = { x: number; y: number; w: number; h: number };
 const boxOf = (el: HTMLElement): Box => ({ x: el.offsetLeft, y: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight });
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/** Phones get the swipe gallery instead of the hover / swap grid (matches the CSS breakpoint) */
+const isPhone = () => window.matchMedia("(max-width: 767px)").matches;
 
 /** CSS cubic-bezier() as a function, so keyframes can be sampled with the page easing */
 function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
@@ -88,7 +91,7 @@ function flight(el: HTMLElement, from: Box, to: Box, end: string, opts: FlightOp
   const k = Math.max(from.w / to.w, from.h / to.h);
   const cw = from.w / k;
   const ch = from.h / k;
-  const img = el.querySelector("img");
+  const img = el.querySelector("img:not([aria-hidden])");
   const py = img ? parseFloat(getComputedStyle(img).objectPosition.split(" ")[1] ?? "0") / 100 : 0;
   const ox = (to.w - cw) / 2;
   const oy = (to.h - ch) * (Number.isFinite(py) ? py : 0);
@@ -155,6 +158,40 @@ function layer(host: HTMLElement, before: Element | null, box: Box, className: s
   });
   host.insertBefore(el, before);
   return el;
+}
+
+/**
+ * Resolves once every image in `el` is loaded and decoded, so it paints in the
+ * very next frame. Lazy images are switched to eager so they start loading now.
+ */
+function ready(el: HTMLElement | null | undefined) {
+  if (!el) return Promise.resolve();
+  return Promise.all(
+    Array.from(el.querySelectorAll("img"), (img) => {
+      img.loading = "eager";
+      return img.decode().catch(() => {});
+    }),
+  ).then(() => {});
+}
+
+/**
+ * A copy of a frame's media for a swap curtain, pinned to the exact file the
+ * original is showing and decoded before it is ever on screen. A plain clone
+ * would re-run srcset selection and decode asynchronously, leaving the curtain
+ * empty for a frame, so the wrong image flashed in the large slot.
+ */
+function decodedCopy(media: HTMLElement) {
+  const copy = media.cloneNode(true) as HTMLElement;
+  const originals = media.querySelectorAll("img");
+  const imgs = Array.from(copy.querySelectorAll("img"));
+  imgs.forEach((img, i) => {
+    const src = originals[i];
+    img.loading = "eager";
+    img.removeAttribute("srcset");
+    img.removeAttribute("sizes");
+    img.src = src.currentSrc || src.src;
+  });
+  return Promise.all(imgs.map((img) => img.decode().catch(() => {}))).then(() => copy);
 }
 
 function applyMask(el: HTMLElement, mask: { image: string; size: string } | null) {
@@ -241,12 +278,16 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     from: [Box, Box];
     hovered: boolean;
     touch: boolean;
+    /** Pre-decoded curtains for the desktop swap: [outgoing, incoming] */
+    copies: [HTMLElement, HTMLElement] | null;
   } | null>(null);
   const intent = useRef<number | null>(null);
   const busy = useRef(false);
   // Last slot the pointer entered: a swap fires only on entering a different one
   const lastSlot = useRef<number | null>(null);
   const [active, setActive] = useState<number | null>(null);
+  const slideMedias = useRef<(HTMLElement | null)[]>([]);
+  const galleryGo = useRef<((index: number, smooth: boolean) => void) | null>(null);
 
   const { images, motion } = project;
 
@@ -259,10 +300,28 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     };
     update();
     mq.addEventListener("change", update);
+
+    // Preload every image in the composition before it scrolls into view, so
+    // the first hover never waits on the network
+    let io: IntersectionObserver | null = null;
+    if (ref.current) {
+      const el = ref.current;
+      io = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          io?.disconnect();
+          // Only the layout in use: the swipe gallery on phones, the grid elsewhere
+          ready(el.querySelector<HTMLElement>(isPhone() ? `.${styles.gallery}` : `.${styles.grid}`));
+        },
+        { rootMargin: "100% 0px" },
+      );
+      io.observe(el);
+    }
     rm.addEventListener("change", update);
     return () => {
       mq.removeEventListener("change", update);
       rm.removeEventListener("change", update);
+      io?.disconnect();
       if (raf.current) cancelAnimationFrame(raf.current);
       if (intent.current) window.clearTimeout(intent.current);
     };
@@ -300,25 +359,40 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     ref.current.style.setProperty("--my", "0");
   }, []);
 
-  /** Trade the image in `slot` with the large image */
+  /**
+   * Trade the image in `slot` with the large image. Nothing moves until both
+   * images (and, on desktop, both curtain copies) are decoded, so no frame of
+   * the swap can show a blank or the wrong image.
+   */
   const promote = useCallback((slot: number, hovered: boolean, touch: boolean) => {
-    if (slot <= 0 || busy.current) return;
+    if (slot <= 0 || busy.current) return Promise.resolve();
     const cur = slotsRef.current;
     const inRole = cur[slot];
     const outRole = cur[0];
     const a = figs.current[inRole];
     const b = figs.current[outRole];
-    if (!a || !b) return;
+    const inMedia = medias.current[inRole];
+    const outMedia = medias.current[outRole];
+    if (!a || !b) return Promise.resolve();
     lastSlot.current = slot;
-    const next = [...cur];
-    next[0] = inRole;
-    next[slot] = outRole;
-    slotsRef.current = next;
-    if (!reducedMotion()) {
-      pending.current = { inRole, outRole, from: [boxOf(a), boxOf(b)], hovered, touch };
-      busy.current = true;
-    }
-    setSlots(next);
+    busy.current = true;
+    const animate = !reducedMotion();
+
+    return Promise.all([ready(inMedia), ready(outMedia)])
+      .then(() =>
+        animate && !touch && inMedia && outMedia ? Promise.all([decodedCopy(outMedia), decodedCopy(inMedia)]) : null,
+      )
+      .then((copies) => {
+        if (!ref.current) return; // unmounted while decoding
+        const next = [...cur];
+        next[0] = inRole;
+        next[slot] = outRole;
+        slotsRef.current = next;
+        if (animate) pending.current = { inRole, outRole, from: [boxOf(a), boxOf(b)], hovered, touch, copies };
+        else busy.current = false;
+        // Commit and start the animation in this same task, before the next paint
+        flushSync(() => setSlots(next));
+      });
   }, []);
 
   /** After a swap, catch up with wherever the pointer went in the meantime */
@@ -327,7 +401,7 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     if (!pt || !fine.current) return;
     const el = document.elementFromPoint(pt.x, pt.y)?.closest<HTMLElement>("[data-slot]");
     const slot = el && ref.current?.contains(el) ? Number(el.dataset.slot) : null;
-    if (slot !== null && slot > 0 && slot !== lastSlot.current) promote(slot, true, false);
+    if (slot !== null && slot > 0 && slot !== lastSlot.current) void promote(slot, true, false);
     else lastSlot.current = slot;
   }, [promote]);
 
@@ -347,12 +421,14 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     const host = inEl?.offsetParent as HTMLElement | null;
     const grid = inEl?.parentElement ?? null;
 
-    if (!p.touch && inEl && inMedia && outMedia && host && grid) {
+    const outEl = figs.current[p.outRole];
+    if (!p.touch && p.copies && inEl && outEl && inMedia && outMedia && host && grid) {
+      const [outCopy, inCopy] = p.copies;
       // ---- Desktop: directional curtain wipe over the large frame ----
       const [thumb, large] = p.from;
       const ease = { duration: SWAP_MS, easing: EASE };
-      // The wipe starts a beat late so the swap reads as a deliberate, slower move
-      const wipe = { duration: SWAP_MS - 150, delay: 150, easing: EASE, fill: "backwards" as const };
+      // The wipe starts a beat late so the swap reads as a deliberate move
+      const wipe = { duration: SWAP_MS - 80, delay: 80, easing: EASE, fill: "backwards" as const };
       const c = curtainFrames(motion.swap, motion.direction, large.w, large.h);
 
       // The incoming image sits in the large slot under the curtain, drifting
@@ -364,11 +440,14 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
           ease,
         ),
       );
+      // Both frames sit flat in their boxes while the curtains cover them, so
+      // hover scale or parallax can't let the other image peek past an edge
       inEl.dataset.flight = "in";
+      outEl.dataset.flight = "out";
 
       // Curtain: the outgoing image, held in place and wiped away
       const curtain = layer(host, grid, large, styles.ghost, 4);
-      curtain.appendChild(outMedia.cloneNode(true));
+      curtain.appendChild(outCopy);
       applyMask(curtain, c.mask);
       anims.push(curtain.animate(c.curtain as Keyframe[], wipe));
       layers.push(curtain);
@@ -397,15 +476,12 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
       // Nothing flies across the grid, so there is no double exposure.
       const t = curtainFrames(motion.swap, motion.direction, thumb.w, thumb.h);
       const stand = layer(host, grid, thumb, styles.ghost, 4);
-      stand.appendChild(inMedia.cloneNode(true));
+      stand.appendChild(inCopy);
       applyMask(stand, t.mask);
       anims.push(stand.animate(t.curtain as Keyframe[], wipe));
       layers.push(stand);
 
-      const outMedia2 = medias.current[p.outRole];
-      if (outMedia2) {
-        anims.push(outMedia2.animate([{ transform: "scale(1.05)" }, { transform: "scale(1)" }], ease));
-      }
+      anims.push(outMedia.animate([{ transform: "scale(1.05)" }, { transform: "scale(1)" }], ease));
     } else roles.forEach((role, i) => {
       const el = figs.current[role];
       if (!el) return;
@@ -447,7 +523,7 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     // Hover intent: passing over a thumbnail on the way somewhere else does nothing
     intent.current = window.setTimeout(() => {
       intent.current = null;
-      promote(slot, true, false);
+      void promote(slot, true, false);
     }, INTENT_MS);
   };
 
@@ -456,15 +532,16 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     // A mouse click on a small frame opens what it shows (hover already promoted).
     if ((!fine.current || keyboard) && slot > 0) {
       const role = slotsRef.current[slot];
-      promote(slot, false, !fine.current);
-      requestAnimationFrame(() => {
-        const el = figs.current[role];
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        if (r.top < 64 || r.bottom > window.innerHeight) {
-          el.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "center" });
-        }
-      });
+      promote(slot, false, !fine.current).then(() =>
+        requestAnimationFrame(() => {
+          const el = figs.current[role];
+          if (!el) return;
+          const r = el.getBoundingClientRect();
+          if (r.top < 64 || r.bottom > window.innerHeight) {
+            el.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "center" });
+          }
+        }),
+      );
       return;
     }
     setActive(slot);
@@ -472,8 +549,16 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
 
   // Viewer order follows what is on screen: large image first
   const gallery = slots.map((role) => images[role]);
-  const getSource = useCallback((index: number) => medias.current[slotsRef.current[index]] ?? null, []);
+  const getSource = useCallback(
+    (index: number) => (isPhone() ? slideMedias.current[index] : medias.current[slotsRef.current[index]]) ?? null,
+    [],
+  );
   const close = useCallback(() => setActive(null), []);
+  // Browsing in the viewer moves the phone gallery along, so closing lands on the same image
+  const onViewerIndex = useCallback((i: number) => {
+    setActive(i);
+    if (isPhone()) galleryGo.current?.(i, false);
+  }, []);
 
   return (
     <div
@@ -488,6 +573,15 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
     >
       {motion.edgeTrace && <span className={styles.edge} aria-hidden="true" />}
       <span className={styles.light} aria-hidden="true" />
+
+      <MobileGallery
+        images={gallery}
+        projectName={project.name}
+        mediaRefs={slideMedias}
+        goRef={galleryGo}
+        onOpen={setActive}
+        paused={active !== null}
+      />
 
       <div className={styles.grid}>
         {/* Each image keeps one element for life and only changes grid slot */}
@@ -557,9 +651,262 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
         title={project.name}
         accent={project.accent}
         getSource={getSource}
-        onIndexChange={setActive}
+        onIndexChange={onViewerIndex}
         onClose={close}
       />
+    </div>
+  );
+}
+
+/** Phone gallery autoplay: time on each image, slide duration, and pause after a touch */
+const AUTO_MS = 2800;
+const SLIDE_MS = 380;
+const RESUME_MS = 1500;
+
+interface MobileGalleryProps {
+  images: ProjectImage[];
+  projectName: string;
+  mediaRefs: React.MutableRefObject<(HTMLElement | null)[]>;
+  goRef: React.MutableRefObject<((index: number, smooth: boolean) => void) | null>;
+  onOpen: (index: number) => void;
+  /** Hold autoplay (e.g. while the fullscreen viewer is open) */
+  paused: boolean;
+}
+
+/**
+ * Phone gallery: one large image you can swipe through (native scroll snap),
+ * a "1 / 4" counter, the image's caption, and thumbnails that jump to an
+ * image. Tapping the large image opens the fullscreen viewer. No hover or
+ * pointer effects; every image is shown whole at its own aspect ratio.
+ *
+ * Autoplay moves to the next image every AUTO_MS with a SLIDE_MS eased
+ * slide, and loops forward: a copy of the first image sits after the last,
+ * and the track jumps back to the real first image once it lands there.
+ * It holds while the gallery is touched (resuming RESUME_MS after), while
+ * it is off screen or the tab is hidden, while `paused`, and entirely for
+ * reduced motion.
+ */
+function MobileGallery({ images, projectName, mediaRefs, goRef, onOpen, paused }: MobileGalleryProps) {
+  const root = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
+  const raf = useRef<number | null>(null);
+  const anim = useRef<number | null>(null);
+  const settle = useRef<number | null>(null);
+  const resume = useRef<number | null>(null);
+  const [index, setIndex] = useState(0);
+  const [touching, setTouching] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [tabHidden, setTabHidden] = useState(false);
+  const count = images.length;
+
+  /** Jump without animation, with snapping off so the browser can't fight it */
+  const jump = useCallback((i: number) => {
+    const el = track.current;
+    if (!el) return;
+    el.style.scrollSnapType = "none";
+    el.scrollLeft = i * el.clientWidth;
+    requestAnimationFrame(() => {
+      el.style.scrollSnapType = "";
+    });
+  }, []);
+
+  const stopAnim = useCallback(() => {
+    if (anim.current === null) return;
+    cancelAnimationFrame(anim.current);
+    anim.current = null;
+    if (track.current) track.current.style.scrollSnapType = "";
+  }, []);
+
+  /** Slide to image `i` (0..count, where count is the loop copy of the first) */
+  const go = useCallback(
+    (i: number, smooth: boolean) => {
+      const el = track.current;
+      if (!el) return;
+      stopAnim();
+      setIndex(i % count);
+      const from = el.scrollLeft;
+      const to = i * el.clientWidth;
+      const land = () => {
+        if (i >= count) jump(0);
+      };
+      if (!smooth || reducedMotion() || Math.abs(to - from) < 1) {
+        jump(i % count);
+        return;
+      }
+      el.style.scrollSnapType = "none";
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - t0) / SLIDE_MS);
+        el.scrollLeft = from + (to - from) * ease(t);
+        if (t < 1) {
+          anim.current = requestAnimationFrame(step);
+          return;
+        }
+        anim.current = null;
+        el.style.scrollSnapType = "";
+        land();
+      };
+      anim.current = requestAnimationFrame(step);
+    },
+    [count, jump, stopAnim],
+  );
+
+  useEffect(() => {
+    goRef.current = go;
+    return () => {
+      goRef.current = null;
+    };
+  }, [go, goRef]);
+
+  // Only rotate while the gallery is actually on screen and the tab is visible
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.5 });
+    io.observe(el);
+    const onVis = () => setTabHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+      for (const r of [raf, anim]) if (r.current !== null) cancelAnimationFrame(r.current);
+      for (const t of [settle, resume]) if (t.current !== null) window.clearTimeout(t.current);
+    };
+  }, []);
+
+  // Autoplay: restarts its full delay whenever the image changes or play resumes
+  useEffect(() => {
+    if (paused || touching || !visible || tabHidden || count < 2 || reducedMotion()) return;
+    const t = window.setTimeout(() => go(index + 1, true), AUTO_MS);
+    return () => window.clearTimeout(t);
+  }, [index, paused, touching, visible, tabHidden, count, go]);
+
+  // A touch holds autoplay; it picks up again shortly after the finger lifts
+  const hold = () => {
+    if (resume.current !== null) window.clearTimeout(resume.current);
+    resume.current = null;
+    stopAnim();
+    setTouching(true);
+  };
+  const release = () => {
+    if (resume.current !== null) window.clearTimeout(resume.current);
+    resume.current = window.setTimeout(() => {
+      resume.current = null;
+      setTouching(false);
+    }, RESUME_MS);
+  };
+
+  const onScroll = () => {
+    if (anim.current !== null) return; // our own slide sets the index itself
+    if (raf.current) cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      const el = track.current;
+      if (!el || !el.clientWidth) return;
+      setIndex(Math.min(count, Math.max(0, Math.round(el.scrollLeft / el.clientWidth))) % count);
+    });
+    // A swipe that comes to rest on the loop copy continues from the real first image
+    if (settle.current !== null) window.clearTimeout(settle.current);
+    settle.current = window.setTimeout(() => {
+      const el = track.current;
+      if (el && el.clientWidth && Math.round(el.scrollLeft / el.clientWidth) >= count) jump(0);
+    }, 160);
+  };
+
+  const current = images[index] ?? images[0];
+  const slides = [...images, images[0]];
+
+  return (
+    <div
+      ref={root}
+      className={styles.gallery}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={`${projectName} images`}
+      onTouchStart={hold}
+      onTouchEnd={release}
+      onTouchCancel={release}
+      onPointerDown={(e) => e.pointerType === "mouse" && hold()}
+      onPointerUp={(e) => e.pointerType === "mouse" && release()}
+    >
+      <div className={styles.stage}>
+        <div ref={track} className={styles.track} onScroll={onScroll}>
+          {slides.map((image, i) => {
+            const copy = i === count;
+            return (
+              <figure
+                key={copy ? "loop-copy" : image.src}
+                className={styles.slide}
+                aria-roledescription={copy ? undefined : "slide"}
+                aria-label={copy ? undefined : `${i + 1} of ${count}: ${image.label}`}
+                aria-hidden={copy || undefined}
+              >
+                <button
+                  type="button"
+                  className={styles.zoom}
+                  onClick={() => onOpen(i % count)}
+                  aria-label={`Open full screen: ${image.label}`}
+                  tabIndex={i === index ? 0 : -1}
+                />
+                <span
+                  ref={
+                    copy
+                      ? undefined
+                      : (el) => {
+                          mediaRefs.current[i] = el;
+                        }
+                  }
+                  className={styles.media}
+                >
+                  <Image
+                    className={styles.backdrop}
+                    src={image.src}
+                    alt=""
+                    aria-hidden="true"
+                    width={image.width}
+                    height={image.height}
+                    sizes="100vw"
+                    quality={90}
+                    draggable={false}
+                  />
+                  <Image
+                    className={styles.fg}
+                    src={image.src}
+                    alt={copy ? "" : image.alt}
+                    width={image.width}
+                    height={image.height}
+                    sizes="100vw"
+                    quality={90}
+                    draggable={false}
+                  />
+                </span>
+              </figure>
+            );
+          })}
+        </div>
+        <span className={`mono ${styles.counter}`} aria-live={touching ? "polite" : "off"}>
+          {index + 1} / {count}
+        </span>
+      </div>
+
+      <p className={styles.galleryCaption}>
+        <b>{current.label}</b>
+        <span>{current.caption}</span>
+      </p>
+
+      <div className={styles.thumbs}>
+        {images.map((image, i) => (
+          <button
+            key={image.src}
+            type="button"
+            className={styles.thumb}
+            aria-label={`Show image ${i + 1}: ${image.label}`}
+            aria-current={i === index}
+            onClick={() => go(i, true)}
+          >
+            <Image src={image.src} alt="" width={image.width} height={image.height} sizes="25vw" draggable={false} />
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -576,8 +923,23 @@ function Frame({ image, priority = false, label, mediaRef, onClick }: FrameProps
   return (
     <>
       <button type="button" className={styles.zoom} onClick={onClick} aria-label={label} />
+      {/* The whole screenshot at its own aspect ratio in every slot, over a
+          blurred copy of the same file (same URL, one request) */}
       <span ref={mediaRef} className={styles.media}>
         <Image
+          className={styles.backdrop}
+          src={image.src}
+          alt=""
+          aria-hidden="true"
+          width={image.width}
+          height={image.height}
+          sizes={SIZES}
+          priority={priority}
+          quality={90}
+          draggable={false}
+        />
+        <Image
+          className={styles.fg}
           src={image.src}
           alt={image.alt}
           width={image.width}

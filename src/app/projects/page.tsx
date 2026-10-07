@@ -61,11 +61,18 @@ export default function ProjectsPage() {
       {/* ---- Intro / capabilities ------------------------------------ */}
       <section className={`container ${styles.intro}`} id="capabilities" aria-labelledby="intro-title" data-reveal>
         <div className={styles.introLead}>
-          <p className={`mono ${styles.eyebrow}`}>What BytesPak does</p>
-          <h2 id="intro-title" className={styles.h2}>
-            Strategy through
-            <br />
-            production.
+          <p className={`mono ${styles.eyebrow} ${styles.introEyebrow}`}>
+            <span className={styles.introRule} aria-hidden="true" />
+            What BytesPak does
+          </p>
+          {/* Each line rises out of its own mask on reveal */}
+          <h2 id="intro-title" className={`${styles.h2} ${styles.introTitle}`}>
+            <span className={styles.line}>
+              <span>Strategy through</span>
+            </span>
+            <span className={styles.line}>
+              <span>production.</span>
+            </span>
           </h2>
           <p className={styles.introText}>
             BytesPak combines product strategy, UI/UX, web and mobile engineering, AI and automation, and growth and SEO
@@ -75,8 +82,8 @@ export default function ProjectsPage() {
         </div>
 
         <ol className={styles.disciplines}>
-          {disciplines.map((d) => (
-            <li key={d.index} className={styles.discipline}>
+          {disciplines.map((d, i) => (
+            <li key={d.index} className={styles.discipline} style={{ "--i": i } as React.CSSProperties}>
               <span className={`mono ${styles.disciplineIndex}`}>{d.index}</span>
               <div>
                 <h3 className={styles.disciplineTitle}>

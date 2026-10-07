@@ -51,10 +51,9 @@ export interface ProjectAccess {
   /** One short line, supported by the case study */
   note: string;
   website: string;
-  app: string;
-  /** Second store, shown as a small companion link to the app CTA */
-  appAlt?: { label: string; href: string };
-  /** "app": the app CTA leads (mobile is core). "even": both CTAs side by side. */
+  /** Store links, one button each. Omitted when there is no app to link to. */
+  apps?: { platform: "iOS" | "Android"; href: string }[];
+  /** "app": the app CTAs lead (mobile is core). "even": website first. */
   emphasis: "app" | "even";
 }
 
@@ -71,6 +70,8 @@ export interface Project {
   sector: string;
   headline: string;
   summary: string;
+  /** 2–3 line version of `summary` for phones, condensed from it with no new claims */
+  brief: string;
   services: string[];
   built: string[];
   metrics: ProjectMetric[];
@@ -78,6 +79,7 @@ export interface Project {
   disclosure?: string;
   liveUrl: string;
   access?: ProjectAccess;
+  /** Internal URL of the case-study PDF (public/case-studies/<slug>.pdf), opened in a new tab */
   caseStudyUrl: string;
   caseStudyLabel: string;
   accent: string;
@@ -122,6 +124,8 @@ export const projects: Project[] = [
     headline: "One trading terminal for crypto and equities.",
     summary:
       "Quantiva HQ links a trader's own exchange and brokerage accounts by API, never takes custody, scores live market signals and places the order from the screen it appeared on. We designed and engineered the product from onboarding to billing, and it shipped complete: KYC, risk controls, VC Pools, an on-chain rewards token on Base and a nine-SKU subscription system all live in version 1.0.",
+    brief:
+      "Links a trader's own exchange and brokerage accounts by API, scores live market signals and places the order from the same screen. Designed and engineered from onboarding to billing.",
     services: ["Product strategy", "UI / UX", "Mobile & web engineering", "API integrations", "KYC & billing"],
     built: [
       "66 mobile screens across 39 flows, resolved into four persistent surfaces: Trades, AI Insights, VC Pool and Profile.",
@@ -142,12 +146,14 @@ export const projects: Project[] = [
     access: {
       note: "Live trading platform on iOS and Android (v1.0.1), alongside its web experience at quantivahq.com.",
       website: "https://www.quantivahq.com/",
-      app: "https://apps.apple.com/us/app/quantiva-hq/id6762023500",
-      appAlt: { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.quantivahq" },
+      apps: [
+        { platform: "iOS", href: "https://apps.apple.com/us/app/quantiva-hq/id6762023500" },
+        { platform: "Android", href: "https://play.google.com/store/apps/details?id=com.quantivahq" },
+      ],
       emphasis: "app",
     },
-    caseStudyUrl: "https://drive.google.com/file/d/1yMT53QzGl9YKf4OSachkhYQXki2n9ZSj/view",
-    caseStudyLabel: "Read the case study",
+    caseStudyUrl: "/case-studies/quantiva-hq",
+    caseStudyLabel: "Read Case Study",
     accent: "#ff8a1f",
     accentSoft: "#ffb766",
     dark: "#0b0d12",
@@ -155,7 +161,7 @@ export const projects: Project[] = [
     motion: { swap: "wipe", direction: "ltr", pan: 6, zoom: 1.03 },
     images: {
       desktop: img("desktop", "quantiva-01-desktop.jpg", 2656, 1660, "Quantiva HQ web landing experience with AI-powered insights headline", "Web experience", "Landing · AI-powered trading across crypto and stocks"),
-      mobile: img("mobile", "quantiva-02-mobile.jpg", 1200, 1000, "Quantiva HQ mobile screens: onboarding and AI trading strategies", "Mobile experience", "Onboarding · connect accounts · live market intelligence"),
+      mobile: img("mobile", "quantiva-02-app.jpg", 1400, 826, "Quantiva HQ app screens: open trade ideas, portfolio dashboard with holdings and market, and the buy / sell order ticket", "App experience", "Trades · dashboard · order ticket"),
       feature: img("feature", "quantiva-03-feature.jpg", 1400, 1050, "Quantiva HQ feature screens: exchange connections, live market intelligence, recommendations and order execution", "Feature detail", "Exchange connections · signals · order ticket"),
       secondary: img("secondary", "quantiva-04-secondary.jpg", 1300, 731, "Quantiva HQ app live on iOS and Android announcement", "Proof", "Live on the App Store and Google Play"),
     },
@@ -169,6 +175,8 @@ export const projects: Project[] = [
     headline: "Turn a shelf of equipment manuals into field-ready answers.",
     summary:
       "IntelliMaint AI is a virtual mechanic. A technician photographs a failing unit, asks a question out loud or types the symptom, and gets repair guidance retrieved from that equipment's own documentation rather than improvised from general knowledge. We designed and built the product, from the interface to the retrieval workflow behind it.",
+    brief:
+      "A virtual mechanic: technicians photograph, speak or type the problem and get repair guidance retrieved from that equipment's own documentation.",
     services: ["AI product build", "Product design", "RAG retrieval", "Voice & vision"],
     built: [
       "Retrieval first, generation second: documents are chunked, embedded and indexed on upload; the LLM is the fallback, not the source of truth.",
@@ -186,15 +194,14 @@ export const projects: Project[] = [
       "A capability engagement at the pre-measurement stage. No user counts, revenue, diagnostic accuracy or repair-time figures are claimed.",
     liveUrl: "https://intellimaint-ai.onrender.com/",
     // Case study: "Responsive web application"; questions typed, spoken or photographed,
-    // answered from the equipment's own documentation. No store app exists.
+    // answered from the equipment's own documentation. No store app exists, so no app link.
     access: {
       note: "Responsive AI maintenance app: diagnose by text, voice or photo, grounded in the equipment's own documentation.",
       website: "https://intellimaint-ai.onrender.com/",
-      app: "https://intellimaint-ai.onrender.com/login",
       emphasis: "even",
     },
-    caseStudyUrl: "https://drive.google.com/file/d/16JiFdk-U7GnhXX6Y9A7jbli6l5vgOjpz/view",
-    caseStudyLabel: "Read the case study",
+    caseStudyUrl: "/case-studies/intellimaint-ai",
+    caseStudyLabel: "Read Case Study",
     accent: "#3ad3ff",
     accentSoft: "#8fe7ff",
     dark: "#06111f",
@@ -202,7 +209,7 @@ export const projects: Project[] = [
     motion: { swap: "wipe", direction: "rtl", pan: 8, zoom: 1.025, parallax: true, edgeTrace: true },
     images: {
       desktop: img("desktop", "intellimaint-01-desktop.jpg", 2656, 1660, "IntelliMaint AI web landing page: your troubleshooting assistant", "Web experience", "Landing · ask, don't search"),
-      mobile: img("mobile", "intellimaint-02-mobile.jpg", 1200, 1000, "IntelliMaint AI mobile screens: landing and how it works", "Mobile experience", "Responsive · how it works in three steps"),
+      mobile: img("mobile", "intellimaint-02-app.jpg", 1448, 1086, "IntelliMaint AI app screens: recent history of equipment photos, the Resolve. Repair. Reinforce. welcome screen, and document upload", "App experience", "History · welcome · document upload"),
       feature: img("feature", "intellimaint-03-feature.jpg", 1400, 1050, "IntelliMaint AI core capabilities: document analysis, manual library, visual diagnostics and hands-free support", "Feature detail", "Four capabilities · documents, manuals, vision, voice"),
       secondary: img("secondary", "intellimaint-04-secondary.jpg", 1300, 812, "IntelliMaint AI pricing: free, pro, military and enterprise plans", "Proof", "Four tiers priced against three distinct buyers"),
     },
@@ -216,10 +223,12 @@ export const projects: Project[] = [
     headline: "Make deep expertise visible before the first sales call.",
     summary:
       "Aegis Creek helps deep-tech companies raise non-dilutive government capital, and almost none of that expertise was visible to the founders who needed it. We built a repeatable content engine, a LinkedIn publishing rhythm and a paid video campaign that put the firm's core argument in front of a quarter of a million professional feeds.",
+    brief:
+      "A content engine, LinkedIn publishing rhythm and paid video campaign that put the firm's non-dilutive funding expertise in front of a quarter of a million professional feeds.",
     services: ["Brand positioning", "LinkedIn content strategy", "Thought leadership", "LinkedIn video ads"],
     built: [
       "Positioning on the outcome, not the paperwork: non-dilutive capital, named sectors in the H1, practitioners first.",
-      "Nine Insights articles on live federal funding vehicles (DARPA, BARDA, DCSA, Army Corps of Engineers, Navy T&E, NIH SBIR/STTR), each published to the feed and republished on the firm's own domain.",
+      "Nine Insights articles on live federal funding vehicles (DARPA, BARDA, DCSA, Army Corps of Engineers, Navy T&E, NIH SBIR/STTR), each published to the feed and republished on the firm's own domain as owned, indexable pages for long-term search visibility.",
       "Three escalating video creatives built on one argument, carried by a LinkedIn video-views campaign targeted by role, seniority and industry.",
     ],
     metrics: [
@@ -232,8 +241,8 @@ export const projects: Project[] = [
     disclosure:
       "No leads, revenue, pipeline or ROI are claimed; conversion tracking was not in place during the period.",
     liveUrl: "https://aegiscreek.com/",
-    caseStudyUrl: "https://drive.google.com/file/d/1PnlmXsdw9uU4OOFBtf5nok7qUs6fEzSi/view",
-    caseStudyLabel: "Read the case study",
+    caseStudyUrl: "/case-studies/aegis-creek",
+    caseStudyLabel: "Read Case Study",
     accent: "#d14bff",
     accentSoft: "#5ee1ff",
     dark: "#0a0b24",
@@ -255,11 +264,13 @@ export const projects: Project[] = [
     headline: "Turn specialised logistics services into search demand.",
     summary:
       "A twenty-year Southern California transport company ran mobile EV charging, EV fire response, container hauling and dealership fleet moves that most towing operators can't match, and none of it was visible online. A seven-page site built around how buyers actually search, with the client's own fleet in every photograph, reached page one in its first quarter.",
-    services: ["Website design", "Development", "Local SEO architecture", "Content strategy"],
+    brief:
+      "A seven-page site built around how buyers actually search, with the client's own fleet in every photograph, reached page one of Google in its first quarter.",
+    services: ["Website design", "Development", "Local SEO architecture", "Content strategy", "UX & information architecture"],
     built: [
-      "Seven pages with one job each, ten titled service blocks opening on the customer's situation, and a Call Now action in every header, hero and footer.",
+      "Service-page architecture: seven pages with one job each and ten titled service blocks, each opening on the customer's situation and each its own search entry point, with a Call Now action in every header, hero and footer.",
       "Positioned as transport and logistics while keeping the head terms, then widened to specialist terms no competitor targets: mobile EV charging, shipping container transport, container hauling.",
-      "A seven-question FAQ, a six-post blog cluster, and Los Angeles, Riverside County and San Bernardino named in body copy, Areas We Serve and every footer.",
+      "Local SEO and search-driven content: a seven-question FAQ written for answer engines, a six-post blog cluster, and Los Angeles, Riverside County and San Bernardino named in body copy, Areas We Serve and every footer.",
     ],
     metrics: [
       { value: "8.9", label: "Average Google position across tracked queries" },
@@ -269,8 +280,8 @@ export const projects: Project[] = [
     ],
     metricsSource: "Google Search Console · 1 January – 26 March 2026, first quarter after launch",
     liveUrl: "https://teamsmithlogistics.com/",
-    caseStudyUrl: "https://drive.google.com/file/d/18m_R-O9Z3o-UFAKVDwSkO0LAQN0su0lI/view",
-    caseStudyLabel: "Read the case study",
+    caseStudyUrl: "/case-studies/team-smith-logistics",
+    caseStudyLabel: "Read Case Study",
     accent: "#4f8dff",
     accentSoft: "#9ec2ff",
     dark: "#0a1326",
@@ -292,11 +303,13 @@ export const projects: Project[] = [
     headline: "Turn valuation expertise into a search-driven authority platform.",
     summary:
       "Honolulu-based MAI- and SRA-designated appraisers with defensible valuations across six Pacific regions since 2017, known only to the attorneys and lenders who already used them. A five-page platform and a definition-led content engine now rank the firm for the technical vocabulary its buyers actually search.",
-    services: ["UX strategy", "Website design", "Development", "SEO architecture", "Content architecture"],
+    brief:
+      "A five-page platform and definition-led content engine that ranks MAI- and SRA-designated appraisers for the technical terms their buyers search.",
+    services: ["Website design", "Development", "SEO architecture", "Content strategy", "UX strategy", "Weekly search reporting"],
     built: [
       "Five pages, each carrying one burden of proof: can they do this work, are they credible, have they done it before, do they understand my problem, how do I reach them discreetly.",
-      "MAI and SRA credentials in the hero and beside every name; a portfolio of eleven filterable asset classes in the firm's own photography; coverage named jurisdiction by jurisdiction.",
-      "A knowledge system, not a blog: every article follows “What is [technical term]? A guide for Hawai‘i [professional audience]”, with weekly Search Console reporting.",
+      "MAI and SRA credentials in the hero and beside every name; a portfolio of eleven filterable asset classes in the firm's own photography; coverage named jurisdiction by jurisdiction, which also carries the search signal into body copy.",
+      "Search-driven content, not a blog: every article follows “What is [technical term]? A guide for Hawai‘i [professional audience]”, answering the valuation terms buyers search mid-problem, with weekly Search Console reporting on performance and indexing.",
     ],
     metrics: [
       { value: "9.92K", label: "Search impressions in 60+ days" },
@@ -306,8 +319,8 @@ export const projects: Project[] = [
     ],
     metricsSource: "Google Search Console · 60+ days to 10 September 2026",
     liveUrl: "https://benaventegroup.com/",
-    caseStudyUrl: "https://drive.google.com/file/d/1Fp-oXDzHO7Mz0Sue_0MLeoNYTQRe34w6/view",
-    caseStudyLabel: "Read the case study",
+    caseStudyUrl: "/case-studies/the-benavente-group",
+    caseStudyLabel: "Read Case Study",
     accent: "#d4b068",
     accentSoft: "#efd9a4",
     dark: "#0e1f3a",

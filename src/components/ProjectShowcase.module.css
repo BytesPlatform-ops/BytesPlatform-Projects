@@ -212,6 +212,11 @@
 .frame[data-flight="out"] {
   z-index: 2;
 }
+/* Frames under a swap curtain sit flat in their layout box (no hover scale or
+   parallax offset), so the curtain covers them exactly; they ease back after */
+.showcase .grid .frame[data-flight] {
+  transform: none;
+}
 
 /* Swap layers (created in JS for the length of one swap) */
 .ghost,
@@ -220,6 +225,9 @@
   overflow: hidden;
   border-radius: var(--radius-md);
   pointer-events: none;
+}
+.ghost {
+  background: #0a0c10;
 }
 .ghostSheen > span {
   position: absolute;
@@ -282,8 +290,9 @@
   bottom: 16px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   color: #fff;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
   pointer-events: none;
   transform: translateY(8px);
   opacity: 0;
@@ -292,16 +301,18 @@
     opacity var(--t-med) var(--ease);
 }
 .caption b {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
 }
+/* Supporting line in the body sans, sentence case, for easy reading */
 .caption span {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+  font-weight: 450;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  color: rgba(255, 255, 255, 0.82);
 }
 /* Full-frame hit area that opens the image viewer. Sits under the pill. */
 .zoom {
@@ -709,10 +720,10 @@
     gap: 2px;
   }
   .caption b {
-    font-size: 13px;
+    font-size: 13.5px;
   }
   .caption span {
-    font-size: 9px;
+    font-size: 11.5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -802,5 +813,183 @@
   .edge,
   .sweep {
     display: none;
+  }
+}
+
+/* ---- Phone gallery ---------------------------------------------------
+   Phones don't get the hover / swap grid. They get one large swipeable
+   image, a counter, its caption and tappable thumbnails, then the metrics.
+   (MobileGallery in ProjectShowcase.tsx) */
+
+.gallery {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* Images span the full text column: same 20px page padding as the copy */
+  .showcase {
+    --inset: 0px;
+    margin-inline: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 18px;
+  }
+  .grid,
+  [data-sweep="rtl"] .grid {
+    display: block;
+  }
+  .grid > .frame,
+  .pillSlot {
+    display: none;
+  }
+  .panel {
+    border-radius: 0;
+    outline: 0;
+    padding: 20px 18px 18px;
+  }
+  /* Three key figures as compact rows: value, then what it measures */
+  .metrics {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .metric:nth-child(n + 4) {
+    display: none;
+  }
+  .metric {
+    display: grid;
+    grid-template-columns: minmax(116px, 36%) minmax(0, 1fr);
+    align-items: baseline;
+    gap: 14px;
+    padding: 12px 0;
+  }
+  .metric dd {
+    font-size: 28px;
+  }
+  .metric dt {
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+
+  .gallery {
+    display: block;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .stage {
+    position: relative;
+  }
+  .track {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    position: relative;
+    flex: 0 0 100%;
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #0a0c10;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+  /* The whole screenshot, centred over its blurred copy */
+  .slide .media .fg {
+    object-fit: contain;
+    object-position: center;
+  }
+  .slide .zoom {
+    cursor: zoom-in;
+  }
+
+  .counter {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 4;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(8, 10, 14, 0.6);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    pointer-events: none;
+  }
+
+  .galleryCaption {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 14px 18px 12px;
+    color: #fff;
+  }
+  .galleryCaption b {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .galleryCaption span {
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0 18px;
+  }
+  .thumb {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0a0c10;
+    cursor: pointer;
+    opacity: 0.55;
+    outline: 1px solid rgba(255, 255, 255, 0.1);
+    outline-offset: -1px;
+    transition:
+      opacity 0.3s var(--ease),
+      outline-color 0.3s var(--ease);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .thumb[aria-current="true"] {
+    opacity: 1;
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .thumb:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  :global(.reveal-ready:not(.reveal-in)) .gallery {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  :global(.reveal-in) .gallery {
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.7s var(--ease);
   }
 }

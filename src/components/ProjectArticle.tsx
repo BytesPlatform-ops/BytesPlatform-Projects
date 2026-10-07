@@ -31,6 +31,17 @@ function AccessLink({ href, label, name, strong = false }: { href: string; label
 
 export default function ProjectArticle({ project, total, priority = false }: Props) {
   const { access } = project;
+  const [sectorMain, ...more] = project.sector.split(" · ");
+  const sectorRest = more.join(" · ");
+  const appLinks = access?.apps?.map((app) => (
+    <AccessLink
+      key={app.platform}
+      href={app.href}
+      label={`View on ${app.platform}`}
+      name={project.name}
+      strong={access.emphasis === "app"}
+    />
+  ));
   const vars = {
     "--accent": project.accent,
     "--accent-soft": project.accentSoft,
@@ -62,7 +73,9 @@ export default function ProjectArticle({ project, total, priority = false }: Pro
             <span className={styles.indexSep} aria-hidden="true">
               —
             </span>
-            {project.sector}
+            {/* Phones show only the short category before the first "·" */}
+            {sectorMain}
+            {sectorRest && <span className={styles.sectorRest}> · {sectorRest}</span>}
           </p>
           <h2 className={`${styles.title} ${styles.st}`} style={st(1)}>
             <span>{project.name}</span>
@@ -70,52 +83,35 @@ export default function ProjectArticle({ project, total, priority = false }: Pro
           <p className={`${styles.headline} ${styles.st}`} style={st(2)}>
             {project.headline}
           </p>
+          <p className={`${styles.brief} ${styles.st}`} style={st(2)}>
+            {project.brief}
+          </p>
         </div>
 
         <dl className={styles.meta}>
-          <div className={styles.st} style={st(3)}>
+          <div className={`${styles.st} ${styles.metaDetail}`} style={st(3)}>
             <dt className="mono">Client</dt>
             <dd>{project.client}</dd>
           </div>
-          <div className={styles.st} style={st(4)}>
+          <div className={`${styles.st} ${styles.metaDetail}`} style={st(4)}>
             <dt className="mono">Scope</dt>
             <dd>{project.services.slice(0, 3).join(" · ")}</dd>
           </div>
           {access ? (
             <div className={`${styles.access} ${styles.st}`} style={st(5)} data-emphasis={access.emphasis}>
               <dt className="mono">Platforms</dt>
-              <dd>{access.note}</dd>
+              <dd className={styles.accessNote}>{access.note}</dd>
               <dd className={styles.accessLinks}>
-                {/* Order follows emphasis: app first where mobile is the core product */}
-                {access.emphasis === "app" ? (
-                  <>
-                    <AccessLink href={access.app} label="View App" name={project.name} strong />
-                    <AccessLink href={access.website} label="View Website" name={project.name} />
-                  </>
-                ) : (
-                  <>
-                    <AccessLink href={access.website} label="View Website" name={project.name} />
-                    <AccessLink href={access.app} label="View App" name={project.name} />
-                  </>
-                )}
-                {access.appAlt && (
-                  <a
-                    href={access.appAlt.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.accessAlt}
-                    aria-label={`${project.name} on ${access.appAlt.label}`}
-                  >
-                    <span>also on {access.appAlt.label}</span>
-                    <i aria-hidden="true">↗</i>
-                  </a>
-                )}
+                {/* Order follows emphasis: store apps first where mobile is the core product */}
+                {access.emphasis === "app" && appLinks}
+                <AccessLink href={access.website} label="View Website" name={project.name} />
+                {access.emphasis !== "app" && appLinks}
               </dd>
             </div>
           ) : (
             <div className={`${styles.metaLink} ${styles.st}`} style={st(5)}>
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>
-                <span>View live site</span>
+                <span>View Website</span>
                 <i aria-hidden="true">↗</i>
               </a>
             </div>
@@ -160,7 +156,7 @@ export default function ProjectArticle({ project, total, priority = false }: Pro
             </a>
             <a href={project.caseStudyUrl} target="_blank" rel="noopener noreferrer" className={styles.textLink}>
               <span>{project.caseStudyLabel}</span>
-              <i aria-hidden="true">→</i>
+              <i aria-hidden="true">↗</i>
             </a>
           </div>
         </aside>
