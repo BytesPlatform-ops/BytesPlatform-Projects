@@ -12,7 +12,7 @@ npm run dev      # http://localhost:3000  (/ redirects to /projects)
 npm run build && npm start
 ```
 
-## Structure
+## Structure. 
 
 ```
 src/app/layout.tsx                      global shell: Geist fonts, header, footer
