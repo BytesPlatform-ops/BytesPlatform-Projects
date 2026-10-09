@@ -7,7 +7,7 @@ import styles from "./projects.module.css";
 export const metadata: Metadata = {
   title: "Projects & case studies",
   description:
-    "Selected work from BytesPak: Quantiva HQ, IntelliMaint AI, Aegis Creek, Team Smith Logistics and The Benavente Group. Product strategy, UI/UX, web and mobile engineering, AI and automation, growth and SEO.",
+    "Selected work from BytesPak, including Quantiva HQ, IntelliMaint AI, Aegis Creek, Team Smith Logistics, The Benavente Group, Cascadia Health, Goldway Capital and SQUSH LLC. Product strategy, UI/UX, web and mobile engineering, AI and automation, growth and SEO.",
   alternates: { canonical: "/projects" },
   openGraph: {
     title: "Projects & case studies — BytesPak",

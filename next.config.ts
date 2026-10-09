@@ -1,7 +1,20 @@
 import type { NextConfig } from "next";
 
 /** Case studies with a PDF in public/case-studies/<slug>.pdf */
-const CASE_STUDIES = "quantiva-hq|intellimaint-ai|aegis-creek|team-smith-logistics|the-benavente-group";
+const CASE_STUDIES = [
+  "quantiva-hq",
+  "intellimaint-ai",
+  "aegis-creek",
+  "team-smith-logistics",
+  "the-benavente-group",
+  "cascadia-health",
+  "goldway-capital",
+  "trident-foundation-systems",
+  "gilbert-and-sons",
+  "rob-does-it",
+  "weisz-sports-management",
+  "sqush-llc",
+].join("|");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

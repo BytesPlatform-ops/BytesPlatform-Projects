@@ -658,9 +658,13 @@ export default function ProjectShowcase({ project, priority = false }: Props) {
   );
 }
 
-/** Phone gallery autoplay: time on each image, slide duration, and pause after a touch */
-const AUTO_MS = 2800;
-const SLIDE_MS = 380;
+/**
+ * Phone gallery autoplay. The timer restarts as each slide begins, so an image
+ * rests for AUTO_MS - SLIDE_MS (1.25s) before the next 350ms slide.
+ * RESUME_MS is the pause after a touch before autoplay picks up again.
+ */
+const SLIDE_MS = 350;
+const AUTO_MS = 1250 + SLIDE_MS;
 const RESUME_MS = 1500;
 
 interface MobileGalleryProps {
