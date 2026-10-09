@@ -37,95 +37,99 @@
 }
 
 /* ---- Hero ------------------------------------------------------------- */
+/* Open and light, like the rest of the page: the logo leads, a hairline
+   separates it from the headline, and a faint gold / blue light sits behind. */
 
 .hero {
-  padding-top: clamp(56px, 9vw, 128px);
+  --logo-gold: #c5ad6c;
+  padding-top: clamp(48px, 7vw, 104px);
   padding-bottom: clamp(56px, 7vw, 104px);
 }
 
-.heroFoot {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 96px);
-  align-items: end;
-  margin-top: clamp(40px, 6vw, 88px);
-}
-
-.lede {
-  font-size: clamp(18px, 1.6vw, 24px);
-  line-height: 1.4;
-  letter-spacing: -0.012em;
-  color: var(--ink-2);
-  max-width: 30ch;
-}
-
-.indexList {
-  border-top: 1px solid var(--line);
-}
-
-.indexItem {
-  --accent: var(--brand);
+.heroStage {
   position: relative;
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1.2fr) minmax(0, 1fr) 24px;
-  align-items: center;
-  gap: 14px;
-  min-height: 54px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
+  isolation: isolate;
 }
 
-.indexItem .mono {
-  color: var(--muted);
+/* Soft light behind the type, very low strength, no edges */
+.heroGlow {
+  position: absolute;
+  inset: -80px 0;
+  z-index: -1;
+  pointer-events: none;
+  /* closest-side keeps each light fully faded inside the layer: no hard edges */
+  background:
+    radial-gradient(closest-side at 76% 34%, color-mix(in srgb, var(--logo-gold) 16%, transparent), transparent),
+    radial-gradient(closest-side at 22% 78%, color-mix(in srgb, var(--brand) 6%, transparent), transparent);
 }
-
-.indexItem::before {
+/* Hairline under the logo, drawn in on load */
+.heroStage::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -1px;
+  top: calc(clamp(70px, 8.9vw, 126px) + clamp(22px, 2.8vw, 40px));
   height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--logo-gold), var(--line) 45%);
   transform-origin: left;
-  transition: transform var(--t-med) var(--ease);
+  animation: heroLine 1.2s var(--ease) 0.25s both;
 }
 
-.indexName {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  transition: transform var(--t-med) var(--ease);
+.heroLogo {
+  display: block;
+  width: clamp(190px, 24vw, 340px);
+  height: auto;
+  animation: heroRise 0.9s var(--ease) both;
 }
 
-.indexSector {
-  font-size: 13px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.heroEyebrow {
+  margin-top: clamp(44px, 5.6vw, 80px);
+  animation: heroRise 0.9s var(--ease) 0.12s both;
+}
+.heroEyebrow .eyebrowDot {
+  background: var(--logo-gold);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--logo-gold) 18%, transparent);
 }
 
-.indexItem i {
-  font-style: normal;
-  color: var(--muted);
-  justify-self: end;
-  transition:
-    transform var(--t-med) var(--ease),
-    color var(--t-fast);
+.heroStage .h1 {
+  margin-top: 22px;
+  animation: heroRise 1s var(--ease) 0.2s both;
 }
 
-/* ---- Intro ------------------------------------------------------------ */
+.lede {
+  margin-top: clamp(28px, 3.2vw, 44px);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.45;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 46ch;
+  animation: heroRise 1s var(--ease) 0.32s both;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes heroLine {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---- About ------------------------------------------------------------ */
 
 .intro {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: clamp(40px, 7vw, 120px);
-  padding-top: clamp(56px, 7vw, 104px);
+  padding-top: clamp(64px, 8vw, 128px);
   padding-bottom: clamp(72px, 9vw, 136px);
-  border-top: 1px solid var(--line);
+}
+
+.aboutHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: end;
 }
 
 .introLead .h2 {
@@ -133,64 +137,13 @@
 }
 
 .introText {
-  margin-top: 24px;
-  font-size: clamp(17px, 1.35vw, 20px);
-  line-height: 1.55;
+  font-size: clamp(18px, 1.45vw, 22px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
   color: var(--ink-2);
-  max-width: 48ch;
+  max-width: 44ch;
+  justify-self: end;
 }
-
-.disciplines {
-  border-top: 1px solid var(--line);
-}
-
-.discipline {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 16px;
-  padding: clamp(18px, 2vw, 26px) 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.disciplineIndex {
-  color: var(--muted);
-  padding-top: 8px;
-}
-
-.disciplineTitle {
-  font-size: clamp(22px, 2.1vw, 30px);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 600;
-}
-
-.disciplineTitle span {
-  position: relative;
-  display: inline-block;
-  transition: transform var(--t-med) var(--ease);
-}
-.disciplineTitle span::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  background: var(--brand);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--t-med) var(--ease);
-}
-
-.disciplineBody {
-  margin-top: 10px;
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--muted);
-  max-width: 52ch;
-}
-
-/* About: accent rule, line reveal, row motion */
 
 .introEyebrow {
   gap: 12px;
@@ -217,10 +170,37 @@
   display: block;
 }
 
+/* Capabilities: numbered editorial rows, two columns on desktop */
+.capHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: clamp(56px, 7vw, 104px);
+  padding-bottom: 14px;
+}
+.capCount {
+  color: var(--muted);
+}
+
+.disciplines {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows, 6), auto);
+  grid-auto-flow: column;
+  column-gap: clamp(32px, 5vw, 88px);
+  border-top: 1px solid var(--line);
+}
+
 .discipline {
   position: relative;
   isolation: isolate;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  padding: clamp(20px, 2vw, 28px) 0;
+  border-bottom: 1px solid var(--line);
 }
+
 /* Soft brand wash that slides in under a hovered row */
 .discipline::before {
   content: "";
@@ -249,11 +229,39 @@
   transform-origin: left;
   transition: transform var(--t-slow) var(--ease);
 }
+
 .disciplineIndex {
+  color: var(--muted);
+  padding-top: 7px;
   transition: color var(--t-fast) var(--ease);
 }
-.disciplineBody {
+
+.disciplineTitle {
+  font-size: clamp(20px, 1.75vw, 26px);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+.disciplineTitle span {
+  position: relative;
+  display: inline;
   transition: color var(--t-fast) var(--ease);
+}
+
+.disciplineBody {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 48ch;
+  transition:
+    color var(--t-fast) var(--ease),
+    transform var(--t-med) var(--ease);
+}
+
+.discipline > div {
+  transition: transform var(--t-med) var(--ease);
 }
 
 /* Entrance, only when the section was below the fold (see RevealObserver) */
@@ -266,6 +274,12 @@
 :global(.reveal-ready:not(.reveal-in)) .introText {
   opacity: 0;
   transform: translateY(14px);
+}
+:global(.reveal-ready:not(.reveal-in)) .capHead {
+  opacity: 0;
+}
+:global(.reveal-ready:not(.reveal-in)) .disciplines {
+  border-top-color: transparent;
 }
 :global(.reveal-ready:not(.reveal-in)) .discipline {
   opacity: 0;
@@ -288,10 +302,16 @@
     opacity var(--t-slow) var(--ease) 0.34s,
     transform var(--t-slow) var(--ease) 0.34s;
 }
+:global(.reveal-in) .capHead {
+  transition: opacity var(--t-slow) var(--ease) 0.4s;
+}
+:global(.reveal-in) .disciplines {
+  transition: border-color var(--t-slow) var(--ease) 0.4s;
+}
 :global(.reveal-in) .discipline {
   transition:
-    opacity 0.8s var(--ease) calc(0.28s + var(--i) * 0.08s),
-    transform 0.8s var(--ease) calc(0.28s + var(--i) * 0.08s);
+    opacity 0.8s var(--ease) calc(0.45s + var(--i) * 0.05s),
+    transform 0.8s var(--ease) calc(0.45s + var(--i) * 0.05s);
 }
 
 /* ---- Section head ----------------------------------------------------- */
@@ -315,16 +335,6 @@
 /* ---- Hover (fine pointers only) -------------------------------------- */
 
 @media (hover: hover) and (pointer: fine) {
-  .indexItem:hover::before {
-    transform: scaleX(1);
-  }
-  .indexItem:hover .indexName {
-    transform: translateX(6px);
-  }
-  .indexItem:hover i {
-    transform: translateY(3px);
-    color: var(--accent);
-  }
   .intro:hover .introRule {
     width: 52px;
   }
@@ -338,30 +348,23 @@
   .discipline:hover .disciplineIndex {
     color: var(--brand);
   }
-  .discipline:hover .disciplineBody {
-    color: var(--ink-2);
-  }
-  .discipline:hover .disciplineTitle span {
+  .discipline:hover > div {
     transform: translateX(6px);
   }
-  .discipline:hover .disciplineTitle span::after {
-    transform: scaleX(1);
+  .discipline:hover .disciplineBody {
+    color: var(--ink-2);
   }
 }
 
 /* ---- Responsive ------------------------------------------------------- */
 
 @media (max-width: 1023px) {
-  .heroFoot {
+  .aboutHead {
     grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
+    gap: 28px;
   }
-  .lede {
-    max-width: 44ch;
-  }
-  .intro {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
+  .introText {
+    justify-self: start;
   }
   .sectionHead {
     grid-template-columns: minmax(0, 1fr);
@@ -373,40 +376,59 @@
 }
 
 @media (max-width: 767px) {
+  .hero {
+    padding-top: 36px;
+  }
+  .heroStage::after {
+    top: calc(75px + 20px);
+  }
+  .heroLogo {
+    width: 200px;
+  }
+  .heroEyebrow {
+    margin-top: 44px;
+  }
   .h1 {
-    font-size: clamp(42px, 12.5vw, 60px);
+    font-size: clamp(38px, 11vw, 56px);
     max-width: none;
   }
-  .indexItem {
-    grid-template-columns: 28px minmax(0, 1fr) 20px;
-    min-height: 56px;
+  .lede {
+    font-size: 16.5px;
   }
-  .indexSector {
-    display: none;
+
+  /* One column of capabilities; the short descriptions stay */
+  .disciplines {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-auto-flow: row;
   }
   .discipline {
     grid-template-columns: 36px minmax(0, 1fr);
+    gap: 10px;
     padding: 16px 0;
   }
-
-  /* Phones: headings carry the section; the long explanations stay on desktop */
-  .introText,
-  .disciplineBody,
-  .sectionNote {
-    display: none;
-  }
-  .intro {
-    gap: 28px;
-    padding-top: 48px;
-    padding-bottom: 56px;
-  }
   .disciplineIndex {
-    padding-top: 6px;
+    padding-top: 5px;
   }
   .disciplineTitle {
-    font-size: 21px;
+    font-size: 19px;
   }
-  .lede {
-    font-size: 17px;
+  .disciplineBody {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .intro {
+    padding-top: 52px;
+    padding-bottom: 60px;
+  }
+  .capHead {
+    margin-top: 40px;
+  }
+  .introText {
+    font-size: 16.5px;
+  }
+  /* Phones: the section note stays on desktop */
+  .sectionNote {
+    display: none;
   }
 }

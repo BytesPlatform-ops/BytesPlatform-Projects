@@ -620,30 +620,18 @@ export const projects: Project[] = [
   },
 ];
 
-export const disciplines = [
-  {
-    index: "01",
-    title: "Product strategy",
-    body: "Positioning, scope and sequencing decided before a screen is drawn, so the first release is the right release.",
-  },
-  {
-    index: "02",
-    title: "UI / UX",
-    body: "Interfaces designed around what the user is doing in a session, from a trader's order ticket to a technician's gloved hands.",
-  },
-  {
-    index: "03",
-    title: "Web & mobile engineering",
-    body: "Production systems across iOS, Android and the web: integrations, identity, billing and the infrastructure behind them.",
-  },
-  {
-    index: "04",
-    title: "AI & automation",
-    body: "Retrieval-grounded assistants, signal engines and automated workflows built to be right, not just fluent.",
-  },
-  {
-    index: "05",
-    title: "Growth & SEO",
-    body: "Search architecture, content systems and paid distribution, instrumented so impact can be proved rather than asserted.",
-  },
+/**
+ * Capabilities listed in the About section. Descriptions state what the work
+ * covers, never a credential: no accreditation, contractor status or
+ * eInvoicing ASP status is claimed.
+ */
+export const capabilities = [
+  { title: "AI Automation & Intelligent Workflows", body: "Repetitive operations turned into reliable, monitored automated workflows." },
+  { title: "AI Agents & Business Assistants", body: "Assistants grounded in your own documents, data and processes." },
+  { title: "Custom SaaS & Product Development", body: "Software products taken from first release through to scale." },
+  { title: "Web & Mobile App Development", body: "Production apps for iOS, Android and the web." },
+  { title: "CRM & ERP Systems", body: "Customer and operations platforms configured around how your teams work." },
+  { title: "Government Opportunity & Proposal Technology", body: "Tools for finding, qualifying and responding to public-sector opportunities." },
+  { title: "Public-Sector Digital Solutions", body: "Accessible, secure digital services for public-sector organisations." },
+  { title: "UAE eInvoicing & Business System Integration", body: "eInvoicing integration, ERP readiness, data mapping and business-system implementation." },
 ];

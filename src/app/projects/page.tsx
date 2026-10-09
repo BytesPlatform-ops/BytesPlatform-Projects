@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { projects, disciplines } from "@/data/projects";
+import Image from "next/image";
+import { projects, capabilities } from "@/data/projects";
 import ProjectArticle from "@/components/ProjectArticle";
 import RevealObserver from "@/components/RevealObserver";
 import styles from "./projects.module.css";
@@ -25,71 +26,78 @@ export default function ProjectsPage() {
 
       {/* ---- Hero ---------------------------------------------------- */}
       <section className={`container ${styles.hero}`} aria-labelledby="hero-title">
-        <p className={`mono ${styles.eyebrow}`}>
-          <span className={styles.eyebrowDot} aria-hidden="true" />
-          Selected work · {String(total).padStart(2, "0")} case studies
-        </p>
-        <h1 id="hero-title" className={styles.h1}>
-          Products, platforms
-          <br />
-          and growth systems,
-          <br />
-          <em>built end to end.</em>
-        </h1>
-
-        <div className={styles.heroFoot}>
+        <div className={styles.heroStage}>
+          <span className={styles.heroGlow} aria-hidden="true" />
+          {/* Official BYTES. PLATFORM logo, shown at its own proportions */}
+          <Image
+            src="/images/bytes-platform-logo-dark.png"
+            alt="Bytes Platform"
+            width={1639}
+            height={608}
+            priority
+            sizes="(max-width: 767px) 220px, 340px"
+            className={styles.heroLogo}
+          />
+          <p className={`mono ${styles.eyebrow} ${styles.heroEyebrow}`}>
+            <span className={styles.eyebrowDot} aria-hidden="true" />
+            Selected work · {String(total).padStart(2, "0")} case studies
+          </p>
+          <h1 id="hero-title" className={styles.h1}>
+            Products, platforms
+            <br />
+            and growth systems,
+            <br />
+            <em>built end to end.</em>
+          </h1>
           <p className={styles.lede}>
             BytesPak designs and engineers digital products, AI systems and search-driven growth. Every project below
             is shown through its real interfaces and the figures its case study can defend.
           </p>
-
-          <ol className={styles.indexList} aria-label="Projects on this page">
-            {projects.map((p) => (
-              <li key={p.slug}>
-                <a href={`#${p.slug}`} className={styles.indexItem} style={{ "--accent": p.accent } as React.CSSProperties}>
-                  <span className="mono">{p.index}</span>
-                  <span className={styles.indexName}>{p.name}</span>
-                  <span className={styles.indexSector}>{p.sector}</span>
-                  <i aria-hidden="true">↓</i>
-                </a>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
-      {/* ---- Intro / capabilities ------------------------------------ */}
+      {/* ---- About ---------------------------------------------------- */}
       <section className={`container ${styles.intro}`} id="capabilities" aria-labelledby="intro-title" data-reveal>
-        <div className={styles.introLead}>
-          <p className={`mono ${styles.eyebrow} ${styles.introEyebrow}`}>
-            <span className={styles.introRule} aria-hidden="true" />
-            What BytesPak does
-          </p>
-          {/* Each line rises out of its own mask on reveal */}
-          <h2 id="intro-title" className={`${styles.h2} ${styles.introTitle}`}>
-            <span className={styles.line}>
-              <span>Strategy through</span>
-            </span>
-            <span className={styles.line}>
-              <span>production.</span>
-            </span>
-          </h2>
+        <div className={styles.aboutHead}>
+          <div className={styles.introLead}>
+            <p className={`mono ${styles.eyebrow} ${styles.introEyebrow}`}>
+              <span className={styles.introRule} aria-hidden="true" />
+              About
+            </p>
+            {/* Each line rises out of its own mask on reveal */}
+            <h2 id="intro-title" className={`${styles.h2} ${styles.introTitle}`}>
+              <span className={styles.line}>
+                <span>One team,</span>
+              </span>
+              <span className={styles.line}>
+                <span>strategy to scale.</span>
+              </span>
+            </h2>
+          </div>
           <p className={styles.introText}>
-            BytesPak combines product strategy, UI/UX, web and mobile engineering, AI and automation, and growth and SEO
-            where it matters. One team carries the work from the first positioning decision to the production release
-            and the search results after it, so the finished product is both usable and measurable.
+            BytesPak is a modern digital product and engineering company, building websites, software platforms, AI
+            systems, automation workflows and growth infrastructure for businesses in 2026. We bring strategy, design,
+            development and search-driven execution together in one team, to ship products that are usable, scalable
+            and commercially effective.
           </p>
         </div>
 
-        <ol className={styles.disciplines}>
-          {disciplines.map((d, i) => (
-            <li key={d.index} className={styles.discipline} style={{ "--i": i } as React.CSSProperties}>
-              <span className={`mono ${styles.disciplineIndex}`}>{d.index}</span>
+        <div className={styles.capHead}>
+          <p className={`mono ${styles.eyebrow}`}>Capabilities</p>
+          <span className={`mono ${styles.capCount}`}>{String(capabilities.length).padStart(2, "0")}</span>
+        </div>
+        <ol
+          className={styles.disciplines}
+          style={{ "--rows": Math.ceil(capabilities.length / 2) } as React.CSSProperties}
+        >
+          {capabilities.map((c, i) => (
+            <li key={c.title} className={styles.discipline} style={{ "--i": i } as React.CSSProperties}>
+              <span className={`mono ${styles.disciplineIndex}`}>{String(i + 1).padStart(2, "0")}</span>
               <div>
                 <h3 className={styles.disciplineTitle}>
-                  <span>{d.title}</span>
+                  <span>{c.title}</span>
                 </h3>
-                <p className={styles.disciplineBody}>{d.body}</p>
+                <p className={styles.disciplineBody}>{c.body}</p>
               </div>
             </li>
           ))}
