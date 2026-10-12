@@ -1,0 +1,515 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Amins Consult Case Study</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F3F6FA; --surface:#FFFFFF; --ink:#0E1A2B; --ink-2:#4A5C72; --line:#D5DFEA; --tint:#E6EDF5;
+  --navy:#0B1830; --navy-2:#13243F; --navy-ink:#FFFFFF; --navy-line:#2C4468; --navy-mute:#C4D3E6;
+  --cyan:#3E9BFF; --cyan-ink:#1555B8; --mag:#F2A93B; --mag-ink:#8F5200; --on-grad:#0B1830;
+  --grad:linear-gradient(90deg,#9CCBFF,#5FA6FF);
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#08111F; --surface:#0F1E36; --ink:#EDF3FA; --ink-2:#A9BBD2; --line:#22385A; --tint:#162A48;
+    --cyan-ink:#8EC3FF; --mag-ink:#F6BF5E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08111F; --surface:#0F1E36; --ink:#EDF3FA; --ink-2:#A9BBD2; --line:#22385A; --tint:#162A48;
+  --cyan-ink:#8EC3FF; --mag-ink:#F6BF5E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1;margin:0;text-wrap:balance;font-weight:700;text-transform:uppercase;letter-spacing:.005em}
+h1{font-size:clamp(44px,6.4vw,88px)}
+h2{font-size:clamp(34px,4.2vw,56px)}
+h3{font-size:clamp(28px,2.8vw,38px)}
+h1 em,h2 em,h3 em{font-style:normal;color:var(--mag-ink)}
+.hero h1 em,.results h2 em,.cta h2 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.prose{max-width:68ch}
+.stack{display:grid;gap:18px}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--navy);color:var(--navy-ink);border-bottom:1px solid var(--navy-line)}
+.nav .wrap{display:flex;align-items:center;height:60px}
+.brand{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.btn{display:inline-block;background:var(--grad);color:var(--on-grad);font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:13px;padding:15px 24px;border-radius:2px;text-decoration:none}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1px currentColor}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+.hero{background:radial-gradient(900px 400px at 85% 0,rgba(62,155,255,.20),transparent 60%),radial-gradient(700px 400px at 0 100%,rgba(242,169,59,.20),transparent 60%),var(--navy);color:var(--navy-ink);padding-block:60px 0;overflow:hidden}
+.hero .eyebrow{color:var(--navy-mute)}
+.hero .lead{font-size:20px;color:#D5E2F2;max-width:62ch}
+.hero-img{margin-top:44px;border-radius:6px 6px 0 0;overflow:hidden;box-shadow:0 -10px 50px rgba(0,0,0,.5)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--navy-line);border-radius:2px;color:#D5E2F2}
+.hero h1{max-width:20ch}
+
+.metrics{background:var(--grad);color:var(--on-grad)}
+.metrics .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:24px 18px 22px;border-left:1px solid rgba(11,24,48,.25)}
+.metric:first-child{border-left:0;padding-left:0}
+.metric b{display:block;font-family:var(--display);font-size:clamp(32px,5.6vw,72px);font-weight:700;line-height:.95;font-variant-numeric:tabular-nums}
+.metric small{display:block;font-size:15px;line-height:1.3;margin-top:8px;max-width:24ch}
+.metric .src{font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.75;margin-top:8px;display:block}
+@media (max-width:760px){.metrics .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.metric:nth-child(3){border-left:0;padding-left:0}.metric{border-top:1px solid rgba(11,24,48,.22)}.metric:nth-child(-n+2){border-top:0}}
+
+.facts{border-bottom:1px solid var(--line);background:var(--surface)}
+.facts .wrap{display:grid;grid-template-columns:repeat(5,auto);gap:28px;padding-block:16px;font-size:15px}
+.facts div span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-bottom:2px}
+@media (max-width:860px){.facts .wrap{grid-template-columns:1fr 1fr}}
+
+section.block{padding-block:76px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.split.rev>.media{order:-1}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr)}.split.rev>.media{order:0}}
+.shot{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);box-shadow:0 12px 40px rgba(14,26,43,.16)}
+.cap{font-size:14px;color:var(--ink-2);margin-top:10px}
+
+.challenge{background:var(--surface);border-block:1px solid var(--line)}
+.gaps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.gaps.four{grid-template-columns:repeat(4,1fr)}
+.gap{padding:18px;border-radius:4px;background:var(--tint);border-top:3px solid var(--cyan)}
+.gap:nth-child(even){border-top-color:var(--mag)}
+.gap .t{font-family:var(--display);font-size:24px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.gap p{font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.4}
+@media (max-width:1040px){.gaps,.gaps.four{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.gaps,.gaps.four{grid-template-columns:1fr}}
+.buyers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.buyer{padding:20px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.buyer .t{font-family:var(--display);font-size:28px;font-weight:700;text-transform:uppercase}
+.buyer p{font-size:16px;color:var(--ink-2);margin-top:6px}
+@media (max-width:980px){.buyers{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.buyers{grid-template-columns:1fr}}
+
+.arch{margin-top:36px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.arch svg{display:block;width:100%;min-width:700px;height:auto}
+.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.arch .sm{font-family:var(--body);font-weight:400}
+
+.steps{display:grid;gap:68px;margin-top:52px}
+.step-n{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--cyan-ink);margin-bottom:8px}
+.step p{color:var(--ink-2);margin-top:12px;max-width:52ch}
+.step .chips{margin-top:16px}
+
+.clusters{margin-top:18px;border-top:1px solid var(--line)}
+.cluster{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.cluster b{font-family:var(--display);font-size:22px;font-weight:700;text-transform:uppercase;line-height:1.1}
+.cluster span{color:var(--ink-2)}
+
+.panel{padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 40px rgba(14,26,43,.10)}
+.panel h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin:0 0 12px;color:var(--cyan-ink)}
+.lib{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.lib li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:16px;line-height:1.3}
+.lib li:first-child{border-top:0}
+.lib li i{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--mag-ink);padding-top:3px}
+
+.funnel{display:grid;gap:12px}
+.fun{padding:16px 18px;border-radius:4px;background:var(--navy);color:#fff;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;position:relative;overflow:hidden}
+.fun{border-left:4px solid var(--cyan)}.fun:nth-child(even){border-left-color:var(--mag)}
+.fun b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;font-variant-numeric:tabular-nums}
+.fun span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-mute);text-align:right}
+
+.creatives{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.creatives .shot{box-shadow:0 12px 40px rgba(14,26,43,.22)}
+.creatives figcaption{margin-top:12px;font-size:16px;color:var(--ink-2);line-height:1.4}
+.creatives figcaption b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan-ink);font-weight:500;margin-bottom:2px}
+.creatives figure{margin:0}
+@media (max-width:860px){.creatives{grid-template-columns:1fr}}
+
+.results{background:radial-gradient(800px 400px at 100% 0,rgba(62,155,255,.14),transparent 60%),var(--navy);color:var(--navy-ink)}
+.results .eyebrow{color:var(--navy-mute)}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:36px}
+@media (max-width:860px){.res-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.res{grid-template-columns:1fr;gap:6px}}
+.res{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--navy-line);align-items:start}
+.res b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.res span{font-size:16px;color:#D5E2F2}
+.res span strong{display:block;color:#fff;font-weight:600}
+.note{margin-top:28px;font-size:14px;color:var(--navy-mute);max-width:80ch}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;align-items:flex-start}
+.chip{font-size:15px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tiers .tier{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 0;border-top:1px solid var(--line)}
+.tiers h4+.tier{border-top:0}
+.tier b{display:block;font-family:var(--display);font-size:30px;line-height:1;text-transform:uppercase;font-weight:700}
+.tier span{display:block;font-size:15px;color:var(--ink-2);margin-top:4px}
+.tier i{font-style:normal;font-family:var(--display);font-size:38px;font-weight:700;line-height:1;color:var(--cyan-ink);font-variant-numeric:tabular-nums}
+.tier i small{font-size:16px;-webkit-text-fill-color:var(--ink-2)}
+.next{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.next li{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:3px;font-size:16px;line-height:1.35}
+.next li b{display:block;font-family:var(--display);font-size:22px;text-transform:uppercase;font-weight:700}
+
+.faq{background:var(--surface);border-block:1px solid var(--line)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-family:var(--display);font-size:30px;font-weight:700;text-transform:uppercase;list-style:none;display:flex;justify-content:space-between;gap:16px;line-height:1.1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--mag-ink);flex:none}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--ink-2);max-width:68ch}
+summary:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+
+.cta{padding-block:80px}
+.cta .box{background:radial-gradient(600px 300px at 100% 0,rgba(62,155,255,.20),transparent 60%),var(--navy);color:var(--navy-ink);border-radius:8px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.cta p{color:#D5E2F2;margin-top:14px;max-width:50ch}
+.cta .actions{display:grid;gap:12px;justify-items:start}
+@media (max-width:860px){.cta .box{grid-template-columns:1fr}}
+footer{padding-block:28px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (prefers-reduced-motion:no-preference){.shot{transition:transform .3s ease}.shot:hover{transform:translateY(-3px)}}
+
+.viz{margin-top:44px;border-radius:6px 6px 0 0;background:var(--navy-2);border:1px solid var(--navy-line);border-bottom:0;padding:26px 26px 8px;box-shadow:0 -10px 50px rgba(0,0,0,.5);overflow-x:auto}
+.viz svg{display:block;width:100%;min-width:640px;height:auto}
+.viz .disp,.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.viz .lab,.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.viz .sm,.arch .sm{font-family:var(--body);font-weight:400}
+.buyers.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.buyers.three{grid-template-columns:1fr}}
+.ba+.ba{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.ba p{font-size:16px;color:var(--ink-2)}
+.ba b{display:block;font-family:var(--display);font-size:30px;line-height:1.05;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.no li i{color:var(--mag-ink)}
+.bar{height:8px;border-radius:99px;background:var(--tint);overflow:hidden;margin:6px 0 18px}
+.bar i{display:block;height:100%;width:14%;background:var(--grad)}
+.prog{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:560px){.tier{grid-template-columns:minmax(0,1fr)!important;gap:4px}.tier i{font-size:30px}}
+</style>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#">Bytes <span>&amp;</span> Partners</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="stack">
+      <p class="eyebrow">Custom software development case study · Scranton, PA</p>
+      <h1>Turning deep engineering expertise into <em>a clear consulting platform</em></h1>
+      <p class="lead">A consultancy's product is judgement under constraint. The page has to be read by a federal program director, a hospital CIO and a fintech engineering lead, each asking a different version of the same question: have these people done this in my regulatory environment, and can I check? Amins Consult needed a site that answers it with specifics rather than adjectives.</p>
+      <div class="tags"><span class="tag">Custom software development</span><span class="tag">Technology consulting</span><span class="tag">Federal</span><span class="tag">Healthcare</span><span class="tag">Finance</span><span class="tag">UX/UI</span><span class="tag">Web development</span></div>
+    </div>
+    <div class="viz">
+      <svg viewBox="0 0 960 340" role="img" aria-label="Schematic: three readers from federal, healthcare and finance, each with their own vocabulary, converge on one site, beside three notes on who reads it, what they check and where it ends">
+        <g>
+          <rect x="16" y="30" width="210" height="62" rx="3" fill="#13243F" stroke="#2C4468"/><rect x="16" y="30" width="4" height="62" fill="#3E9BFF"/>
+          <text x="34" y="54" class="lab" font-size="11" fill="#8EC3FF">FEDERAL</text><text x="34" y="78" class="sm" font-size="12" fill="#C4D3E6">FedRAMP · IL5 · NIST 800-53</text>
+          <rect x="16" y="130" width="210" height="62" rx="3" fill="#13243F" stroke="#2C4468"/><rect x="16" y="130" width="4" height="62" fill="#F2A93B"/>
+          <text x="34" y="154" class="lab" font-size="11" fill="#8EC3FF">HEALTHCARE</text><text x="34" y="178" class="sm" font-size="12" fill="#C4D3E6">FHIR · HL7 · HIPAA</text>
+          <rect x="16" y="230" width="210" height="62" rx="3" fill="#13243F" stroke="#2C4468"/><rect x="16" y="230" width="4" height="62" fill="#3E9BFF"/>
+          <text x="34" y="254" class="lab" font-size="11" fill="#8EC3FF">FINANCE</text><text x="34" y="278" class="sm" font-size="12" fill="#C4D3E6">ISO 20022 · FedNow · Basel III</text>
+        </g>
+        <g fill="none" stroke="#3E9BFF" stroke-width="2.5" stroke-dasharray="3 8" stroke-linecap="round">
+          <path d="M226 61 C300 61 300 161 352 161"/><path d="M226 161 L352 161"/><path d="M226 261 C300 261 300 161 352 161"/>
+        </g>
+        <circle cx="372" cy="161" r="20" fill="#F2A93B"/><circle cx="372" cy="161" r="7" fill="#0B1830"/>
+        <text x="372" y="204" text-anchor="middle" class="lab" font-size="11" fill="#C4D3E6">ONE SITE</text>
+        <text x="16" y="326" class="lab" font-size="11" fill="#8AA2C2">THREE VOCABULARIES, ONE PAGE</text>
+        <g>
+          <rect x="500" y="14" width="460" height="86" rx="3" fill="#13243F" stroke="#2C4468"/><rect x="500" y="14" width="460" height="4" fill="#3E9BFF"/>
+          <text x="516" y="42" class="lab" font-size="11" fill="#8EC3FF">WHO READS IT</text><text x="516" y="76" class="disp" font-size="20" fill="#fff">Three readers, three vocabularies</text>
+          <rect x="500" y="116" width="460" height="86" rx="3" fill="#13243F" stroke="#2C4468"/><rect x="500" y="116" width="460" height="4" fill="#F2A93B"/>
+          <text x="516" y="144" class="lab" font-size="11" fill="#8EC3FF">WHAT THEY CHECK</text><text x="516" y="178" class="disp" font-size="20" fill="#fff">Named standards, not adjectives</text>
+          <rect x="500" y="218" width="460" height="86" rx="3" fill="#13243F" stroke="#2C4468"/><rect x="500" y="218" width="460" height="4" fill="#3E9BFF"/>
+          <text x="516" y="246" class="lab" font-size="11" fill="#8EC3FF">WHERE IT ENDS</text><text x="516" y="280" class="disp" font-size="20" fill="#fff">One door: Partner With Us</text>
+        </g>
+        <text x="730" y="328" text-anchor="middle" class="lab" font-size="11" fill="#8AA2C2">SCHEMATIC ONLY</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="metrics">
+  <div class="wrap">
+    <div class="metric"><b>6</b><small>Service pillars named on the site</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>3</b><small>Regulated industries, each with its own section</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>7</b><small>Technology stack categories published</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>1</b><small>Route to make contact, labelled for the buyer</small><span class="src">PUBLISHED</span></div>
+  </div>
+</div>
+
+<div class="facts">
+  <div class="wrap">
+    <div><span>Client</span>Amins Consult</div>
+    <div><span>Sector</span>Software engineering consulting · Federal · Healthcare · Finance</div>
+    <div><span>Services</span>Digital strategy · UX/UI · Web development</div>
+    <div><span>Market</span>Scranton, PA · Serving global clients</div>
+    <div><span>Reviewed</span>October 2026</div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">The business</p>
+      <h2>Breadth is the asset. The site decides <em>whether it reads as depth</em></h2>
+      <p class="prose">Amins Consult is a software engineering consultancy based in Scranton, Pennsylvania. The home page states the scope in one sub-headline, “Engineering the Future of Regulated Industries”, and names the industries on the same screen: Federal, Healthcare and Finance.</p>
+      <p class="prose">Reduce that to “we build software” and the firm disappears into a category with thousands of entrants. The published capability runs far wider than a development shop: six service pillars, three industry sections, and a seven-category technology stack naming tools from LangChain and Palantir Foundry to Kafka and Power BI. The site cannot win by asserting range. It has to organise it so a buyer can check it.</p>
+    </div>
+    <div class="media">
+      <div class="panel">
+        <h4>Who reads the page</h4>
+        <ul class="lib">
+          <li><i>→</i><span><b>A federal program director</b> reading for compliance vocabulary.</span></li>
+          <li><i>→</i><span><b>A healthcare technology leader</b> reading for interoperability and PHI handling.</span></li>
+          <li><i>→</i><span><b>A fintech engineering lead</b> reading for payment rails and fraud.</span></li>
+          <li><i>→</i><span><b>A procurement lead</b> comparing three firms in the same afternoon.</span></li>
+          <li><i>→</i><span><b>A technical evaluator</b> forwarded the link for a second opinion.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block challenge">
+  <div class="wrap">
+    <p class="eyebrow">The challenge</p>
+    <h2 style="margin-top:14px">Six disciplines, three industries, <em>one page to read them</em></h2>
+    <p class="prose" style="margin-top:18px">Enterprise buyers screen for security posture before they read about capability, and the person who finds the site is rarely the person who signs. Five pressures shaped the build.</p>
+
+    <div class="gaps">
+      <div class="gap"><div class="t">The range is wide and hard to name</div><p>AI agents, DevSecOps, data mesh, healthcare interoperability, federal mission systems, fintech platforms. Listed flat, it reads unfocused; left unexplained, it looks like a body shop with a long menu.</p></div>
+      <div class="gap"><div class="t">Three industries, three vocabularies</div><p>A federal reader wants IL5. A healthcare reader wants FHIR. A fintech reader wants ISO 20022. One page cannot sound fluent in all three unless it is structured to.</p></div>
+      <div class="gap"><div class="t">Buying is slow and multi-handed</div><p>The page is forwarded, read in procurement and compared against two others. It has to survive being read by someone who was not looking for it.</p></div>
+      <div class="gap"><div class="t">Security is screened first</div><p>A site that mentions compliance once, on a dedicated page, has already lost the reader who needed it on the first screen.</p></div>
+      <div class="gap"><div class="t">Credibility must be shown</div><p>“Experienced, secure, trusted” survive no comparison. Only named standards, named tools and stated engagement models do.</p></div>
+    </div>
+    <p class="prose" style="margin-top:28px">The organising principle: let the reader self-identify by industry first, put the capability under that industry in the reader's own regulatory vocabulary, repeat the security message everywhere a buyer would look, and make first contact feel like opening a partnership rather than submitting a lead.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="eyebrow">The searches behind the visit</p>
+    <h2 style="margin-top:14px">Buyers search for the discipline <em>before the firm</em></h2>
+    <p class="prose" style="margin-top:18px">Engineering buyers often start with a topic, not a company name. The terms below are the language visitors use, shown as search language, not as a list of services offered or claims made.</p>
+    <div class="buyers three">
+      <div class="buyer"><div class="t">Custom software</div><p>The firm is a software engineering consultancy. Its FAQ publishes three engagement models: staff augmentation, project-based delivery and strategic advisory.</p><div class="chips" style="margin-top:14px"><span class="chip">Custom software development</span><span class="chip">Custom software development agencies</span></div></div>
+      <div class="buyer"><div class="t">Scranton, PA</div><p>The contact page states the HQ as Scranton, PA, USA, and describes the firm as serving global clients, so the local search and the enterprise reader land on the same page.</p><div class="chips" style="margin-top:14px"><span class="chip">Scranton web development</span></div></div>
+      <div class="buyer"><div class="t">DevOps and delivery</div><p>One pillar covers complete CI/CD pipelines, Zero Trust security and multi-region failover. Security is stated as part of delivery rather than a gate after it.</p><div class="chips" style="margin-top:14px"><span class="chip">CI/CD service</span><span class="chip">DevSecOps flow</span><span class="chip">DevOps in healthcare</span></div></div>
+      <div class="buyer"><div class="t">Cloud</div><p>A Cloud Native block sits in the published stack, and AWS, Azure and GCP are named. Searches about the platforms are informational, and the site makes no performance claims.</p><div class="chips" style="margin-top:14px"><span class="chip">Cloud app performance</span><span class="chip">What is AWS</span></div></div>
+      <div class="buyer"><div class="t">AI agents</div><p>AI sits as one pillar of six, naming LLM-based agents, RAG pipelines, predictive modeling and GPU/CPU training, backed by a published AI/ML toolchain.</p><div class="chips" style="margin-top:14px"><span class="chip">LLM agents</span></div></div>
+      <div class="buyer"><div class="t">Public sector</div><p>A Federal and Government pillar covers mission systems for defense, intelligence and civilian agencies, with a federal analytics section on the services page.</p><div class="chips" style="margin-top:14px"><span class="chip">What is public sector network</span></div></div>
+    </div>
+    <p class="prose" style="margin-top:22px;font-size:16px;color:var(--ink-2)">These terms describe how people search, not what the client offers. “What is AWS” and “what is public sector network” are informational questions, not services, and Scranton web development is local search language. No certification, partner status, authorisation or performance figure held by the firm is published or claimed here.</p>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">What we built</p>
+    <div class="step-n" style="margin-top:14px">01 / 07</div>
+    <h2>Industry, then discipline, <em>then proof</em></h2>
+    <p class="prose" style="margin-top:18px">Each layer of the site answers the question the previous one raises: for whom, doing what, how deep, can I check it, how do I buy. One sub-headline, six cards, three industry sections, a seven-block stack and a single contact route, arranged so a reader can stop at any depth and still have the answer to what they came for.</p>
+
+    <div class="arch">
+      <svg viewBox="0 0 960 220" role="img" aria-label="The buyer path: enterprise buyer, industry first, six named pillars, proof you can check, Partner With Us">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="#7F98BA"/></marker></defs>
+        <g>
+<g><rect x="0" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="0" y="10" width="160" height="4" fill="#3E9BFF"/><circle cx="26" cy="38" r="14" fill="#0B1830"/><text x="26" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">01</text><text x="14" y="82" class="disp" font-size="20" style="fill:var(--ink)">Enterprise</text><text x="14" y="106" class="disp" font-size="20" style="fill:var(--ink)">buyer</text><text x="14" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">A committee reads</text><text x="14" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">for the link</text></g><g><rect x="200" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="200" y="10" width="160" height="4" fill="#F2A93B"/><circle cx="226" cy="38" r="14" fill="#0B1830"/><text x="226" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">02</text><text x="214" y="82" class="disp" font-size="20" style="fill:var(--ink)">Industry</text><text x="214" y="106" class="disp" font-size="20" style="fill:var(--ink)">first</text><text x="214" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Federal, healthcare,</text><text x="214" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">finance</text></g><g><rect x="400" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="400" y="10" width="160" height="4" fill="#3E9BFF"/><circle cx="426" cy="38" r="14" fill="#0B1830"/><text x="426" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">03</text><text x="414" y="82" class="disp" font-size="20" style="fill:var(--ink)">Six named</text><text x="414" y="106" class="disp" font-size="20" style="fill:var(--ink)">pillars</text><text x="414" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Domain plus a</text><text x="414" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">named standard</text></g><g><rect x="600" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="600" y="10" width="160" height="4" fill="#F2A93B"/><circle cx="626" cy="38" r="14" fill="#0B1830"/><text x="626" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">04</text><text x="614" y="82" class="disp" font-size="20" style="fill:var(--ink)">Proof you</text><text x="614" y="106" class="disp" font-size="20" style="fill:var(--ink)">can check</text><text x="614" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Tools, frameworks,</text><text x="614" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">engagement models</text></g><g><rect x="800" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="800" y="10" width="160" height="4" fill="#3E9BFF"/><circle cx="826" cy="38" r="14" fill="#0B1830"/><text x="826" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">05</text><text x="814" y="82" class="disp" font-size="20" style="fill:var(--ink)">Partner</text><text x="814" y="106" class="disp" font-size="20" style="fill:var(--ink)">With Us</text><text x="814" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">One door, labelled</text><text x="814" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">for the buyer</text></g>
+          <g stroke="#7F98BA" stroke-width="1.5" fill="none" marker-end="url(#ar)"><path d="M164 95 L196 95"/><path d="M364 95 L396 95"/><path d="M564 95 L596 95"/><path d="M764 95 L796 95"/></g>
+          <g class="lab" font-size="11" style="fill:var(--cyan-ink)" text-anchor="middle"><text x="480" y="208">EVERY LAYER ANSWERS THE NEXT QUESTION</text></g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="steps">
+      <div class="split step">
+        <div>
+          <div class="step-n">02 / 07</div>
+          <h3>Let the reader <em>self-identify by industry</em></h3>
+          <p>Service cards are ordered by sector first, and each pairs a regulated context with the standard or platform a buyer would already be searching for. Three industry sections on the services page then speak each sector's own language: HEDIS and HCC for healthcare, Basel III and SAR for finance, DRRS and JADC2 for federal. A site written for one reader reads as a stranger to the other two. This one carries all three without any of them noticing the others being served.</p>
+          <div class="clusters">
+            <div class="cluster"><b>Domain, then standard</b><span>Redshift/S3 and FedRAMP, FHIR/HL7 and HIPAA, Snowflake and Databricks, in the same sentence.</span></div>
+            <div class="cluster"><b>Specific about the unglamorous</b><span>Prior-auth automation, improper payment detection and reconciliation automation read as true.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>Three readers, three vocabularies</h4>
+            <div class="tier"><div><b>Federal</b><span>FedRAMP High · IL5/IL6 · NIST 800-53 · JADC2</span></div><i>Compliance</i></div>
+            <div class="tier"><div><b>Healthcare</b><span>FHIR · HL7 · HIPAA · HEDIS · HCC</span></div><i>Interop</i></div>
+            <div class="tier"><div><b>Finance</b><span>ISO 20022 · FedNow · Basel III · open banking</span></div><i>Payments</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">03 / 07</div>
+          <h3>Six pillars, <em>read as buyer problems</em></h3>
+          <p>A service card answers what a consultancy does. A buyer is asking which problem. The six pillars are published with one-line descriptions that name a domain and then a standard or technology, and read a second time as buyer problems, they stop being a menu and become a map of where the firm fits inside a modernisation programme. None has a page of its own. All six expand inside one deep services page, which is better than twenty shallow ones.</p>
+          <div class="clusters">
+            <div class="cluster"><b>One deep page</b><span>Three industry sections, each with capability groups carrying a one-line description and named line items.</span></div>
+            <div class="cluster"><b>No hidden menu</b><span>Six items in the navigation and one persistent Get Started button.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The six pillars, as published</h4>
+            <ul class="lib">
+              <li><i>01</i><span><b>Federal &amp; Government</b>, with secure Redshift/S3 pipelines.</span></li>
+              <li><i>02</i><span><b>Healthcare Interoperability</b>, FHIR/HL7 and EMR/EHR pipelines.</span></li>
+              <li><i>03</i><span><b>Fintech Solutions</b>, payments, web3 and fraud detection.</span></li>
+              <li><i>04</i><span><b>AI &amp; Generative Agents</b>, LLM agents and RAG pipelines.</span></li>
+              <li><i>05</i><span><b>Enterprise DevSecOps</b>, CI/CD, Zero Trust, failover.</span></li>
+              <li><i>06</i><span><b>Data &amp; Analytics Mesh</b>, Snowflake and Databricks.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split step">
+        <div>
+          <div class="step-n">04 / 07</div>
+          <h3>Security on <em>the first screen</em></h3>
+          <p>In these sectors a buyer's first filter is posture, not skill. The site repeats the security message everywhere a buyer would look instead of parking it on one compliance page. It is in the hero, in the regulated-industry service cards, in the first of three trust pillars, “Security First, Always”, and in the FAQ answer that calls security the “Day 0” priority. The buyer who filters on compliance first never has to go looking.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>Where the security message appears</h4>
+            <ul class="lib">
+              <li><i>→</i><span><b>The hero</b> and its regulated-industries sub-headline.</span></li>
+              <li><i>→</i><span><b>Every regulated-industry card</b> on the home and services pages.</span></li>
+              <li><i>→</i><span><b>The first trust pillar</b>, Zero Trust and automated compliance from Day One.</span></li>
+              <li><i>→</i><span><b>The services FAQ</b>, where security is the Day 0 priority.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">05 / 07</div>
+          <h3>AI as <em>an engineering discipline</em></h3>
+          <p>Every consultancy can put AI in a headline. Here it is one pillar of six, not the hero, which is the editorial decision that matches the firm's stated principle, “Engineering Logic, Not Hype”. The card names four disciplines, the About page lists the tools behind them, and inside the industry sections AI is tied to workflows a buyer can price: chart abstraction via LLMs and prior auth automation in healthcare, fraud detection in finance, computer vision for GEOINT in federal. The tool list is published as a statement of technologies the firm works with, not a record of any specific engagement.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The AI toolchain, as published</h4>
+            <ul class="lib">
+              <li><i>→</i><span><b>Agents:</b> LangChain, LangGraph, AutoGen.</span></li>
+              <li><i>→</i><span><b>Models:</b> TensorFlow, PyTorch, Hugging Face.</span></li>
+              <li><i>→</i><span><b>Platforms:</b> SageMaker, Databricks ML, MLflow.</span></li>
+              <li><i>→</i><span><b>Serving and search:</b> Triton Server, vector search.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split step">
+        <div>
+          <div class="step-n">06 / 07</div>
+          <h3>Credibility a buyer <em>can actually check</em></h3>
+          <p>Named frameworks, named clouds, named compliance regimes and a seven-block technology stack: LLM agents and RAG pipelines through to Looker, Power BI and Tableau. Each is checkable by a technical evaluator, and checkable is the whole point. Set against a consultancy that lists three logos and a mission statement, it is not a close contest for a technical reader. The compliance frameworks are standards the firm works within. No certification held by the firm is published or claimed.</p>
+          <div class="clusters">
+            <div class="cluster"><b>Engagement models stated</b><span>Staff augmentation, project-based delivery and strategic advisory, so a buyer knows how to buy before the first call.</span></div>
+            <div class="cluster"><b>A staffed capability</b><span>A careers page of open roles whose briefs name the same stack the About page lists.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>Stated and checkable</h4>
+            <div class="tier"><div><b>Delivery</b><span>Agile · SAFe · GitOps · ModelOps</span></div><i>Named</i></div>
+            <div class="tier"><div><b>Clouds</b><span>AWS · Azure · GCP</span></div><i>Named</i></div>
+            <div class="tier"><div><b>Standards worked within</b><span>ISO 27001 · SOC 2 · NIST CSF · GDPR · HIPAA</span></div><i>Named</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">07 / 07</div>
+          <h3>One door, <em>labelled for the buyer</em></h3>
+          <p>Every call to action on the site leads to one contact page headed “Partner With Us”. The heading frames the first message as the opening of a relationship rather than a lead submission, and it closes the loop opened by the third trust pillar, “Partner, Not Just Vendor”. A four-field form keeps friction low, the email line is labelled for the inquiry type, and phone hours are stated, because an enterprise buyer wants to know a person answers before they write.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>What the contact page publishes</h4>
+            <ul class="lib">
+              <li><i>01</i><span>A four-field form: name, email, subject and message.</span></li>
+              <li><i>02</i><span>An email line labelled <b>Federal &amp; Enterprise Inquiries</b>.</span></li>
+              <li><i>03</i><span>Phone hours of Mon–Fri, 9am to 6pm EST.</span></li>
+              <li><i>04</i><span>HQ stated as Scranton, PA, serving global clients.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block results">
+  <div class="wrap">
+    <p class="eyebrow">Results &amp; impact</p>
+    <h2 style="margin-top:14px">A structure, <em>stated at the level it can be defended</em></h2>
+    <p style="margin-top:18px;max-width:64ch;color:#D5E2F2">No performance data was supplied and none is claimed. What follows is capability created by the structure, which is different from a measured result.</p>
+    <div class="res-grid">
+      <div class="res"><b>6 pillars</b><span><strong>A thesis the firm can say in six words</strong>“Engineering the Future of Regulated Industries” organises every card, section and role on the site.</span></div>
+      <div class="res"><b>3 readers</b><span><strong>Each finds their problem named</strong>A payer analytics lead, a bank risk officer and a program manager do not have to translate first.</span></div>
+      <div class="res"><b>7 blocks</b><span><strong>Specifics instead of adjectives</strong>Frameworks, clouds, tools and engagement models, every one checkable by an evaluator who wants to check.</span></div>
+      <div class="res"><b>Security</b><span><strong>Posture on every page a buyer screens</strong>Hero, service cards, trust pillar and FAQ, so the compliance-first reader never goes looking.</span></div>
+      <div class="res"><b>1 door</b><span><strong>A partnership, not a lead form</strong>Four fields, a labelled inquiry type and stated hours behind every call to action.</span></div>
+      <div class="res"><b>Grows</b><span><strong>Grids that expand without a rebuild</strong>Capability grids, blog and careers board can each take more content without restructuring.</span></div>
+    </div>
+    <p class="note">No clients, contracts, contract vehicles, agency relationships, certifications or authorisations held by the firm, revenue, headcount, project counts, inquiries, traffic, rankings, conversion rates, hosting, analytics or integrations are claimed. None were supplied. Nothing here describes a measured result.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap two">
+    <div class="stack">
+      <p class="eyebrow">What's next</p>
+      <h2>Three ways to <em>route the right buyer</em></h2>
+      <p class="prose">The positioning is sound. The next layer gives each inquiry more to route on and gives each sector more to read.</p>
+    </div>
+    <ul class="next">
+      <li><b>Give the inquiry form something to route on</b>Two optional fields, industry and engagement type, would let every inquiry arrive ready for the right person and match the three engagement models already published.</li>
+      <li><b>Publish for the four sectors</b>The blog covers cloud, integration, platform engineering and PySpark. Articles on healthcare, federal, fintech and AI would meet buyers where the thesis says they search first.</li>
+      <li><b>Explain the federal-specific product names</b>A line of context on names such as Palantir Foundry would let that credential do its full work for healthcare and finance readers too.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="block faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2 style="margin:14px 0 24px">About this <em>custom software development</em> case study</h2>
+    <details><summary>What does Amins Consult do?</summary><p>It is a software engineering consultancy in Scranton, Pennsylvania, working across federal, healthcare and finance. The site publishes three engagement models: staff augmentation, project-based delivery and strategic advisory. Searches such as custom software development agencies describe how buyers look, not a claim about the firm's size or rank.</p></details>
+    <details><summary>Does it cover DevOps, cloud and AI?</summary><p>Yes, as published pillars and stack blocks: complete CI/CD pipelines, Zero Trust security and multi-region failover; a Cloud Native block naming AWS, Azure and GCP; and LLM-based agents and RAG pipelines. This case study describes the site, not specific engagements, and makes no claim about performance or any named tool's use on a project.</p></details>
+    <details><summary>Does the firm hold certifications or partner status?</summary><p>None is published on the site or claimed here. Compliance frameworks such as FedRAMP, HIPAA and ISO 27001 are named as standards the firm works within. Informational searches such as what is AWS or what is public sector network describe curiosity, not services.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <h2>Deep expertise deserves <em>a site that proves it</em></h2>
+        <p>Bytes &amp; Partners builds digital experiences for firms whose expertise is deeper than their website says, and whose buyers are reading quietly, comparing them to two others and checking every claim against something they already know. If your business is judgement in a regulated environment, your website is the technical interview you are not in the room for. It has to organise the range, speak each buyer's vocabulary, make every credential checkable and make the first step feel like the opening of a partnership.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://www.bytesandpartners.co/#contact">Start a conversation</a>
+        <a class="btn ghost" href="files/amins-consult-case-study.pdf">Download the full case study</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>© Bytes &amp; Partners</span><span>Client: Amins Consult · Reviewed October 2026</span></div>
+</footer>
+
+</body></html>

@@ -1,0 +1,491 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Central Florida Water Solutions Case Study</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F2F7F8; --surface:#FFFFFF; --ink:#0B2A33; --ink-2:#4A6670; --line:#D3E2E5; --tint:#E3EDEF;
+  --navy:#08222A; --navy-2:#0F3641; --navy-ink:#FFFFFF; --navy-line:#1D5663; --navy-mute:#C7E0E5;
+  --cyan:#2EC4D6; --cyan-ink:#0A7084; --mag:#F2C14E; --mag-ink:#8A6200; --on-grad:#08222A;
+  --grad:linear-gradient(90deg,#9BE4EE,#6BD3E2);
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#05181D; --surface:#0A272F; --ink:#ECF6F7; --ink-2:#A6C4CB; --line:#164650; --tint:#0C303A;
+    --cyan-ink:#8EE0EC; --mag-ink:#FFD97A; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#05181D; --surface:#0A272F; --ink:#ECF6F7; --ink-2:#A6C4CB; --line:#164650; --tint:#0C303A;
+  --cyan-ink:#8EE0EC; --mag-ink:#FFD97A; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1;margin:0;text-wrap:balance;font-weight:700;text-transform:uppercase;letter-spacing:.005em}
+h1{font-size:clamp(44px,6.4vw,88px)}
+h2{font-size:clamp(34px,4.2vw,56px)}
+h3{font-size:clamp(28px,2.8vw,38px)}
+h1 em,h2 em,h3 em{font-style:normal;color:var(--mag-ink)}
+.hero h1 em,.results h2 em,.cta h2 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.prose{max-width:68ch}
+.stack{display:grid;gap:18px}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--navy);color:var(--navy-ink);border-bottom:1px solid var(--navy-line)}
+.nav .wrap{display:flex;align-items:center;height:60px}
+.brand{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.btn{display:inline-block;background:var(--grad);color:var(--on-grad);font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:13px;padding:15px 24px;border-radius:2px;text-decoration:none}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1px currentColor}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+.hero{background:radial-gradient(900px 400px at 85% 0,rgba(46,196,214,.20),transparent 60%),radial-gradient(700px 400px at 0 100%,rgba(242,193,78,.20),transparent 60%),var(--navy);color:var(--navy-ink);padding-block:60px 0;overflow:hidden}
+.hero .eyebrow{color:var(--navy-mute)}
+.hero .lead{font-size:20px;color:#DDEEF1;max-width:62ch}
+.hero-img{margin-top:44px;border-radius:6px 6px 0 0;overflow:hidden;box-shadow:0 -10px 50px rgba(0,0,0,.5)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--navy-line);border-radius:2px;color:#DDEEF1}
+.hero h1{max-width:20ch}
+
+.metrics{background:var(--grad);color:var(--on-grad)}
+.metrics .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:24px 18px 22px;border-left:1px solid rgba(8,34,42,.25)}
+.metric:first-child{border-left:0;padding-left:0}
+.metric b{display:block;font-family:var(--display);font-size:clamp(32px,5.6vw,72px);font-weight:700;line-height:.95;font-variant-numeric:tabular-nums}
+.metric small{display:block;font-size:15px;line-height:1.3;margin-top:8px;max-width:24ch}
+.metric .src{font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.75;margin-top:8px;display:block}
+@media (max-width:760px){.metrics .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.metric:nth-child(3){border-left:0;padding-left:0}.metric{border-top:1px solid rgba(8,34,42,.22)}.metric:nth-child(-n+2){border-top:0}}
+
+.facts{border-bottom:1px solid var(--line);background:var(--surface)}
+.facts .wrap{display:grid;grid-template-columns:repeat(5,auto);gap:28px;padding-block:16px;font-size:15px}
+.facts div span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-bottom:2px}
+@media (max-width:860px){.facts .wrap{grid-template-columns:1fr 1fr}}
+
+section.block{padding-block:76px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.split.rev>.media{order:-1}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr)}.split.rev>.media{order:0}}
+.shot{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);box-shadow:0 12px 40px rgba(11,42,51,.16)}
+.cap{font-size:14px;color:var(--ink-2);margin-top:10px}
+
+.challenge{background:var(--surface);border-block:1px solid var(--line)}
+.gaps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.gaps.four{grid-template-columns:repeat(4,1fr)}
+.gap{padding:18px;border-radius:4px;background:var(--tint);border-top:3px solid var(--cyan)}
+.gap:nth-child(even){border-top-color:var(--mag)}
+.gap .t{font-family:var(--display);font-size:24px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.gap p{font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.4}
+@media (max-width:1040px){.gaps,.gaps.four{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.gaps,.gaps.four{grid-template-columns:1fr}}
+.buyers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.buyer{padding:20px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.buyer .t{font-family:var(--display);font-size:28px;font-weight:700;text-transform:uppercase}
+.buyer p{font-size:16px;color:var(--ink-2);margin-top:6px}
+@media (max-width:980px){.buyers{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.buyers{grid-template-columns:1fr}}
+
+.arch{margin-top:36px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.arch svg{display:block;width:100%;min-width:700px;height:auto}
+.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.arch .sm{font-family:var(--body);font-weight:400}
+
+.steps{display:grid;gap:68px;margin-top:52px}
+.step-n{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--cyan-ink);margin-bottom:8px}
+.step p{color:var(--ink-2);margin-top:12px;max-width:52ch}
+.step .chips{margin-top:16px}
+
+.clusters{margin-top:18px;border-top:1px solid var(--line)}
+.cluster{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.cluster b{font-family:var(--display);font-size:22px;font-weight:700;text-transform:uppercase;line-height:1.1}
+.cluster span{color:var(--ink-2)}
+
+.panel{padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 40px rgba(11,42,51,.10)}
+.panel h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin:0 0 12px;color:var(--cyan-ink)}
+.lib{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.lib li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:16px;line-height:1.3}
+.lib li:first-child{border-top:0}
+.lib li i{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--mag-ink);padding-top:3px}
+
+.funnel{display:grid;gap:12px}
+.fun{padding:16px 18px;border-radius:4px;background:var(--navy);color:#fff;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;position:relative;overflow:hidden}
+.fun{border-left:4px solid var(--cyan)}.fun:nth-child(even){border-left-color:var(--mag)}
+.fun b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;font-variant-numeric:tabular-nums}
+.fun span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-mute);text-align:right}
+
+.creatives{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.creatives .shot{box-shadow:0 12px 40px rgba(11,42,51,.22)}
+.creatives figcaption{margin-top:12px;font-size:16px;color:var(--ink-2);line-height:1.4}
+.creatives figcaption b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan-ink);font-weight:500;margin-bottom:2px}
+.creatives figure{margin:0}
+@media (max-width:860px){.creatives{grid-template-columns:1fr}}
+
+.results{background:radial-gradient(800px 400px at 100% 0,rgba(46,196,214,.14),transparent 60%),var(--navy);color:var(--navy-ink)}
+.results .eyebrow{color:var(--navy-mute)}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:36px}
+@media (max-width:860px){.res-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.res{grid-template-columns:1fr;gap:6px}}
+.res{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--navy-line);align-items:start}
+.res b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.res span{font-size:16px;color:#DDEEF1}
+.res span strong{display:block;color:#fff;font-weight:600}
+.note{margin-top:28px;font-size:14px;color:var(--navy-mute);max-width:80ch}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;align-items:flex-start}
+.chip{font-size:15px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tiers .tier{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 0;border-top:1px solid var(--line)}
+.tiers h4+.tier{border-top:0}
+.tier b{display:block;font-family:var(--display);font-size:30px;line-height:1;text-transform:uppercase;font-weight:700}
+.tier span{display:block;font-size:15px;color:var(--ink-2);margin-top:4px}
+.tier i{font-style:normal;font-family:var(--display);font-size:38px;font-weight:700;line-height:1;color:var(--cyan-ink);font-variant-numeric:tabular-nums}
+.tier i small{font-size:16px;-webkit-text-fill-color:var(--ink-2)}
+.next{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.next li{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:3px;font-size:16px;line-height:1.35}
+.next li b{display:block;font-family:var(--display);font-size:22px;text-transform:uppercase;font-weight:700}
+
+.faq{background:var(--surface);border-block:1px solid var(--line)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-family:var(--display);font-size:30px;font-weight:700;text-transform:uppercase;list-style:none;display:flex;justify-content:space-between;gap:16px;line-height:1.1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--mag-ink);flex:none}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--ink-2);max-width:68ch}
+summary:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+
+.cta{padding-block:80px}
+.cta .box{background:radial-gradient(600px 300px at 100% 0,rgba(46,196,214,.20),transparent 60%),var(--navy);color:var(--navy-ink);border-radius:8px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.cta p{color:#DDEEF1;margin-top:14px;max-width:50ch}
+.cta .actions{display:grid;gap:12px;justify-items:start}
+@media (max-width:860px){.cta .box{grid-template-columns:1fr}}
+footer{padding-block:28px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (prefers-reduced-motion:no-preference){.shot{transition:transform .3s ease}.shot:hover{transform:translateY(-3px)}}
+
+.viz{margin-top:44px;border-radius:6px 6px 0 0;background:var(--navy-2);border:1px solid var(--navy-line);border-bottom:0;padding:26px 26px 8px;box-shadow:0 -10px 50px rgba(0,0,0,.5);overflow-x:auto}
+.viz svg{display:block;width:100%;min-width:640px;height:auto}
+.viz .disp,.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.viz .lab,.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.viz .sm,.arch .sm{font-family:var(--body);font-weight:400}
+.buyers.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.buyers.three{grid-template-columns:1fr}}
+.ba+.ba{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.ba p{font-size:16px;color:var(--ink-2)}
+.ba b{display:block;font-family:var(--display);font-size:30px;line-height:1.05;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.no li i{color:var(--mag-ink)}
+.bar{height:8px;border-radius:99px;background:var(--tint);overflow:hidden;margin:6px 0 18px}
+.bar i{display:block;height:100%;width:14%;background:var(--grad)}
+.prog{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:560px){.tier{grid-template-columns:minmax(0,1fr)!important;gap:4px}.tier i{font-size:30px}}
+</style>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#">Bytes <span>&amp;</span> Partners</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="stack">
+      <p class="eyebrow">Water treatment case study · Lakeland and Central Florida</p>
+      <h1>Turning orange stains into <em>a water test a homeowner will book</em></h1>
+      <p class="lead">Nobody in Polk County searches for ion exchange. They search for the spots on the glasses, the yellow laundry, the sulfur in the shower. The site has to meet the symptom, explain the cause in plain words, offer a test instead of a product, and only then name the system, in the homeowner's own town.</p>
+      <div class="tags"><span class="tag">Water treatment</span><span class="tag">Reverse osmosis</span><span class="tag">Water softeners</span><span class="tag">Content architecture</span><span class="tag">UX/UI</span><span class="tag">Local SEO</span></div>
+    </div>
+    <div class="viz">
+      <svg viewBox="0 0 960 340" role="img" aria-label="Schematic: four water drops labelled hardness, iron, chlorine and sulfur, beside three notes on what the homeowner sees, what the site does and where it ends">
+        <text x="80" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C7E0E5">HARDNESS</text><path d="M80 106 V130" stroke="#86AEB8" stroke-width="1.5" stroke-dasharray="2 4"/><path d="M80 134 C80 134 54 170 54 188 A26 26 0 0 0 106 188 C106 170 80 134 80 134 Z" fill="#2EC4D6"/><text x="180" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C7E0E5">IRON</text><path d="M180 106 V130" stroke="#86AEB8" stroke-width="1.5" stroke-dasharray="2 4"/><path d="M180 134 C180 134 154 170 154 188 A26 26 0 0 0 206 188 C206 170 180 134 180 134 Z" fill="#F2C14E"/><text x="280" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C7E0E5">CHLORINE</text><path d="M280 106 V130" stroke="#86AEB8" stroke-width="1.5" stroke-dasharray="2 4"/><path d="M280 134 C280 134 254 170 254 188 A26 26 0 0 0 306 188 C306 170 280 134 280 134 Z" fill="#2EC4D6"/><text x="380" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C7E0E5">SULFUR</text><path d="M380 106 V130" stroke="#86AEB8" stroke-width="1.5" stroke-dasharray="2 4"/><path d="M380 134 C380 134 354 170 354 188 A26 26 0 0 0 406 188 C406 170 380 134 380 134 Z" fill="#F2C14E"/>
+        <path d="M40 232 H420" stroke="#86AEB8" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <text x="40" y="264" class="lab" font-size="11" fill="#C7E0E5">A SYMPTOM GOES IN, A TEST COMES OUT</text>
+        <text x="16" y="326" class="lab" font-size="11" fill="#86AEB8">SCHEMATIC, NOT A WATER REPORT</text>
+        <g>
+          <rect x="500" y="14" width="460" height="86" rx="3" fill="#0F3641" stroke="#1D5663"/><rect x="500" y="14" width="460" height="4" fill="#2EC4D6"/>
+          <text x="516" y="42" class="lab" font-size="11" fill="#8EE0EC">WHAT THE HOMEOWNER SEES</text><text x="516" y="76" class="disp" font-size="20" fill="#fff">Orange stains, a sulfur smell</text>
+          <rect x="500" y="116" width="460" height="86" rx="3" fill="#0F3641" stroke="#1D5663"/><rect x="500" y="116" width="460" height="4" fill="#F2C14E"/>
+          <text x="516" y="144" class="lab" font-size="11" fill="#8EE0EC">WHAT THE SITE DOES</text><text x="516" y="178" class="disp" font-size="20" fill="#fff">Names the cause, offers a test</text>
+          <rect x="500" y="218" width="460" height="86" rx="3" fill="#0F3641" stroke="#1D5663"/><rect x="500" y="218" width="460" height="4" fill="#2EC4D6"/>
+          <text x="516" y="246" class="lab" font-size="11" fill="#8EE0EC">WHERE IT ENDS</text><text x="516" y="280" class="disp" font-size="20" fill="#fff">A scheduled free analysis</text>
+        </g>
+        <text x="730" y="328" text-anchor="middle" class="lab" font-size="11" fill="#86AEB8">SCHEMATIC ONLY</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="metrics">
+  <div class="wrap">
+    <div class="metric"><b>8</b><small>Treatment services, a page each</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>16</b><small>Central Florida cities named</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>6</b><small>Parameters in the free water test</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>4</b><small>Steps from test to ongoing support</small><span class="src">PUBLISHED</span></div>
+  </div>
+</div>
+
+<div class="facts">
+  <div class="wrap">
+    <div><span>Client</span>Central Florida Water Solutions, LLC</div>
+    <div><span>Sector</span>Residential water treatment</div>
+    <div><span>Services</span>Digital strategy · Content architecture · UX/UI · Web · Local SEO</div>
+    <div><span>Market</span>Lakeland, Florida · Central Florida</div>
+    <div><span>Reviewed</span>October 2026</div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">The business</p>
+      <h2>A water system is a technical purchase. The site is where it becomes <em>understandable, not a quote</em></h2>
+      <p class="prose">Central Florida Water Solutions is a family-owned water treatment company in Lakeland, Florida. The home page title states the business in one line: “Trusted Water Softener &amp; Filtration Experts in Lakeland, FL.” Behind it sit eight service pages, a sixteen-city service-area page, an About page built around one named person, and a free water analysis that every page points to.</p>
+      <p class="prose">Reduce that to a softener company and most of the site disappears. The published offer runs from softeners through well water filtration, reverse osmosis, UV disinfection, iron filters, city water treatment and whole-home filtration to repairs and maintenance on other companies’ equipment.</p>
+    </div>
+    <div class="media">
+      <div class="panel">
+        <h4>Two readers, one test</h4>
+        <ul class="lib">
+          <li><i>→</i><span><b>The homeowner with a symptom</b> reads for the cause: why are my fixtures orange, is my well safe.</span></li>
+          <li><i>→</i><span><b>The homeowner choosing an installer</b> reads for the company: who owns it, what does it cost, will someone upsell me.</span></li>
+          <li><i>→</i><span><b>The free test</b> carries both readers to the same door.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block challenge">
+  <div class="wrap">
+    <p class="eyebrow">The challenge</p>
+    <h2 style="margin-top:14px">Symptoms in, <em>systems out</em></h2>
+    <p class="prose" style="margin-top:18px">Hard water, iron, sulfur, chlorine and well bacteria each have their own fix. The visitor knows the symptom, not the fix, and will not read a catalogue to find it. Five pressures shaped the build.</p>
+
+    <div class="gaps">
+      <div class="gap"><div class="t">The customer starts with a symptom</div><p>Spots on the dishes, orange rings in the toilet, a rotten-egg smell. None of those is a menu item, and the site still has to arrive at a named system.</p></div>
+      <div class="gap"><div class="t">Softener and filter are not the same</div><p>Most visitors use the words interchangeably. A site that lists both without explaining the difference sells neither.</p></div>
+      <div class="gap"><div class="t">City water and well water are different problems</div><p>Chlorine and pipe sediment on one side; iron, sulfur, bacteria and tannins on the other. One page cannot speak to both households.</p></div>
+      <div class="gap"><div class="t">Every answer depends on a test</div><p>What a home needs is in the water, not on the website. The site has to make the test the product without seeming to withhold the answer.</p></div>
+      <div class="gap"><div class="t">Price anxiety is the first objection</div><p>A homeowner has heard a softener costs a fortune. A site that says nothing about cost confirms it.</p></div>
+    </div>
+    <p class="prose" style="margin-top:28px">The organising principle: give every water problem a page that names its cause in plain words before it names a system, put the softener-versus-filter explanation where the confusion starts, separate city water from well water, publish cost ranges so the first objection is answered, and make the free in-home test the single call to action on every page.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="eyebrow">The searches behind the visit</p>
+    <h2 style="margin-top:14px">Homeowners search the symptom, <em>the system and the town</em></h2>
+    <p class="prose" style="margin-top:18px">Each term below is shown as search language with a note on what the site actually publishes for it.</p>
+    <div class="buyers three">
+<div class="buyer"><div class="t">Orlando searches</div><p>Orlando is one of sixteen Central Florida cities named on the service-area page, and one of the four reviewer towns on the home page. The home base is Lakeland, and no page is titled for Orlando.</p><div class="chips" style="margin-top:14px"><span class="chip">Water treatment Orlando FL</span><span class="chip">Orlando Florida water</span></div></div>
+<div class="buyer"><div class="t">Reverse osmosis</div><p>The RO page is titled for Lakeland and explains eight contaminants, the four stages, how much water an RO rejects and the filter schedule, with its limits beside the claims.</p><div class="chips" style="margin-top:14px"><span class="chip">Reverse osmosis systems Orlando</span></div></div>
+<div class="buyer"><div class="t">Tankless RO</div><p>The RO page explains how traditional units work and says higher-efficiency units exist. It does not describe tankless systems, and this page does not claim it does.</p><div class="chips" style="margin-top:14px"><span class="chip">Tankless reverse osmosis system</span></div></div>
+<div class="buyer"><div class="t">Softener upkeep</div><p>A softener page covers what a softener does, how it is sized and what it costs, and repairs and maintenance extend to other companies’ equipment. No salt-bridge guide is published.</p><div class="chips" style="margin-top:14px"><span class="chip">Water softener salt bridge</span></div></div>
+<div class="buyer"><div class="t">Contaminants and methods</div><p>The well page names six Florida well problems, the city page names chlorine, chloramines and pipe sediment, and the iron page compares four filter methods.</p><div class="chips" style="margin-top:14px"><span class="chip">Common water contaminants in drinking water</span><span class="chip">Water filtration methods</span></div></div>
+<div class="buyer"><div class="t">Near me</div><p>A Lakeland address in every footer, five counties and sixteen cities named, and a free in-home test booked by a five-field form, with a phone number and a sticky mobile bar.</p><div class="chips" style="margin-top:14px"><span class="chip">Water filtration systems near me</span></div></div>
+    </div>
+    <p class="prose" style="margin-top:22px;font-size:16px;color:var(--ink-2)">These terms describe how people search, not results the client has proven. No lead, installation, traffic or ranking figure is published or claimed, and the site’s own review statistics are not restated.</p>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">What we built</p>
+    <div class="step-n" style="margin-top:14px">01 / 07</div>
+    <h2>Explain, then test, <em>then recommend</em></h2>
+    <p class="prose" style="margin-top:18px">A page per problem that names the cause, a filter-versus-softener explainer on the home page, cost ranges in the FAQ, and a free in-home test offered as the first step on every page. By the time a homeowner submits the form, they have searched the symptom, read why Florida water does that, learned that a softener and a filter are different, seen a cost range and checked who owns the company.</p>
+
+    <div class="arch">
+      <svg viewBox="0 0 960 220" role="img" aria-label="The homeowner journey: a symptom, search the symptom and town, understand the cause, learn what it costs, book the test">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="#78A2AD"/></marker></defs>
+        <g>
+<g><rect x="0" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="0" y="10" width="160" height="4" fill="#2EC4D6"/><circle cx="26" cy="38" r="14" fill="#08222A"/><text x="26" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">01</text><text x="14" y="82" class="disp" font-size="20" style="fill:var(--ink)">A symptom</text><text x="14" y="106" class="disp" font-size="20" style="fill:var(--ink)">in the house</text><text x="14" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Spots, orange rings,</text><text x="14" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">a sulfur smell</text></g><g><rect x="200" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="200" y="10" width="160" height="4" fill="#F2C14E"/><circle cx="226" cy="38" r="14" fill="#08222A"/><text x="226" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">02</text><text x="214" y="82" class="disp" font-size="20" style="fill:var(--ink)">Search the</text><text x="214" y="106" class="disp" font-size="20" style="fill:var(--ink)">symptom, town</text><text x="214" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Water softener</text><text x="214" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">Lakeland</text></g><g><rect x="400" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="400" y="10" width="160" height="4" fill="#2EC4D6"/><circle cx="426" cy="38" r="14" fill="#08222A"/><text x="426" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">03</text><text x="414" y="82" class="disp" font-size="20" style="fill:var(--ink)">Understand</text><text x="414" y="106" class="disp" font-size="20" style="fill:var(--ink)">the cause</text><text x="414" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Why Florida water</text><text x="414" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">does this</text></g><g><rect x="600" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="600" y="10" width="160" height="4" fill="#F2C14E"/><circle cx="626" cy="38" r="14" fill="#08222A"/><text x="626" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">04</text><text x="614" y="82" class="disp" font-size="20" style="fill:var(--ink)">Learn what</text><text x="614" y="106" class="disp" font-size="20" style="fill:var(--ink)">it costs</text><text x="614" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">A range before</text><text x="614" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">the call</text></g><g><rect x="800" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="800" y="10" width="160" height="4" fill="#2EC4D6"/><circle cx="826" cy="38" r="14" fill="#08222A"/><text x="826" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">05</text><text x="814" y="82" class="disp" font-size="20" style="fill:var(--ink)">Book the</text><text x="814" y="106" class="disp" font-size="20" style="fill:var(--ink)">test</text><text x="814" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Five fields, thirty</text><text x="814" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">minutes, no obligation</text></g>
+          <g stroke="#78A2AD" stroke-width="1.5" fill="none" marker-end="url(#ar)"><path d="M164 95 L196 95"/><path d="M364 95 L396 95"/><path d="M564 95 L596 95"/><path d="M764 95 L796 95"/></g>
+          <g class="lab" font-size="11" style="fill:var(--cyan-ink)" text-anchor="middle"><text x="480" y="208">FROM AN ORANGE STAIN TO A SCHEDULED TEST</text></g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="steps">
+      <div class="split step">
+        <div>
+          <div class="step-n">02 / 07</div>
+          <h3>The symptom in the headline, <em>not the system</em></h3>
+          <p>The service page headlines are written as the symptom rather than the product: “No More Orange Stains,” not Iron Filtration. That is the choice that lets a visitor recognise their own problem in one scroll. Eight services are grouped by what the homeowner noticed, and each page explains the cause before it names a system. The site does not just offer iron filters; it explains that dissolved iron is invisible until it meets air and that sulfur is bacteria in a low-oxygen well.</p>
+          <div class="clusters">
+            <div class="cluster"><b>Symptom first</b><span>A homeowner recognises their own problem in the headline.</span></div>
+            <div class="cluster"><b>Cause in plain words</b><span>Explanation is what makes a homeowner trust the fix.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>Headlines written as symptoms</h4>
+            <div class="tier"><div><b>Hardness</b><span>“Say Goodbye to Hard Water — For Good”</span></div><i>Soft</i></div>
+            <div class="tier"><div><b>Iron</b><span>“No More Orange Stains”</span></div><i>Iron</i></div>
+            <div class="tier"><div><b>City water</b><span>“City Water Is Treated — Not Clean”</span></div><i>City</i></div>
+            <div class="tier"><div><b>Well water</b><span>“We Don’t Guess — We Test”</span></div><i>Well</i></div>
+          </div>
+        </div>
+      </div>
+      <div class="split rev step">
+        <div>
+          <div class="step-n">03 / 07</div>
+          <h3>Softener versus filter, <em>explained where the confusion starts</em></h3>
+          <p>Instead of a product grid, the home page offers a comparison, a definition of each side, and then the test as the resolution: “Not sure which one you need? That’s why we offer a free water analysis.” The confusion is not an obstacle to the sale; it is the reason for the first appointment. City water and well water get separate pages, each with its own contaminants and systems, so one household is never asked to read the other’s page.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>Where the explanation lives</h4>
+            <ul class="lib">
+              <li><i>01</i><span>A “Water Filter vs. Water Softener” section on the home page.</span></li>
+              <li><i>02</i><span>Ferrous versus ferric, answered on the iron page.</span></li>
+              <li><i>03</i><span>Four iron-filter methods compared side by side.</span></li>
+              <li><i>04</i><span>City water and well water on separate pages.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="split step">
+        <div>
+          <div class="step-n">04 / 07</div>
+          <h3>Limits stated <em>beside the claims</em></h3>
+          <p>The UV page is the one that prevents the category’s most common overclaim. It says plainly that UV does not remove chemicals, heavy metals or minerals, that it needs a sediment pre-filter, that during a power outage the water is not being treated, and that the lamp must be replaced yearly. The RO page says how much water a traditional unit rejects. A homeowner who feared being oversold reads a company that lists the limits unprompted, which is how a product page becomes a trust signal.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>What the pages say plainly</h4>
+            <ul class="lib">
+              <li><i>01</i><span>UV does not remove chemicals, heavy metals or minerals.</span></li>
+              <li><i>02</i><span>UV needs a sediment pre-filter.</span></li>
+              <li><i>03</i><span>Water is not treated during a power outage.</span></li>
+              <li><i>04</i><span>RO rejects water, and the page says how much.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="split rev step">
+        <div>
+          <div class="step-n">05 / 07</div>
+          <h3>The site sells <em>a diagnosis, not a product</em></h3>
+          <p>Most home-services sites ask for a quote request, which asks the visitor to know what they want. This one asks for a test, which asks only that they have noticed something. The call to action on every page is the same, it is free, it is in the home, and it is framed as finding out rather than buying. The form asks five things and includes “What are you noticing with your water?”, so the lead arrives with the complaint in the homeowner’s own words.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The free water analysis</h4>
+            <div class="funnel">
+              <div class="fun"><b>6</b><span>Parameters tested</span></div>
+              <div class="fun"><b>30</b><span>Minutes in the home</span></div>
+              <div class="fun"><b>24</b><span>Hours to contact</span></div>
+              <div class="fun"><b>1</b><span>Ask on every page</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split step">
+        <div>
+          <div class="step-n">06 / 07</div>
+          <h3>Trust from <em>a person, not a brand</em></h3>
+          <p>A stranger is going to cut into the main water line. They want to know who, whether the company is local, and whether a neighbour used them. The site answers with a named founder on the About page (“He doesn’t sell equipment — he solves problems”), a Lakeland address in every footer, four reviewers with their towns, “No upsells, no pressure” stated in three places, and cost ranges published in the FAQ and on two service pages, with the real number following the test.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>What a homeowner can check</h4>
+            <ul class="lib">
+              <li><i>01</i><span>A named founder, on the About page and in a review.</span></li>
+              <li><i>02</i><span>A Lakeland street address in every footer.</span></li>
+              <li><i>03</i><span>Four reviewers with their towns.</span></li>
+              <li><i>04</i><span>Cost ranges before the call, with the real number after the test.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="split rev step">
+        <div>
+          <div class="step-n">07 / 07</div>
+          <h3>Sixteen cities, <em>a sentence of local knowledge each</em></h3>
+          <p>The service-area page names sixteen cities across five counties, from Lakeland as “Our home base” to Mango, and writes each a line that names a local condition where there is one: hard water, iron and sulfur in Groveland, the Chain of Lakes communities of Winter Haven, well water in Thonotosassa. A line about Tavares being “America’s Seaplane City” is not on a template. The next layer gives each of those sentences a page of its own.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The territory</h4>
+            <ul class="lib">
+              <li><i>01</i><span>Polk, Orange, Lake, Hillsborough and Osceola counties.</span></li>
+              <li><i>02</i><span>Sixteen city cards, each with a local line.</span></li>
+              <li><i>03</i><span>Lakeland as the home base, named plainly.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block results">
+  <div class="wrap">
+    <p class="eyebrow">Results &amp; impact</p>
+    <h2 style="margin-top:14px">A structure, <em>stated at the level it can be defended</em></h2>
+    <p style="margin-top:18px;max-width:64ch;color:#DDEEF1">No performance data was supplied and none is claimed. What follows is capability created by the structure, which is different from a measured result.</p>
+    <div class="res-grid">
+      <div class="res"><b>8 pages</b><span><strong>Every problem has a page</strong>Each titled for the symptom or the system, with the cause explained before the product.</span></div>
+      <div class="res"><b>1 ask</b><span><strong>One call to action, everywhere</strong>A free water analysis in the header, hero, close and footer, with a sticky bar on mobile.</span></div>
+      <div class="res"><b>6 tests</b><span><strong>A specified diagnosis</strong>Hardness, iron, chlorine, pH, TDS and sulfur, in about thirty minutes, in the home.</span></div>
+      <div class="res"><b>Limits</b><span><strong>Claims with their boundaries</strong>What UV does not remove, what RO wastes and what carbon will not do, stated unprompted.</span></div>
+      <div class="res"><b>16 cities</b><span><strong>A territory a homeowner can see</strong>Five counties and sixteen named cities, each with a local line.</span></div>
+      <div class="res"><b>Named</b><span><strong>A founder and a shop</strong>A person a reviewer names back, and an address in every footer.</span></div>
+    </div>
+    <p class="note">No lead volume, tests booked, installation count, customer count, revenue, rankings, traffic, licence number, product certification or verified review figure is claimed. None were supplied. Figures the client’s site displays about itself, and its removal percentages and cost ranges, are not restated here. Nothing here describes a measured result.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap two">
+    <div class="stack">
+      <p class="eyebrow">What's next</p>
+      <h2>Three ways to <em>widen the footprint</em></h2>
+      <p class="prose">The test-first structure is built. The next layer carries it to every town and every question a homeowner types.</p>
+    </div>
+    <ul class="next">
+      <li><b>Give each city a page</b>Sixteen cities already have a sentence of local knowledge. A page per city, linked to the eight services, would let a search with Orlando, Winter Haven or Clermont in it land on a page titled for it.</li>
+      <li><b>Answer the questions people search</b>Short guides on tankless reverse osmosis, a salt bridge in a softener and the common contaminants in drinking water would carry the site’s plain-words style into searches it does not yet answer.</li>
+      <li><b>Add hours and a ZIP field beside the test</b>A homeowner expects to see when the company schedules, and a ZIP field would tell the company where the visit is before the call.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="block faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2 style="margin:14px 0 24px">About this <em>water treatment</em> case study</h2>
+    <details><summary>What does Central Florida Water Solutions offer?</summary><p>Eight published services: water softener systems, well water filtration, iron filters, UV water filtration, city water treatment, reverse osmosis, whole-home filtration, and repairs and maintenance. Every page leads to a free in-home water analysis. The company is based in Lakeland and names sixteen Central Florida cities.</p></details>
+    <details><summary>Does it serve Orlando?</summary><p>Orlando is one of sixteen cities named on the service-area page, across Polk, Orange, Lake, Hillsborough and Osceola counties, and one reviewer is from Orlando. The home base is Lakeland, and no page is titled for Orlando yet.</p></details>
+    <details><summary>Does the site cover tankless reverse osmosis or softener salt bridges?</summary><p>Not directly. The RO page explains how traditional units work and says higher-efficiency units exist, and softener repairs and maintenance are offered. No tankless or salt-bridge guide is published, and the case study does not claim one.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <h2>Sell the diagnosis, <em>and the system follows</em></h2>
+        <p>Bytes &amp; Partners builds education-led lead-generation sites for home-service companies whose customers cannot evaluate the product. If your buyers arrive with a symptom, your website has to name the cause in plain words, state the limits beside the claims, answer the price objection, put a person in front of the company, and make one free first step the single ask on every page.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://www.bytesandpartners.co/#contact">Start a conversation</a>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>© Bytes &amp; Partners</span><span>Client: Central Florida Water Solutions, LLC · Reviewed October 2026</span></div>
+</footer>
+
+</body></html>

@@ -1,0 +1,501 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Jobco Supply Case Study</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F4F4F1; --surface:#FFFFFF; --ink:#1B1D21; --ink-2:#565A63; --line:#DCDCD6; --tint:#EAEAE5;
+  --navy:#1D1F24; --navy-2:#2A2D34; --navy-ink:#FFFFFF; --navy-line:#454A55; --navy-mute:#CDD1DA;
+  --cyan:#FF7A1A; --cyan-ink:#A84A00; --mag:#3FA9D6; --mag-ink:#11719A; --on-grad:#1D1F24;
+  --grad:linear-gradient(90deg,#FFC38A,#FF8A3D);
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316; --surface:#1C1E23; --ink:#F1F1EE; --ink-2:#B2B6BF; --line:#2F333B; --tint:#24272D;
+    --cyan-ink:#FFA766; --mag-ink:#6CC4EA; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121316; --surface:#1C1E23; --ink:#F1F1EE; --ink-2:#B2B6BF; --line:#2F333B; --tint:#24272D;
+  --cyan-ink:#FFA766; --mag-ink:#6CC4EA; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1;margin:0;text-wrap:balance;font-weight:700;text-transform:uppercase;letter-spacing:.005em}
+h1{font-size:clamp(44px,6.4vw,88px)}
+h2{font-size:clamp(34px,4.2vw,56px)}
+h3{font-size:clamp(28px,2.8vw,38px)}
+h1 em,h2 em,h3 em{font-style:normal;color:var(--mag-ink)}
+.hero h1 em,.results h2 em,.cta h2 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.prose{max-width:68ch}
+.stack{display:grid;gap:18px}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--navy);color:var(--navy-ink);border-bottom:1px solid var(--navy-line)}
+.nav .wrap{display:flex;align-items:center;height:60px}
+.brand{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.btn{display:inline-block;background:var(--grad);color:var(--on-grad);font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:13px;padding:15px 24px;border-radius:2px;text-decoration:none}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1px currentColor}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+.hero{background:radial-gradient(900px 400px at 85% 0,rgba(255,122,26,.20),transparent 60%),radial-gradient(700px 400px at 0 100%,rgba(63,169,214,.20),transparent 60%),var(--navy);color:var(--navy-ink);padding-block:60px 0;overflow:hidden}
+.hero .eyebrow{color:var(--navy-mute)}
+.hero .lead{font-size:20px;color:#E4E7EE;max-width:62ch}
+.hero-img{margin-top:44px;border-radius:6px 6px 0 0;overflow:hidden;box-shadow:0 -10px 50px rgba(0,0,0,.5)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--navy-line);border-radius:2px;color:#E4E7EE}
+.hero h1{max-width:20ch}
+
+.metrics{background:var(--grad);color:var(--on-grad)}
+.metrics .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:24px 18px 22px;border-left:1px solid rgba(29,31,36,.25)}
+.metric:first-child{border-left:0;padding-left:0}
+.metric b{display:block;font-family:var(--display);font-size:clamp(32px,5.6vw,72px);font-weight:700;line-height:.95;font-variant-numeric:tabular-nums}
+.metric small{display:block;font-size:15px;line-height:1.3;margin-top:8px;max-width:24ch}
+.metric .src{font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.75;margin-top:8px;display:block}
+@media (max-width:760px){.metrics .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.metric:nth-child(3){border-left:0;padding-left:0}.metric{border-top:1px solid rgba(29,31,36,.22)}.metric:nth-child(-n+2){border-top:0}}
+
+.facts{border-bottom:1px solid var(--line);background:var(--surface)}
+.facts .wrap{display:grid;grid-template-columns:repeat(5,auto);gap:28px;padding-block:16px;font-size:15px}
+.facts div span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-bottom:2px}
+@media (max-width:860px){.facts .wrap{grid-template-columns:1fr 1fr}}
+
+section.block{padding-block:76px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.split.rev>.media{order:-1}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr)}.split.rev>.media{order:0}}
+.shot{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);box-shadow:0 12px 40px rgba(27,29,33,.16)}
+.cap{font-size:14px;color:var(--ink-2);margin-top:10px}
+
+.challenge{background:var(--surface);border-block:1px solid var(--line)}
+.gaps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.gaps.four{grid-template-columns:repeat(4,1fr)}
+.gap{padding:18px;border-radius:4px;background:var(--tint);border-top:3px solid var(--cyan)}
+.gap:nth-child(even){border-top-color:var(--mag)}
+.gap .t{font-family:var(--display);font-size:24px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.gap p{font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.4}
+@media (max-width:1040px){.gaps,.gaps.four{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.gaps,.gaps.four{grid-template-columns:1fr}}
+.buyers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.buyer{padding:20px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.buyer .t{font-family:var(--display);font-size:28px;font-weight:700;text-transform:uppercase}
+.buyer p{font-size:16px;color:var(--ink-2);margin-top:6px}
+@media (max-width:980px){.buyers{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.buyers{grid-template-columns:1fr}}
+
+.arch{margin-top:36px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.arch svg{display:block;width:100%;min-width:700px;height:auto}
+.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.arch .sm{font-family:var(--body);font-weight:400}
+
+.steps{display:grid;gap:68px;margin-top:52px}
+.step-n{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--cyan-ink);margin-bottom:8px}
+.step p{color:var(--ink-2);margin-top:12px;max-width:52ch}
+.step .chips{margin-top:16px}
+
+.clusters{margin-top:18px;border-top:1px solid var(--line)}
+.cluster{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.cluster b{font-family:var(--display);font-size:22px;font-weight:700;text-transform:uppercase;line-height:1.1}
+.cluster span{color:var(--ink-2)}
+
+.panel{padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 40px rgba(27,29,33,.10)}
+.panel h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin:0 0 12px;color:var(--cyan-ink)}
+.lib{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.lib li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:16px;line-height:1.3}
+.lib li:first-child{border-top:0}
+.lib li i{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--mag-ink);padding-top:3px}
+
+.funnel{display:grid;gap:12px}
+.fun{padding:16px 18px;border-radius:4px;background:var(--navy);color:#fff;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;position:relative;overflow:hidden}
+.fun{border-left:4px solid var(--cyan)}.fun:nth-child(even){border-left-color:var(--mag)}
+.fun b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;font-variant-numeric:tabular-nums}
+.fun span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-mute);text-align:right}
+
+.creatives{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.creatives .shot{box-shadow:0 12px 40px rgba(27,29,33,.22)}
+.creatives figcaption{margin-top:12px;font-size:16px;color:var(--ink-2);line-height:1.4}
+.creatives figcaption b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan-ink);font-weight:500;margin-bottom:2px}
+.creatives figure{margin:0}
+@media (max-width:860px){.creatives{grid-template-columns:1fr}}
+
+.results{background:radial-gradient(800px 400px at 100% 0,rgba(255,122,26,.14),transparent 60%),var(--navy);color:var(--navy-ink)}
+.results .eyebrow{color:var(--navy-mute)}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:36px}
+@media (max-width:860px){.res-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.res{grid-template-columns:1fr;gap:6px}}
+.res{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--navy-line);align-items:start}
+.res b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.res span{font-size:16px;color:#E4E7EE}
+.res span strong{display:block;color:#fff;font-weight:600}
+.note{margin-top:28px;font-size:14px;color:var(--navy-mute);max-width:80ch}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;align-items:flex-start}
+.chip{font-size:15px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tiers .tier{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 0;border-top:1px solid var(--line)}
+.tiers h4+.tier{border-top:0}
+.tier b{display:block;font-family:var(--display);font-size:30px;line-height:1;text-transform:uppercase;font-weight:700}
+.tier span{display:block;font-size:15px;color:var(--ink-2);margin-top:4px}
+.tier i{font-style:normal;font-family:var(--display);font-size:38px;font-weight:700;line-height:1;color:var(--cyan-ink);font-variant-numeric:tabular-nums}
+.tier i small{font-size:16px;-webkit-text-fill-color:var(--ink-2)}
+.next{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.next li{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:3px;font-size:16px;line-height:1.35}
+.next li b{display:block;font-family:var(--display);font-size:22px;text-transform:uppercase;font-weight:700}
+
+.faq{background:var(--surface);border-block:1px solid var(--line)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-family:var(--display);font-size:30px;font-weight:700;text-transform:uppercase;list-style:none;display:flex;justify-content:space-between;gap:16px;line-height:1.1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--mag-ink);flex:none}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--ink-2);max-width:68ch}
+summary:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+
+.cta{padding-block:80px}
+.cta .box{background:radial-gradient(600px 300px at 100% 0,rgba(255,122,26,.20),transparent 60%),var(--navy);color:var(--navy-ink);border-radius:8px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.cta p{color:#E4E7EE;margin-top:14px;max-width:50ch}
+.cta .actions{display:grid;gap:12px;justify-items:start}
+@media (max-width:860px){.cta .box{grid-template-columns:1fr}}
+footer{padding-block:28px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (prefers-reduced-motion:no-preference){.shot{transition:transform .3s ease}.shot:hover{transform:translateY(-3px)}}
+
+.viz{margin-top:44px;border-radius:6px 6px 0 0;background:var(--navy-2);border:1px solid var(--navy-line);border-bottom:0;padding:26px 26px 8px;box-shadow:0 -10px 50px rgba(0,0,0,.5);overflow-x:auto}
+.viz svg{display:block;width:100%;min-width:640px;height:auto}
+.viz .disp,.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.viz .lab,.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.viz .sm,.arch .sm{font-family:var(--body);font-weight:400}
+.buyers.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.buyers.three{grid-template-columns:1fr}}
+.ba+.ba{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.ba p{font-size:16px;color:var(--ink-2)}
+.ba b{display:block;font-family:var(--display);font-size:30px;line-height:1.05;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.no li i{color:var(--mag-ink)}
+.bar{height:8px;border-radius:99px;background:var(--tint);overflow:hidden;margin:6px 0 18px}
+.bar i{display:block;height:100%;width:14%;background:var(--grad)}
+.prog{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:560px){.tier{grid-template-columns:minmax(0,1fr)!important;gap:4px}.tier i{font-size:30px}}
+</style>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#">Bytes <span>&amp;</span> Partners</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="stack">
+      <p class="eyebrow">Industrial electric heaters case study · Fort Smith, AR</p>
+      <h1>Turning a complex heater catalog into <em>a spec-first buying experience</em></h1>
+      <p class="lead">An industrial buyer rarely arrives with a part number. They arrive with a temperature, a bore diameter, a wattage, a voltage and a machine that is down. The site has to take those facts and get them to the right heater, confirm it will fit, and let them buy it before lunch or spec a custom one by the afternoon.</p>
+      <div class="tags"><span class="tag">Industrial electric heaters</span><span class="tag">Cartridge and band heaters</span><span class="tag">Temperature controls</span><span class="tag">Information architecture</span><span class="tag">UX/UI</span><span class="tag">Technical SEO</span></div>
+    </div>
+    <div class="viz">
+      <svg viewBox="0 0 960 340" role="img" aria-label="Schematic: a cylindrical heater with four specifications pointing at it, bore, length, volts and watts, beside three notes on what the buyer has, what the site does and where it ends">
+        <text x="90" y="96" text-anchor="middle" class="lab" font-size="11" fill="#CDD1DA">BORE</text><path d="M90 106 V134" stroke="#8D93A0" stroke-width="1.5" stroke-dasharray="2 4"/><text x="170" y="96" text-anchor="middle" class="lab" font-size="11" fill="#CDD1DA">LENGTH</text><path d="M170 106 V134" stroke="#8D93A0" stroke-width="1.5" stroke-dasharray="2 4"/><text x="250" y="96" text-anchor="middle" class="lab" font-size="11" fill="#CDD1DA">VOLTS</text><path d="M250 106 V134" stroke="#8D93A0" stroke-width="1.5" stroke-dasharray="2 4"/><text x="330" y="96" text-anchor="middle" class="lab" font-size="11" fill="#CDD1DA">WATTS</text><path d="M330 106 V134" stroke="#8D93A0" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <rect x="40" y="134" width="340" height="64" rx="32" fill="#454A55" stroke="#8D93A0" stroke-width="1.5"/>
+        <path d="M80 166 l22 -20 l22 40 l22 -40 l22 40 l22 -40 l22 40 l22 -40 l22 40 l22 -40 l22 40 l22 -40" fill="none" stroke="#FF7A1A" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M380 156 H440 M380 176 H440" stroke="#CDD1DA" stroke-width="4" stroke-linecap="round"/>
+        <text x="40" y="240" class="lab" font-size="11" fill="#CDD1DA">A SPEC GOES IN, A PART ROW COMES OUT</text>
+        <text x="16" y="326" class="lab" font-size="11" fill="#8D93A0">SCHEMATIC, NOT A PRODUCT DRAWING</text>
+        <g>
+          <rect x="500" y="14" width="460" height="86" rx="3" fill="#2A2D34" stroke="#454A55"/><rect x="500" y="14" width="460" height="4" fill="#FF7A1A"/>
+          <text x="516" y="42" class="lab" font-size="11" fill="#FFA766">WHAT THE BUYER HAS</text><text x="516" y="76" class="disp" font-size="20" fill="#fff">A bore, a voltage, a wattage</text>
+          <rect x="500" y="116" width="460" height="86" rx="3" fill="#2A2D34" stroke="#454A55"/><rect x="500" y="116" width="460" height="4" fill="#3FA9D6"/>
+          <text x="516" y="144" class="lab" font-size="11" fill="#FFA766">WHAT THE SITE DOES</text><text x="516" y="178" class="disp" font-size="20" fill="#fff">Narrows by attribute, then proves it</text>
+          <rect x="500" y="218" width="460" height="86" rx="3" fill="#2A2D34" stroke="#454A55"/><rect x="500" y="218" width="460" height="4" fill="#FF7A1A"/>
+          <text x="516" y="246" class="lab" font-size="11" fill="#FFA766">WHERE IT ENDS</text><text x="516" y="280" class="disp" font-size="20" fill="#fff">A cart, a quote form or a call</text>
+        </g>
+        <text x="730" y="328" text-anchor="middle" class="lab" font-size="11" fill="#8D93A0">SCHEMATIC ONLY</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="metrics">
+  <div class="wrap">
+    <div class="metric"><b>16</b><small>Product categories on the home page</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>7</b><small>Cartridge heater diameters, one page each</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>6</b><small>Custom quote forms, one per heater type</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>84</b><small>Guides, data sheets and manuals in the library</small><span class="src">PUBLISHED</span></div>
+  </div>
+</div>
+
+<div class="facts">
+  <div class="wrap">
+    <div><span>Client</span>Jobco Supply, Inc.</div>
+    <div><span>Sector</span>Industrial process heating · Sensors · Controls</div>
+    <div><span>Services</span>Information architecture · UX/UI · Web · Technical SEO</div>
+    <div><span>Market</span>Fort Smith, Arkansas · B2B</div>
+    <div><span>Reviewed</span>October 2026</div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">The business</p>
+      <h2>The buyer knows the requirement. The site decides <em>whether it becomes a part number</em></h2>
+      <p class="prose">Jobco Supply is an industrial heater and sensor supplier in Fort Smith, Arkansas. The home page states the business in its headline: “Electric Heaters, Temperature Sensors &amp; Accessories for Today's Manufacturers.” Beneath it sit sixteen category tiles, a search box, a storefront with a cart, six manufacturers named, custom quote forms and a library of eighty-four technical documents.</p>
+      <p class="prose">Reduce that to a parts store and the business disappears into a category where every competitor lists the same heaters from the same factories. The published offer is wider than a catalog: stock cartridge heaters organised by diameter and voltage, band heaters purchasable by inside diameter, custom configurators for everything the tables do not cover, and a help page that answers procurement questions before anyone asks.</p>
+    </div>
+    <div class="media">
+      <div class="panel">
+        <h4>Two readers, one engineer</h4>
+        <ul class="lib">
+          <li><i>→</i><span><b>The maintenance buyer</b> with a machine down, reading for the exact part: diameter, insertion, voltage, watts, in stock, ships today.</span></li>
+          <li><i>→</i><span><b>The design engineer</b> speccing a new line, reading for options: which sheath survives the temperature, which lead fits the conduit.</span></li>
+          <li><i>→</i><span><b>One architecture</b> that serves a price list reader and a catalog reader without either noticing.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block challenge">
+  <div class="wrap">
+    <p class="eyebrow">The challenge</p>
+    <h2 style="margin-top:14px">Requirements, <em>not part numbers</em></h2>
+    <p class="prose" style="margin-top:18px">Buyers arrive with a diameter, a wattage, a voltage and an application. Sixteen heater families, six manufacturers and many variants have to resolve to one row or one form. Five pressures shaped the build.</p>
+
+    <div class="gaps">
+      <div class="gap"><div class="t">The buyer has a spec, not a SKU</div><p>A half-inch bore, three inches deep, 240 volts. No search box answers that sentence, so the taxonomy has to be built from the attributes a buyer already has.</p></div>
+      <div class="gap"><div class="t">Each family has its own grammar</div><p>Cartridge heaters are chosen by diameter. Band heaters by inside diameter and width. Hot air heaters by brand line and kilowatts. One navigation pattern cannot serve all of them.</p></div>
+      <div class="gap"><div class="t">Stock and custom are different purchases</div><p>A stock part is bought in a minute from a table. A custom part is a conversation about sheath, lead, seal and fitting. Put them on one page and both buyers are slowed down.</p></div>
+      <div class="gap"><div class="t">Validation prevents the return</div><p>A heater a sixteenth of an inch oversize goes back with a restocking fee. Tolerances and sizing guidance have to be one click from the row.</p></div>
+      <div class="gap"><div class="t">The phone is a feature</div><p>In this category assisted buying is normal. Calling has to feel like the next step, not the fallback when the website failed.</p></div>
+    </div>
+    <p class="prose" style="margin-top:28px">The organising principle: split every family by the attribute its buyer knows first, put the specification on the row and the tolerances one click away, separate the stock table from the custom form, and put the phone number beside every decision as the honest third door.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="eyebrow">The searches behind the visit</p>
+    <h2 style="margin-top:14px">Engineers search by heater type, <em>then by spec</em></h2>
+    <p class="prose" style="margin-top:18px">Industrial buyers search for the family they know and the part they need. Each term below is shown as search language with a note on what the site actually covers.</p>
+    <div class="buyers three">
+      <div class="buyer"><div class="t">Industrial supply</div><p>The home page title leads with industrial electric heaters and sensors, and the business is a wholesale supplier of process heaters, temperature sensors, controllers, relays, wires and cable assemblies.</p><div class="chips" style="margin-top:14px"><span class="chip">Industrial electric heaters</span><span class="chip">Heater supplier</span></div></div>
+      <div class="buyer"><div class="t">Broad heater searches</div><p>Sixteen heater and sensor families are published as tiles. The catalog is industrial process heating, not space heaters or consumer products, so broad searches land on the family list.</p><div class="chips" style="margin-top:14px"><span class="chip">Heaters</span><span class="chip">Electric heaters</span><span class="chip">Heater types</span></div></div>
+      <div class="buyer"><div class="t">Cartridge and band</div><p>The deepest taxonomy on the site: cartridge heaters split seven ways by diameter, band heaters by voltage then inside diameter, with a catalog PDF for ceramic bands in the library.</p><div class="chips" style="margin-top:14px"><span class="chip">Cartridge heaters</span><span class="chip">Band heaters</span><span class="chip">Ceramic band heaters</span></div></div>
+      <div class="buyer"><div class="t">Ceramic, quartz and PTC</div><p>Each has a category page of its own among the sixteen families. The site publishes no stock count or lead time for them in this review.</p><div class="chips" style="margin-top:14px"><span class="chip">Ceramic heaters</span><span class="chip">Quartz heaters</span><span class="chip">PTC heaters</span></div></div>
+      <div class="buyer"><div class="t">Sensing and control</div><p>Thermocouple types, wires and connectors sit in a sensors family, and temperature controllers have a category page and library documents.</p><div class="chips" style="margin-top:14px"><span class="chip">Temperature controllers</span><span class="chip">Thermocouple</span></div></div>
+      <div class="buyer"><div class="t">Not a published product</div><p>No thermostat is published. A thermostat search is usually a home-heating or appliance part, and the site sells controllers and sensors for process heating.</p><div class="chips" style="margin-top:14px"><span class="chip">Thermostat</span></div></div>
+    </div>
+    <p class="prose" style="margin-top:22px;font-size:16px;color:var(--ink-2)">These terms describe how people search, not what the client offers. No certification is published for the company itself, and no rankings, order volumes or inventory levels are published or claimed.</p>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">What we built</p>
+    <div class="step-n" style="margin-top:14px">01 / 07</div>
+    <h2>Taxonomy by attribute, <em>proof by document</em></h2>
+    <p class="prose" style="margin-top:18px">Categories are split by the attribute a buyer knows first, spec tables sit at the row level, a library of data sheets prevents the wrong order, and a configurator per heater type covers everything the tables do not. The buyer starts with a requirement and the site ends with a row in a table, a form, or a phone number.</p>
+
+    <div class="arch">
+      <svg viewBox="0 0 960 220" role="img" aria-label="The buyer path: a requirement, find the family, narrow by attribute, validate against the row, buy quote or call">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="#7F8593"/></marker></defs>
+        <g>
+<g><rect x="0" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="0" y="10" width="160" height="4" fill="#FF7A1A"/><circle cx="26" cy="38" r="14" fill="#1D1F24"/><text x="26" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">01</text><text x="14" y="82" class="disp" font-size="20" style="fill:var(--ink)">A require-</text><text x="14" y="106" class="disp" font-size="20" style="fill:var(--ink)">ment, not a SKU</text><text x="14" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Bore, voltage,</text><text x="14" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">watts, a down line</text></g><g><rect x="200" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="200" y="10" width="160" height="4" fill="#3FA9D6"/><circle cx="226" cy="38" r="14" fill="#1D1F24"/><text x="226" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">02</text><text x="214" y="82" class="disp" font-size="20" style="fill:var(--ink)">Find the</text><text x="214" y="106" class="disp" font-size="20" style="fill:var(--ink)">family</text><text x="214" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Sixteen category</text><text x="214" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">tiles on the home page</text></g><g><rect x="400" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="400" y="10" width="160" height="4" fill="#FF7A1A"/><circle cx="426" cy="38" r="14" fill="#1D1F24"/><text x="426" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">03</text><text x="414" y="82" class="disp" font-size="20" style="fill:var(--ink)">Narrow by</text><text x="414" y="106" class="disp" font-size="20" style="fill:var(--ink)">attribute</text><text x="414" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Each family uses</text><text x="414" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">its own grammar</text></g><g><rect x="600" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="600" y="10" width="160" height="4" fill="#3FA9D6"/><circle cx="626" cy="38" r="14" fill="#1D1F24"/><text x="626" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">04</text><text x="614" y="82" class="disp" font-size="20" style="fill:var(--ink)">Validate</text><text x="614" y="106" class="disp" font-size="20" style="fill:var(--ink)">against the row</text><text x="614" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Spec tables, tolerances</text><text x="614" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">one click away</text></g><g><rect x="800" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="800" y="10" width="160" height="4" fill="#FF7A1A"/><circle cx="826" cy="38" r="14" fill="#1D1F24"/><text x="826" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">05</text><text x="814" y="82" class="disp" font-size="20" style="fill:var(--ink)">Buy, quote</text><text x="814" y="106" class="disp" font-size="20" style="fill:var(--ink)">or call</text><text x="814" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Cart, custom form,</text><text x="814" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">or the phone</text></g>
+          <g stroke="#7F8593" stroke-width="1.5" fill="none" marker-end="url(#ar)"><path d="M164 95 L196 95"/><path d="M364 95 L396 95"/><path d="M564 95 L596 95"/><path d="M764 95 L796 95"/></g>
+          <g class="lab" font-size="11" style="fill:var(--cyan-ink)" text-anchor="middle"><text x="480" y="208">FROM A REQUIREMENT TO A ROW, A FORM OR A NUMBER</text></g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="steps">
+      <div class="split step">
+        <div>
+          <div class="step-n">02 / 07</div>
+          <h3>Sixteen families, <em>each with its own grammar</em></h3>
+          <p>Cartridge heaters split seven ways by diameter because diameter is the thing a bore dictates, then by voltage because that is what a panel dictates. Band heaters split by voltage first, since a 480 V band on a 240 V panel is the expensive mistake, then by inside diameter from one inch to twelve. A buyer with a half-inch bore never sees a three-eighths heater. That is what taxonomy does for discoverability: it removes what cannot fit before the buyer has to read it.</p>
+          <div class="clusters">
+            <div class="cluster"><b>Sixteen tiles</b><span>A buyer who knows the word cartridge or band can skip search entirely.</span></div>
+            <div class="cluster"><b>A second axis by voltage</b><span>The store menu serves the buyer whose panel is the constraint.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>Split on what the buyer measures</h4>
+            <div class="tier"><div><b>Cartridge</b><span>Bore diameter, then voltage</span></div><i>Diameter</i></div>
+            <div class="tier"><div><b>Band</b><span>Voltage, then inside diameter and width</span></div><i>Voltage</i></div>
+            <div class="tier"><div><b>Hot air</b><span>Brand line, then kilowatts</span></div><i>Line</i></div>
+            <div class="tier"><div><b>Immersion</b><span>Fitting type and the liquid being heated</span></div><i>Fitting</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">03 / 07</div>
+          <h3>The row <em>does the validating</em></h3>
+          <p>The half-inch cartridge page is a part-row table of insertion length, overall length, volts, watts, lead length, feature and part ID, grouped by lead length and running to roughly a hundred and fifty rows in its first group. A buyer reads it the way they read a catalog page, which is the point. A supplier that publishes overall length to the hundredth of an inch is a supplier that expects to be measured against, and a tolerances document is linked from the category above it.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>What a part row carries</h4>
+            <ul class="lib">
+              <li><i>01</i><span>Insertion length and overall length.</span></li>
+              <li><i>02</i><span>Volts and watts.</span></li>
+              <li><i>03</i><span>Lead length and lead type options.</span></li>
+              <li><i>04</i><span>Feature and part ID.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split step">
+        <div>
+          <div class="step-n">04 / 07</div>
+          <h3>Stock first, <em>custom second</em></h3>
+          <p>The category page asks the question in its own heading, “Do you need a custom cartridge heater?”, after it has shown the stock. The buyer is never sent to a form for a part that was on the shelf. When a heater does need to be made, six forms, one per heater type, walk the buyer through the options an applications engineer would ask about, in that order: sheath, lead wire, termination, seals, fittings. Engineering review is named as the next step, and a human call as the outcome.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The six custom forms</h4>
+            <ul class="lib">
+              <li><i>01</i><span>Band heater.</span></li>
+              <li><i>02</i><span>Cartridge heater, with a full configurator.</span></li>
+              <li><i>03</i><span>Coil heater.</span></li>
+              <li><i>04</i><span>Nozzle heater.</span></li>
+              <li><i>05</i><span>Strip heater, ceramic.</span></li>
+              <li><i>06</i><span>Strip heater, mica.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">05 / 07</div>
+          <h3>A library that <em>prevents the return</em></h3>
+          <p>Every document is a reason the wrong part does not get ordered, and a landing page for a search no product listing would catch. Eighty-four guides, data sheets, manuals and drawings are grouped by family, with seals, leads, sheaths and tolerances for cartridge heaters, lead, conduit and clamp options for bands, and a Heater Sizing and Watt Density Calculator. A distributor that hosts the manufacturer's manual and a calculator is one that expects to be asked an engineering question.</p>
+          <div class="clusters">
+            <div class="cluster"><b>By family</b><span>Documents sit beside the family they belong to, so the guide is one click from the row.</span></div>
+            <div class="cluster"><b>Manufacturers credited</b><span>Six factories are named in a menu, so an engineer specifying a brand can see it.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The library</h4>
+            <div class="funnel">
+              <div class="fun"><b>84</b><span>Documents</span></div>
+              <div class="fun"><b>16</b><span>Product families</span></div>
+              <div class="fun"><b>6</b><span>Manufacturers named</span></div>
+              <div class="fun"><b>1</b><span>Sizing calculator</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split step">
+        <div>
+          <div class="step-n">06 / 07</div>
+          <h3>Honest about <em>price and time</em></h3>
+          <p>Most industrial sites say fast. This one says a number: stock band heaters ship the same day or within two business days, custom units in one, three, five or ten, and in-stock orders received by 1:00 pm Central are generally processed the same business day. Price is shown where it is public and the account route is labelled where it is not. A buyer can plan the line restart, and a purchasing agent can see the terms before putting a card into the cart.</p>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>Stated, in business days</h4>
+            <div class="tier"><div><b>Same-day cutoff</b><span>In-stock orders received by 1:00 pm Central</span></div><i>1 pm CT</i></div>
+            <div class="tier"><div><b>Stock band heaters</b><span>Same day or within two business days</span></div><i>1 to 2 days</i></div>
+            <div class="tier"><div><b>Custom units</b><span>One, three, five or ten business days</span></div><i>1 to 10 days</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">07 / 07</div>
+          <h3>Three doors, <em>none disguised as another</em></h3>
+          <p>Industrial commerce is assisted buying with a cart attached. A connector or a stock cartridge heater goes in the cart. A heater with a special sheath and a right-angle conduit goes on a form that engineering reviews. Everything else goes to a phone number that sits in the top bar of every page and in a home page block headed “Something Else?” that offers quotes on products not shown on the site. For a part that is not on the site at all, calling is the designed route, not the failure case.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>How a buyer gets what they need</h4>
+            <ul class="lib">
+              <li><i>01</i><span><b>Cart</b> for stock parts with a public price.</span></li>
+              <li><i>02</i><span><b>Quote form</b> for made-to-order heaters.</span></li>
+              <li><i>03</i><span><b>Phone</b> beside every decision.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block results">
+  <div class="wrap">
+    <p class="eyebrow">Results &amp; impact</p>
+    <h2 style="margin-top:14px">A structure, <em>stated at the level it can be defended</em></h2>
+    <p style="margin-top:18px;max-width:64ch;color:#E4E7EE">No performance data was supplied and none is claimed. What follows is capability created by the structure, which is different from a measured result.</p>
+    <div class="res-grid">
+      <div class="res"><b>16 families</b><span><strong>Navigable by what the buyer measures</strong>Each family is split on its own attribute, so what cannot fit is removed before the buyer reads it.</span></div>
+      <div class="res"><b>The row</b><span><strong>Validation at the part level</strong>Insertion, length, volts, watts and lead on the row, with tolerances one click away.</span></div>
+      <div class="res"><b>2 paths</b><span><strong>Stock and custom kept apart</strong>A table for the part on the shelf and a configurator for the part that does not exist yet.</span></div>
+      <div class="res"><b>84 docs</b><span><strong>A library that prevents the wrong order</strong>Guides, data sheets, manuals and a sizing calculator, grouped by family.</span></div>
+      <div class="res"><b>Stated</b><span><strong>Time and cutoff in business days</strong>A same-day cutoff and lead times for stock and custom, so a buyer can plan the restart.</span></div>
+      <div class="res"><b>3 doors</b><span><strong>Cart, form and phone</strong>Each honestly labelled, with the phone beside every decision.</span></div>
+    </div>
+    <p class="note">No SKU counts beyond what a page displays, order volumes, customers, revenue, conversion rates, shipment volumes, inventory levels, rankings or certifications for the company are claimed. None were supplied. Technical figures are reproduced as published and are the page's statements, not this document's. Nothing here describes a measured result.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap two">
+    <div class="stack">
+      <p class="eyebrow">What's next</p>
+      <h2>Three ways to <em>shorten the path to a part</em></h2>
+      <p class="prose">The taxonomy understands half inch, 240 volt, cartridge. The next layer carries that same understanding to the other ways a buyer reaches the catalog.</p>
+    </div>
+    <ul class="next">
+      <li><b>Teach site search to read a spec</b>A query such as cartridge heater 240v should resolve to the matching diameter and voltage pages, the way the menus already do.</li>
+      <li><b>Put price and stock on the row</b>A price or an availability flag beside each part would close the gap between validating a part and learning what it costs.</li>
+      <li><b>Deepen the thinner families</b>Temperature controllers have a category page and two documents, the thinnest coverage relative to how often buyers search for them.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="block faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2 style="margin:14px 0 24px">About this <em>industrial electric heaters</em> case study</h2>
+    <details><summary>What does Jobco Supply sell?</summary><p>Industrial process heating: electric heaters, temperature sensors, controllers, relays, wires and cable assemblies, from six named manufacturers, plus custom heaters made to order. It is a wholesale supplier in Fort Smith, Arkansas. Broad searches such as heaters or electric heaters describe how buyers look, not consumer products.</p></details>
+    <details><summary>Does it sell thermostats?</summary><p>No thermostat is published. The site covers temperature controllers and sensors, including thermocouple types, wires and connectors, for industrial heating. A thermostat search often means a home-heating or appliance part, which is outside what the site shows.</p></details>
+    <details><summary>Does it cover ceramic, quartz and PTC heaters?</summary><p>Each has a category page among the sixteen families, and ceramic and mica strip heaters have custom quote forms. The case study reproduces what the pages say and makes no claim about stock levels, lead times or ratings beyond what is published.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <h2>Technical catalogs deserve <em>a way in by spec</em></h2>
+        <p>Bytes &amp; Partners builds product-discovery sites for industrial suppliers whose buyers arrive with a requirement, not a part number. If your catalog runs to thousands of variants, your website is the counter salesperson. It has to split every family on the attribute the buyer knows, prove the fit on the row, separate stock from custom, and keep the phone beside every decision.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://www.bytesandpartners.co/#contact">Start a conversation</a>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>© Bytes &amp; Partners</span><span>Client: Jobco Supply, Inc. · Reviewed October 2026</span></div>
+</footer>
+
+</body></html>

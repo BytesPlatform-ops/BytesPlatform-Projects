@@ -16,6 +16,22 @@ const CASE_STUDIES = [
   "sqush-llc",
 ].join("|");
 
+/** Case studies published as web pages: public/case-studies/<slug>.html */
+const HTML_CASE_STUDIES = [
+  "amins-consult",
+  "dawg-team-apparel-usa",
+  "em-painting-tx",
+  "royalty-with-a-purpose",
+  "safe-travel-charters",
+  "on-top-home-services",
+  "jobco-supply",
+  "this-week-in-public-health",
+  "cfws-llc",
+  "5dccs",
+  "nexus-alliance",
+  "fairpath-consultants",
+].join("|");
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
@@ -28,9 +44,12 @@ const nextConfig: NextConfig = {
     return [{ source: "/", destination: "/projects", permanent: false }];
   },
   // Case studies live on our own domain: /case-studies/<slug> serves
-  // public/case-studies/<slug>.pdf, opened in the browser's PDF viewer
+  // public/case-studies/<slug>.pdf (browser PDF viewer) or <slug>.html
   async rewrites() {
-    return [{ source: `/case-studies/:slug(${CASE_STUDIES})`, destination: "/case-studies/:slug.pdf" }];
+    return [
+      { source: `/case-studies/:slug(${CASE_STUDIES})`, destination: "/case-studies/:slug.pdf" },
+      { source: `/case-studies/:slug(${HTML_CASE_STUDIES})`, destination: "/case-studies/:slug.html" },
+    ];
   },
   async headers() {
     return [

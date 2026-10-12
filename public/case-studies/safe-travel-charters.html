@@ -1,0 +1,497 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Safe Travel Charters Case Study</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#10203D; --ink-2:#4F5F7A; --line:#D6DEEB; --tint:#E6EBF3;
+  --navy:#0E1B33; --navy-2:#182A4A; --navy-ink:#FFFFFF; --navy-line:#2F4670; --navy-mute:#C9D5EA;
+  --cyan:#F5B301; --cyan-ink:#8A5B00; --mag:#3C9BFF; --mag-ink:#1858A8; --on-grad:#0E1B33;
+  --grad:linear-gradient(90deg,#FFD76B,#FFC733);
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#09132A; --surface:#0F1C38; --ink:#EEF2F9; --ink-2:#A9B7D1; --line:#25395F; --tint:#152543;
+    --cyan-ink:#FFD36B; --mag-ink:#7CB8FF; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#09132A; --surface:#0F1C38; --ink:#EEF2F9; --ink-2:#A9B7D1; --line:#25395F; --tint:#152543;
+  --cyan-ink:#FFD36B; --mag-ink:#7CB8FF; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1;margin:0;text-wrap:balance;font-weight:700;text-transform:uppercase;letter-spacing:.005em}
+h1{font-size:clamp(44px,6.4vw,88px)}
+h2{font-size:clamp(34px,4.2vw,56px)}
+h3{font-size:clamp(28px,2.8vw,38px)}
+h1 em,h2 em,h3 em{font-style:normal;color:var(--mag-ink)}
+.hero h1 em,.results h2 em,.cta h2 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.prose{max-width:68ch}
+.stack{display:grid;gap:18px}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--navy);color:var(--navy-ink);border-bottom:1px solid var(--navy-line)}
+.nav .wrap{display:flex;align-items:center;height:60px}
+.brand{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.btn{display:inline-block;background:var(--grad);color:var(--on-grad);font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.12em;font-size:13px;padding:15px 24px;border-radius:2px;text-decoration:none}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1px currentColor}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+.hero{background:radial-gradient(900px 400px at 85% 0,rgba(245,179,1,.20),transparent 60%),radial-gradient(700px 400px at 0 100%,rgba(60,155,255,.20),transparent 60%),var(--navy);color:var(--navy-ink);padding-block:60px 0;overflow:hidden}
+.hero .eyebrow{color:var(--navy-mute)}
+.hero .lead{font-size:20px;color:#DFE7F5;max-width:62ch}
+.hero-img{margin-top:44px;border-radius:6px 6px 0 0;overflow:hidden;box-shadow:0 -10px 50px rgba(0,0,0,.5)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--navy-line);border-radius:2px;color:#DFE7F5}
+.hero h1{max-width:20ch}
+
+.metrics{background:var(--grad);color:var(--on-grad)}
+.metrics .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:24px 18px 22px;border-left:1px solid rgba(14,27,51,.25)}
+.metric:first-child{border-left:0;padding-left:0}
+.metric b{display:block;font-family:var(--display);font-size:clamp(32px,5.6vw,72px);font-weight:700;line-height:.95;font-variant-numeric:tabular-nums}
+.metric small{display:block;font-size:15px;line-height:1.3;margin-top:8px;max-width:24ch}
+.metric .src{font-family:var(--mono);font-size:11px;letter-spacing:.06em;opacity:.75;margin-top:8px;display:block}
+@media (max-width:760px){.metrics .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.metric:nth-child(3){border-left:0;padding-left:0}.metric{border-top:1px solid rgba(14,27,51,.22)}.metric:nth-child(-n+2){border-top:0}}
+
+.facts{border-bottom:1px solid var(--line);background:var(--surface)}
+.facts .wrap{display:grid;grid-template-columns:repeat(5,auto);gap:28px;padding-block:16px;font-size:15px}
+.facts div span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-bottom:2px}
+@media (max-width:860px){.facts .wrap{grid-template-columns:1fr 1fr}}
+
+section.block{padding-block:76px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
+.split.rev>.media{order:-1}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr)}.split.rev>.media{order:0}}
+.shot{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface);box-shadow:0 12px 40px rgba(16,32,61,.16)}
+.cap{font-size:14px;color:var(--ink-2);margin-top:10px}
+
+.challenge{background:var(--surface);border-block:1px solid var(--line)}
+.gaps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.gaps.four{grid-template-columns:repeat(4,1fr)}
+.gap{padding:18px;border-radius:4px;background:var(--tint);border-top:3px solid var(--cyan)}
+.gap:nth-child(even){border-top-color:var(--mag)}
+.gap .t{font-family:var(--display);font-size:24px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.gap p{font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.4}
+@media (max-width:1040px){.gaps,.gaps.four{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.gaps,.gaps.four{grid-template-columns:1fr}}
+.buyers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.buyer{padding:20px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.buyer .t{font-family:var(--display);font-size:28px;font-weight:700;text-transform:uppercase}
+.buyer p{font-size:16px;color:var(--ink-2);margin-top:6px}
+@media (max-width:980px){.buyers{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.buyers{grid-template-columns:1fr}}
+
+.arch{margin-top:36px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.arch svg{display:block;width:100%;min-width:700px;height:auto}
+.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.arch .sm{font-family:var(--body);font-weight:400}
+
+.steps{display:grid;gap:68px;margin-top:52px}
+.step-n{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--cyan-ink);margin-bottom:8px}
+.step p{color:var(--ink-2);margin-top:12px;max-width:52ch}
+.step .chips{margin-top:16px}
+
+.clusters{margin-top:18px;border-top:1px solid var(--line)}
+.cluster{display:grid;grid-template-columns:200px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.cluster b{font-family:var(--display);font-size:22px;font-weight:700;text-transform:uppercase;line-height:1.1}
+.cluster span{color:var(--ink-2)}
+
+.panel{padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 40px rgba(16,32,61,.10)}
+.panel h4{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin:0 0 12px;color:var(--cyan-ink)}
+.lib{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.lib li{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:16px;line-height:1.3}
+.lib li:first-child{border-top:0}
+.lib li i{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--mag-ink);padding-top:3px}
+
+.funnel{display:grid;gap:12px}
+.fun{padding:16px 18px;border-radius:4px;background:var(--navy);color:#fff;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px;position:relative;overflow:hidden}
+.fun{border-left:4px solid var(--cyan)}.fun:nth-child(even){border-left-color:var(--mag)}
+.fun b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;font-variant-numeric:tabular-nums}
+.fun span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy-mute);text-align:right}
+
+.creatives{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.creatives .shot{box-shadow:0 12px 40px rgba(16,32,61,.22)}
+.creatives figcaption{margin-top:12px;font-size:16px;color:var(--ink-2);line-height:1.4}
+.creatives figcaption b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan-ink);font-weight:500;margin-bottom:2px}
+.creatives figure{margin:0}
+@media (max-width:860px){.creatives{grid-template-columns:1fr}}
+
+.results{background:radial-gradient(800px 400px at 100% 0,rgba(245,179,1,.14),transparent 60%),var(--navy);color:var(--navy-ink)}
+.results .eyebrow{color:var(--navy-mute)}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:36px}
+@media (max-width:860px){.res-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.res{grid-template-columns:1fr;gap:6px}}
+.res{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--navy-line);align-items:start}
+.res b{font-family:var(--display);font-size:44px;line-height:.95;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.res span{font-size:16px;color:#DFE7F5}
+.res span strong{display:block;color:#fff;font-weight:600}
+.note{margin-top:28px;font-size:14px;color:var(--navy-mute);max-width:80ch}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;align-items:flex-start}
+.chip{font-size:15px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tiers .tier{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 0;border-top:1px solid var(--line)}
+.tiers h4+.tier{border-top:0}
+.tier b{display:block;font-family:var(--display);font-size:30px;line-height:1;text-transform:uppercase;font-weight:700}
+.tier span{display:block;font-size:15px;color:var(--ink-2);margin-top:4px}
+.tier i{font-style:normal;font-family:var(--display);font-size:38px;font-weight:700;line-height:1;color:var(--cyan-ink);font-variant-numeric:tabular-nums}
+.tier i small{font-size:16px;-webkit-text-fill-color:var(--ink-2)}
+.next{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.next li{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:3px;font-size:16px;line-height:1.35}
+.next li b{display:block;font-family:var(--display);font-size:22px;text-transform:uppercase;font-weight:700}
+
+.faq{background:var(--surface);border-block:1px solid var(--line)}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-family:var(--display);font-size:30px;font-weight:700;text-transform:uppercase;list-style:none;display:flex;justify-content:space-between;gap:16px;line-height:1.1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--mag-ink);flex:none}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--ink-2);max-width:68ch}
+summary:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+
+.cta{padding-block:80px}
+.cta .box{background:radial-gradient(600px 300px at 100% 0,rgba(245,179,1,.20),transparent 60%),var(--navy);color:var(--navy-ink);border-radius:8px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.cta p{color:#DFE7F5;margin-top:14px;max-width:50ch}
+.cta .actions{display:grid;gap:12px;justify-items:start}
+@media (max-width:860px){.cta .box{grid-template-columns:1fr}}
+footer{padding-block:28px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (prefers-reduced-motion:no-preference){.shot{transition:transform .3s ease}.shot:hover{transform:translateY(-3px)}}
+
+.viz{margin-top:44px;border-radius:6px 6px 0 0;background:var(--navy-2);border:1px solid var(--navy-line);border-bottom:0;padding:26px 26px 8px;box-shadow:0 -10px 50px rgba(0,0,0,.5);overflow-x:auto}
+.viz svg{display:block;width:100%;min-width:640px;height:auto}
+.viz .disp,.arch .disp{font-family:var(--display);font-weight:700;text-transform:uppercase}
+.viz .lab,.arch .lab{font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+.viz .sm,.arch .sm{font-family:var(--body);font-weight:400}
+.buyers.three{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.buyers.three{grid-template-columns:1fr}}
+.ba+.ba{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.ba p{font-size:16px;color:var(--ink-2)}
+.ba b{display:block;font-family:var(--display);font-size:30px;line-height:1.05;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.no li i{color:var(--mag-ink)}
+.bar{height:8px;border-radius:99px;background:var(--tint);overflow:hidden;margin:6px 0 18px}
+.bar i{display:block;height:100%;width:14%;background:var(--grad)}
+.prog{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+@media (max-width:560px){.tier{grid-template-columns:minmax(0,1fr)!important;gap:4px}.tier i{font-size:30px}}
+</style>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#">Bytes <span>&amp;</span> Partners</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="stack">
+      <p class="eyebrow">Coach charter bus rental case study · Chicago, IL</p>
+      <h1>Turning a charter purchase into <em>a path a coordinator can trust</em></h1>
+      <p class="lead">Nobody buys a bus. They hand a provider their wedding guests, their students, their sales team or their family reunion, on a date that cannot move. The page is read by a coordinator with three tabs open and one question under all the others: will these people get my group there safely and on time?</p>
+      <div class="tags"><span class="tag">Charter bus rental</span><span class="tag">Group transportation</span><span class="tag">Shuttle service</span><span class="tag">Digital strategy</span><span class="tag">UX/UI</span><span class="tag">Local SEO</span></div>
+    </div>
+    <div class="viz">
+      <svg viewBox="0 0 960 340" role="img" aria-label="Schematic: a coach bus with four facts above it, trip, group, date and route, beside three notes on what the coordinator has, what the site does and where it ends">
+        <text x="90" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C9D5EA">TRIP</text><path d="M90 106 V134" stroke="#8A9CBF" stroke-width="1.5" stroke-dasharray="2 4"/><text x="170" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C9D5EA">GROUP</text><path d="M170 106 V134" stroke="#8A9CBF" stroke-width="1.5" stroke-dasharray="2 4"/><text x="250" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C9D5EA">DATE</text><path d="M250 106 V134" stroke="#8A9CBF" stroke-width="1.5" stroke-dasharray="2 4"/><text x="330" y="96" text-anchor="middle" class="lab" font-size="11" fill="#C9D5EA">ROUTE</text><path d="M330 106 V134" stroke="#8A9CBF" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <rect x="40" y="134" width="400" height="86" rx="14" fill="#2F4670" stroke="#8A9CBF" stroke-width="1.5"/>
+        <rect x="64" y="150" width="56" height="34" rx="4" fill="#F5B301"/><rect x="132" y="150" width="56" height="34" rx="4" fill="#F5B301"/><rect x="200" y="150" width="56" height="34" rx="4" fill="#F5B301"/><rect x="268" y="150" width="56" height="34" rx="4" fill="#F5B301"/><rect x="336" y="150" width="56" height="34" rx="4" fill="#F5B301"/><rect x="404" y="150" width="26" height="50" rx="4" fill="#3C9BFF"/>
+        <path d="M40 206 H440" stroke="#8A9CBF" stroke-width="1.5"/>
+        <circle cx="120" cy="226" r="20" fill="#0E1B33" stroke="#C9D5EA" stroke-width="3"/><circle cx="360" cy="226" r="20" fill="#0E1B33" stroke="#C9D5EA" stroke-width="3"/>
+        <text x="40" y="280" class="lab" font-size="11" fill="#C9D5EA">A TRIP GOES IN, A QUOTE COMES OUT</text>
+        <text x="16" y="326" class="lab" font-size="11" fill="#8A9CBF">SCHEMATIC, NOT A VEHICLE DRAWING</text>
+        <g>
+          <rect x="500" y="14" width="460" height="86" rx="3" fill="#182A4A" stroke="#2F4670"/><rect x="500" y="14" width="460" height="4" fill="#F5B301"/>
+          <text x="516" y="42" class="lab" font-size="11" fill="#FFD36B">WHAT THE COORDINATOR HAS</text><text x="516" y="76" class="disp" font-size="20" fill="#fff">A group, a date, three tabs</text>
+          <rect x="500" y="116" width="460" height="86" rx="3" fill="#182A4A" stroke="#2F4670"/><rect x="500" y="116" width="460" height="4" fill="#3C9BFF"/>
+          <text x="516" y="144" class="lab" font-size="11" fill="#FFD36B">WHAT THE SITE DOES</text><text x="516" y="178" class="disp" font-size="20" fill="#fff">Matches the trip, shows the bus</text>
+          <rect x="500" y="218" width="460" height="86" rx="3" fill="#182A4A" stroke="#2F4670"/><rect x="500" y="218" width="460" height="4" fill="#F5B301"/>
+          <text x="516" y="246" class="lab" font-size="11" fill="#FFD36B">WHERE IT ENDS</text><text x="516" y="280" class="disp" font-size="20" fill="#fff">A free quote or a reservation</text>
+        </g>
+        <text x="730" y="328" text-anchor="middle" class="lab" font-size="11" fill="#8A9CBF">SCHEMATIC ONLY</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="metrics">
+  <div class="wrap">
+    <div class="metric"><b>6</b><small>Trip types, each with “ideal for” tags</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>3</b><small>Offices with a street address</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>53</b><small>Area pages across Illinois, Indiana and Wisconsin</small><span class="src">PUBLISHED</span></div>
+    <div class="metric"><b>10</b><small>Blog articles on the first of six pages</small><span class="src">PUBLISHED</span></div>
+  </div>
+</div>
+
+<div class="facts">
+  <div class="wrap">
+    <div><span>Client</span>Safe Travel Charters</div>
+    <div><span>Sector</span>Charter bus rental · Group transportation</div>
+    <div><span>Services</span>Digital strategy · UX/UI · Web · Local SEO</div>
+    <div><span>Market</span>Chicago · Milwaukee · Indianapolis</div>
+    <div><span>Reviewed</span>October 2026</div>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="eyebrow">The business</p>
+      <h2>Transportation is a trust purchase. The site <em>earns it before anyone calls</em></h2>
+      <p class="prose">Safe Travel Charters is a charter bus rental company based in North Chicago, Illinois, with offices in Milwaukee and Indianapolis. The home page states the business in its title: “Charter Bus Rental Chicago | Safe Travel Charters.” Behind it sit six trip types, a fleet page, an About page built on five mission pillars, fifty-three area pages and a blog that explains how a charter booking actually works.</p>
+      <p class="prose">Reduce that to “a bus company website” and the hard part disappears. A coordinator booking a wedding shuttle, a school booking a tournament run and a company booking an airport transfer are not buying the same thing, and none of them can test-drive the product.</p>
+    </div>
+    <div class="media">
+      <div class="panel">
+        <h4>Two readers, one decision</h4>
+        <ul class="lib">
+          <li><i>→</i><span><b>The coordinator</b> reads for fit: do you do my kind of trip, will the vehicle suit my group.</span></li>
+          <li><i>→</i><span><b>The decision-maker behind them</b>, a principal, an office manager, a parent, reads for credibility: where are you, how do I reach a person.</span></li>
+          <li><i>→</i><span><b>One architecture</b> that serves the first without losing the second.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block challenge">
+  <div class="wrap">
+    <p class="eyebrow">The challenge</p>
+    <h2 style="margin-top:14px">A group, a date, and <em>no way to try before buying</em></h2>
+    <p class="prose" style="margin-top:18px">Six kinds of trip, group sizes that vary, pricing that depends on the route, and a buyer comparing providers on trust rather than product. Five pressures shaped the build.</p>
+
+    <div class="gaps">
+      <div class="gap"><div class="t">The purchase cannot be tried first</div><p>A coordinator cannot sit in the coach before the wedding. Photographs, mission and addresses have to substitute for the test ride.</p></div>
+      <div class="gap"><div class="t">Six trips, six anxieties</div><p>A school wants safety, a wedding wants timing, a company wants polish, an airport group wants luggage handled. One paragraph cannot reassure all six.</p></div>
+      <div class="gap"><div class="t">Group size decides the vehicle</div><p>A coordinator knows “about forty people,” not “minibus or coach.” The site has to let them look at the fleet without demanding they choose.</p></div>
+      <div class="gap"><div class="t">A quote and a booking are different moments</div><p>Getting a price is research. Reserving is commitment. Blur them and the cautious buyer feels pushed while the ready buyer feels slowed.</p></div>
+      <div class="gap"><div class="t">Safety claims are easy to make</div><p>Every operator says licensed, trained and well-maintained. The site has to say it precisely and surround it with things a buyer can check.</p></div>
+    </div>
+    <p class="prose" style="margin-top:28px">The organising principle: let the coordinator find their trip type first, show the vehicles and the places before asking for anything, say exactly where the buses go, state the safety posture in the company's own words, and keep the free quote and the reservation as two doors with a phone number beside each.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="eyebrow">The searches behind the visit</p>
+    <h2 style="margin-top:14px">Coordinators search by vehicle, <em>then by trip</em></h2>
+    <p class="prose" style="margin-top:18px">A group coordinator searches for the thing they need to rent and the kind of company that provides it. Each term below is shown as search language with a note on what the site actually covers.</p>
+    <div class="buyers three">
+      <div class="buyer"><div class="t">Charter bus rental</div><p>The home page title leads with charter bus rental and the city, and the headline and first paragraph repeat both. It is the strongest match on the site for the plain rental search.</p><div class="chips" style="margin-top:14px"><span class="chip">Coach charter bus rental</span><span class="chip">Bus rentals</span><span class="chip">Rent a bus</span></div></div>
+      <div class="buyer"><div class="t">Company searches</div><p>A coordinator comparing providers reads the About page: a company “locally based in Chicago,” three street addresses, five named mission pillars and a Google review link.</p><div class="chips" style="margin-top:14px"><span class="chip">Charter bus company</span><span class="chip">Charter bus companies</span></div></div>
+      <div class="buyer"><div class="t">Services</div><p>The services page is titled for the city and carries six trip types, each with a promise line and an “ideal for” tag line, so each coordinator reads only their own card.</p><div class="chips" style="margin-top:14px"><span class="chip">Charter bus services</span></div></div>
+      <div class="buyer"><div class="t">Vehicle searches</div><p>Coach, shuttle and minibus are named across the site, and the fleet page shows seven photographs of the company's own buses. No vehicle names or capacities are published.</p><div class="chips" style="margin-top:14px"><span class="chip">Minibus</span><span class="chip">Bus coach bus</span></div></div>
+      <div class="buyer"><div class="t">Shuttle searches</div><p>Shuttles appear as wedding guest shuttles, hotel shuttles and concert shuttles on the trip cards. The site presents charter trips, not a scheduled public shuttle line.</p><div class="chips" style="margin-top:14px"><span class="chip">Shuttle service</span></div></div>
+      <div class="buyer"><div class="t">Employee transport</div><p>The corporate card names employee shuttles, conventions, meetings and retreats, with “punctual, professional transport” as its promise.</p><div class="chips" style="margin-top:14px"><span class="chip">Shuttle service for employees</span></div></div>
+    </div>
+    <p class="note-line prose" style="margin-top:22px;font-size:16px;color:var(--ink-2)">These terms describe how people search, not what the client has proven. No fleet size, safety statistic, on-time figure, rating or ranking is published or claimed.</p>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">What we built</p>
+    <div class="step-n" style="margin-top:14px">01 / 07</div>
+    <h2>Trip first, <em>then proof, then two doors</em></h2>
+    <p class="prose" style="margin-top:18px">Six trip types with “ideal for” tags, a fleet page and a mission built on named pillars, fifty-three area pages, and a quote path kept separate from a reservation path. By the time a coordinator calls, they have matched their trip to a service, looked at the buses, read how the company talks about its drivers, and decided whether to ask for a price or to book.</p>
+
+    <div class="arch">
+      <svg viewBox="0 0 960 220" role="img" aria-label="The coordinator journey: a group and a date, match the trip, see the fleet and read the pillars, get a price, reserve">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="#7B8DB1"/></marker></defs>
+        <g>
+<g><rect x="0" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="0" y="10" width="160" height="4" fill="#F5B301"/><circle cx="26" cy="38" r="14" fill="#0E1B33"/><text x="26" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">01</text><text x="14" y="82" class="disp" font-size="20" style="fill:var(--ink)">A group and</text><text x="14" y="106" class="disp" font-size="20" style="fill:var(--ink)">a date</text><text x="14" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">The date is fixed,</text><text x="14" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">the bus is not</text></g><g><rect x="200" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="200" y="10" width="160" height="4" fill="#3C9BFF"/><circle cx="226" cy="38" r="14" fill="#0E1B33"/><text x="226" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">02</text><text x="214" y="82" class="disp" font-size="20" style="fill:var(--ink)">Match the</text><text x="214" y="106" class="disp" font-size="20" style="fill:var(--ink)">trip</text><text x="214" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Six trip types with</text><text x="214" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">“ideal for” tags</text></g><g><rect x="400" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="400" y="10" width="160" height="4" fill="#F5B301"/><circle cx="426" cy="38" r="14" fill="#0E1B33"/><text x="426" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">03</text><text x="414" y="82" class="disp" font-size="20" style="fill:var(--ink)">See the fleet,</text><text x="414" y="106" class="disp" font-size="20" style="fill:var(--ink)">read the pillars</text><text x="414" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Own buses, five</text><text x="414" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">pillars, 3 addresses</text></g><g><rect x="600" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="600" y="10" width="160" height="4" fill="#3C9BFF"/><circle cx="626" cy="38" r="14" fill="#0E1B33"/><text x="626" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">04</text><text x="614" y="82" class="disp" font-size="20" style="fill:var(--ink)">Get a price</text><text x="614" y="106" class="disp" font-size="20" style="fill:var(--ink)"></text><text x="614" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">A free-quote route</text><text x="614" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">in the header</text></g><g><rect x="800" y="10" width="160" height="170" rx="3" style="fill:var(--tint);stroke:var(--line)"/><rect x="800" y="10" width="160" height="4" fill="#F5B301"/><circle cx="826" cy="38" r="14" fill="#0E1B33"/><text x="826" y="42" text-anchor="middle" class="lab" font-size="11" fill="#fff">05</text><text x="814" y="82" class="disp" font-size="20" style="fill:var(--ink)">Reserve</text><text x="814" y="106" class="disp" font-size="20" style="fill:var(--ink)"></text><text x="814" y="134" class="sm" font-size="13" style="fill:var(--ink-2)">Reserve Your Bus Now</text><text x="814" y="152" class="sm" font-size="13" style="fill:var(--ink-2)">on every page</text></g>
+          <g stroke="#7B8DB1" stroke-width="1.5" fill="none" marker-end="url(#ar)"><path d="M164 95 L196 95"/><path d="M364 95 L396 95"/><path d="M564 95 L596 95"/><path d="M764 95 L796 95"/></g>
+          <g class="lab" font-size="11" style="fill:var(--cyan-ink)" text-anchor="middle"><text x="480" y="208">FROM A GROUP AND A DATE TO A QUOTE OR A BOOKING</text></g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="steps">
+      <div class="split step">
+        <div>
+          <div class="step-n">02 / 07</div>
+          <h3>Six trips, <em>each read as a situation</em></h3>
+          <p>A service list answers what. A coordinator is asking whether you understand their event. Each trip type is published with a one-line promise and an “ideal for” tag line, which answers the question most charter sites leave open: is my kind of trip one you do often? The school card leads with “Safety and comfort come first.” The ADA card names ramps and trained staff, which most operators leave out.</p>
+          <div class="clusters">
+            <div class="cluster"><b>Promise plus tags</b><span>A wedding planner reads Receptions, a teacher reads Camp Transport.</span></div>
+            <div class="cluster"><b>A card most sites skip</b><span>Elderly care centres and inclusive tours are named as uses.</span></div>
+          </div>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>What each coordinator fears</h4>
+            <div class="tier"><div><b>School trips</b><span>A teacher or athletic director</span></div><i>Anything</i></div>
+            <div class="tier"><div><b>Weddings</b><span>A couple or planner</span></div><i>Stranded</i></div>
+            <div class="tier"><div><b>Corporate</b><span>An office manager or event lead</span></div><i>Late</i></div>
+            <div class="tier"><div><b>ADA transport</b><span>A care-centre coordinator</span></div><i>No ramp</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">03 / 07</div>
+          <h3>Proof <em>before the ask</em></h3>
+          <p>The fleet photographs are the test ride a coordinator cannot take, and they are the company's own buses, not stock. For the decision-maker behind them, the five mission pillars and three street addresses are the credibility check. The site states its safety posture in one carefully worded line, “Our drivers are fully licensed, trained, and committed to your group's safety at every mile,” and this page reproduces it as written. It names no licence, programme or certifying body, and neither does this page.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>What a buyer can check</h4>
+            <ul class="lib">
+              <li><i>01</i><span>Seven photographs of the company's own buses.</span></li>
+              <li><i>02</i><span>Five mission pillars: punctuality, safety, service, comfort, coverage.</span></li>
+              <li><i>03</i><span>Three offices: North Chicago, Milwaukee and Indianapolis.</span></li>
+              <li><i>04</i><span>A Google review link to the Chicago listing.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split step">
+        <div>
+          <div class="step-n">04 / 07</div>
+          <h3>Where the bus goes, <em>town by town</em></h3>
+          <p>A buyer in Kenosha or Carmel wants to know the bus comes to them. An index of twenty-nine Illinois, twelve Indiana and ten Wisconsin towns links to fifty-three pages of four types: Charter Bus Rentals, Coach Bus, Charter Bus for Sports Teams and Labor Transportation. Each page carries the town in its title and H1. Fifty-three towns in three states is a footprint, not a slogan, and a page type per use tells a labour contractor and an athletic director they were each thought about.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>The area index</h4>
+            <div class="funnel">
+              <div class="fun"><b>53</b><span>Area pages</span></div>
+              <div class="fun"><b>29</b><span>Illinois towns</span></div>
+              <div class="fun"><b>12</b><span>Indiana towns</span></div>
+              <div class="fun"><b>10</b><span>Wisconsin towns</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">05 / 07</div>
+          <h3>A price and a booking <em>are two decisions</em></h3>
+          <p>Every charter site is tempted to put one “book now” button on everything. This one makes the distinction in its language, “FREE Quote” in the header and “Reserve Your Bus Now” in the body, and the blog explains the order: quote, review, contract, deposit, trip. Naming them differently lets the cautious buyer ask for a price without feeling they have booked.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>How the two asks are kept apart</h4>
+            <ul class="lib">
+              <li><i>01</i><span><b>Two names</b> for two moments: a free quote and a reservation.</span></li>
+              <li><i>02</i><span><b>The phone</b> as a primary door, with a number per market and “here 24/7.”</span></li>
+              <li><i>03</i><span><b>Reservation as consultation:</b> “Schedule A Free Trip Consultation With Our Travel Experts Today.”</span></li>
+              <li><i>04</i><span><b>A reserve button</b> on every page for the ready buyer.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="split step">
+        <div>
+          <div class="step-n">06 / 07</div>
+          <h3>A blog that <em>handles the objections</em></h3>
+          <p>The booking-process article tells a coordinator to settle dates, pickup and drop-off points, passenger count and special needs; to ask what a quote includes, “driver cost, fuel, tolls, overtime, and amenities”; to review, sign a contract and pay a deposit “if required”; and to confirm backup plans and waiting-time policy. A company that tells you what to ask it is a company expecting to answer. The ten articles on the first page map almost one-to-one onto the trip types.</p>
+        </div>
+        <div class="media">
+          <div class="panel tiers">
+            <h4>Articles, by the question they answer</h4>
+            <div class="tier"><div><b>How booking works</b><span>Process, deposit, waiting time</span></div><i>Process</i></div>
+            <div class="tier"><div><b>Weddings</b><span>Guest transportation and shuttle guide</span></div><i>Guests</i></div>
+            <div class="tier"><div><b>Schools and sports</b><span>Vehicle options, teams and festivals</span></div><i>Groups</i></div>
+            <div class="tier"><div><b>ADA options</b><span>What you need to know</span></div><i>Access</i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split rev step">
+        <div>
+          <div class="step-n">07 / 07</div>
+          <h3>A city in every title, <em>a town on every area page</em></h3>
+          <p>The architecture is the right shape for a place-plus-service search: the city in the home page title, trip types on a Chicago-titled services page, a Chicago-titled fleet page, and fifty-three area pages with a town in each H1. Milwaukee and Indianapolis each have an office address and a phone line. The next layer is already half-built: a page per trip type linking its blog article, town-specific lines on the area pages, and a local business record per office.</p>
+        </div>
+        <div class="media">
+          <div class="panel">
+            <h4>Where the place shows up</h4>
+            <ul class="lib">
+              <li><i>01</i><span>Home page title, headline and first paragraph all name Chicago.</span></li>
+              <li><i>02</i><span>Services and fleet pages titled for the city.</span></li>
+              <li><i>03</i><span>A town in the title and H1 of every area page.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block results">
+  <div class="wrap">
+    <p class="eyebrow">Results &amp; impact</p>
+    <h2 style="margin-top:14px">A structure, <em>stated at the level it can be defended</em></h2>
+    <p style="margin-top:18px;max-width:64ch;color:#DFE7F5">No performance data was supplied and none is claimed. What follows is capability created by the structure, which is different from a measured result.</p>
+    <div class="res-grid">
+      <div class="res"><b>6 trips</b><span><strong>A coordinator finds their trip by name</strong>Six cards with tag lines mean a wedding planner and a teacher each read only their own.</span></div>
+      <div class="res"><b>Own buses</b><span><strong>Real vehicles, ready for captions</strong>Seven photographs of the actual fleet; names and capacities are the next layer.</span></div>
+      <div class="res"><b>2 asks</b><span><strong>A price without a booking</strong>A free-quote route and a reservation route, named differently and kept apart.</span></div>
+      <div class="res"><b>53 towns</b><span><strong>A page for the search with a place in it</strong>Four page types, so a purpose is covered as well as a location.</span></div>
+      <div class="res"><b>1 tap</b><span><strong>A number per market</strong>Six phone lines in the header and footer, the shortest route to a human on a phone.</span></div>
+      <div class="res"><b>10 posts</b><span><strong>An objection-handling layer</strong>Articles for five of the six trip types and one on the booking process.</span></div>
+    </div>
+    <p class="note">No fleet size, vehicle count, passenger volume, trips completed, customers, safety statistics, accident record, on-time percentage, satisfaction rate, years in business, revenue, bookings, rankings, licences, certifications, insurance, awards, clients or testimonials are claimed. None were supplied. Quoted copy is reproduced from the published site as written. Nothing here describes a measured result.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap two">
+    <div class="stack">
+      <p class="eyebrow">What's next</p>
+      <h2>Three ways to <em>shorten the path to a quote</em></h2>
+      <p class="prose">The positioning is sound. The next work is the gap between what the brand says and what the pages can show a coordinator with a group of forty and a date.</p>
+    </div>
+    <ul class="next">
+      <li><b>Name the fleet</b>Put a name, a seat range and the amenities under each photograph, so a coordinator with “about forty people” can match the group to a bus before asking for a price. Capacities should come from the client.</li>
+      <li><b>Shape the forms to the decision</b>A quote form that asks trip type, date, pickup, drop-off and passengers, and a reservation form that reads everywhere, would give each of the two asks its own door.</li>
+      <li><b>Link each trip card to its article</b>Five of the six trips have a blog article that answers their questions; the cards are where a coordinator would look for it.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="block faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2 style="margin:14px 0 24px">About this <em>coach charter bus rental</em> case study</h2>
+    <details><summary>What does Safe Travel Charters offer?</summary><p>Charter bus rental for groups, based in North Chicago with offices in Milwaukee and Indianapolis. Six trip types are published: corporate and group transportation, weddings and private events, school and educational trips, airport transfers and hotel shuttles, concerts, festivals and sporting events, and ADA-accessible transport. Coach, shuttle and minibus are named across the site.</p></details>
+    <details><summary>Does it offer shuttle service for employees?</summary><p>The corporate card names employee shuttles, conventions, meetings and retreats. The site presents charter trips booked by a coordinator, not a scheduled public shuttle line, and the case study claims no route, schedule or fleet size.</p></details>
+    <details><summary>Does the case study claim safety or performance figures?</summary><p>No. The site states that drivers are “fully licensed, trained” and that the company operates “with all necessary certifications and safety/maintenance standards,” and the case study reproduces those lines as written. No on-time rate, accident record, rating or ranking is published or claimed.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <h2>Your customer is handing you <em>other people</em></h2>
+        <p>Bytes &amp; Partners builds digital experiences for transportation and local-service businesses whose buyers cannot try the product first and are comparing three providers on a phone. If your business is a trust purchase, your website is the first interview. It has to name the buyer's trip, show the vehicle, state the safety posture precisely, say where you are, and give a price and a booking each their own door.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://www.bytesandpartners.co/#contact">Start a conversation</a>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>© Bytes &amp; Partners</span><span>Client: Safe Travel Charters · Reviewed October 2026</span></div>
+</footer>
+
+</body></html>
