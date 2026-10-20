@@ -5,49 +5,64 @@ import { useReveal } from "@/lib/useReveal";
 import styles from "./AboutSection.module.css";
 
 /**
- * About: editorial heading and copy, then the regional footprint: Denton,
- * Texas as the hub, with routes to the Middle East and Africa. A compact,
- * schematic strip rather than a map; node positions only hint at geography.
+ * About: editorial heading and copy, then the regional footprint: the USA as
+ * the hub, a route sweeping across it west to east, then on to the Middle
+ * East and Africa. A compact, schematic strip rather than a map; node
+ * positions only hint at geography.
  */
 
 interface Node {
   key: string;
-  label: string;
-  sub: string;
+  label?: string;
+  sub?: string;
   /** Position in the 1000 × 220 drawing */
   x: number;
   y: number;
   /** Which side of the pin the label sits on */
-  place: "under" | "below" | "above";
+  place?: "under" | "below" | "above";
   hub?: boolean;
+  /** A small waypoint (the US coasts) */
+  dot?: boolean;
 }
 
 const nodes: Node[] = [
-  { key: "denton", label: "Denton, Texas", sub: "USA · Headquarters", x: 150, y: 132, place: "under", hub: true },
+  { key: "us-west", label: "West USA", x: 70, y: 140, place: "below", dot: true },
+  { key: "usa", label: "USA", sub: "Headquarters · Texas", x: 195, y: 105.75, place: "above", hub: true },
+  { key: "us-east", label: "East USA", x: 320, y: 118, place: "below", dot: true },
   { key: "africa", label: "Africa", sub: "Delivery region", x: 590, y: 158, place: "below" },
   { key: "mideast", label: "Middle East", sub: "Delivery region", x: 830, y: 92, place: "above" },
 ];
 
 /** Order on the phone rail: the hub first, then outward */
-const railOrder = ["denton", "mideast", "africa"];
+const railOrder = ["usa", "mideast", "africa"];
 
-/** Routes out of Denton as cubic curves: start, two controls, end */
+/** Routes as cubic curves: start, two controls, end. The first crosses the
+ *  US west to east (passing through the hub); the others leave the east coast */
 const routes: { key: string; pts: [number, number][] }[] = [
+  {
+    key: "us-west-east",
+    pts: [
+      [70, 140],
+      [150, 100],
+      [240, 96],
+      [320, 118],
+    ],
+  },
   {
     key: "to-africa",
     pts: [
-      [150, 132],
-      [300, 40],
-      [470, 60],
+      [320, 118],
+      [420, 50],
+      [500, 70],
       [590, 158],
     ],
   },
   {
     key: "to-mideast",
     pts: [
-      [150, 132],
-      [340, -10],
-      [650, -6],
+      [320, 118],
+      [450, 6],
+      [680, 0],
       [830, 92],
     ],
   },
@@ -60,6 +75,14 @@ const routes: { key: string; pts: [number, number][] }[] = [
       [830, 92],
     ],
   },
+];
+
+/** The delivery path, beside the heading */
+const steps = [
+  { title: "Strategy", body: "The problem worth solving" },
+  { title: "Design", body: "How it looks, reads and feels" },
+  { title: "Engineering", body: "Software, AI, web and mobile" },
+  { title: "Growth", body: "Automation and search that scale it" },
 ];
 
 const pathFor = (pts: [number, number][]) => {
@@ -89,30 +112,34 @@ export default function AboutSection() {
           </h2>
         </div>
         <div className={styles.copy}>
-          <p className={styles.long}>
-            BytesPlatform is a Texas-based digital product and engineering company. We build software, AI systems, web
-            and mobile experiences, automation and growth infrastructure for businesses operating in 2026 and beyond,
-            with strategy, design, engineering and search visibility in one delivery team, from first concept through
-            production and scale.
+          <p className={styles.lead}>
+            A Texas-based product and engineering company. <span>One team takes your idea from first sketch to a
+            product that scales, without ever changing hands.</span>
           </p>
-          <p className={styles.short}>
-            A Texas-based product and engineering company: software, AI, web and mobile, automation and growth, with
-            strategy, design, engineering and search in one team, from concept to scale.
-          </p>
+          {/* Strategy to scale, as the four steps the heading promises */}
+          <ol className={styles.steps}>
+            {steps.map((s, i) => (
+              <li key={s.title} className={styles.step} style={{ "--i": i } as CSSProperties}>
+                <span className={`mono ${styles.stepIndex}`}>{String(i + 1).padStart(2, "0")}</span>
+                <strong className={styles.stepTitle}>{s.title}</strong>
+                <span className={styles.stepBody}>{s.body}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
 
       <figure className={styles.footprint} aria-labelledby="footprint-caption">
         <figcaption id="footprint-caption" className={styles.caption}>
           <span className={`mono ${styles.captionLabel}`}>Regional footprint</span>
-          <strong className={styles.captionHome}>Denton, Texas</strong>
+          <strong className={styles.captionHome}>Proudly Texan</strong>
           <span className={`mono ${styles.captionReach}`}>USA · Middle East · Africa</span>
         </figcaption>
 
         <div className={styles.map}>
           <svg className={styles.svg} viewBox="0 0 1000 220" aria-hidden="true">
             {routes.map((r, k) => (
-              <g key={r.key} style={{ "--i": k } as CSSProperties}>
+              <g key={r.key} style={{ "--i": k } as CSSProperties} data-us={k === 0 || undefined}>
                 <path className={styles.route} d={pathFor(r.pts)} pathLength={1} />
                 <path className={styles.flow} d={pathFor(r.pts)} pathLength={100} />
               </g>
@@ -125,14 +152,17 @@ export default function AboutSection() {
               key={n.key}
               className={styles.node}
               data-hub={n.hub || undefined}
+              data-dot={n.dot || undefined}
               data-place={n.place}
               style={{ left: `${n.x / 10}%`, top: `${(n.y / 220) * 100}%`, "--i": i } as CSSProperties}
             >
               <span className={styles.pin} aria-hidden="true" />
-              <span className={styles.nodeText}>
-                <span className={styles.nodeLabel}>{n.label}</span>
-                <span className={`mono ${styles.nodeSub}`}>{n.sub}</span>
-              </span>
+              {n.label && (
+                <span className={styles.nodeText}>
+                  <span className={styles.nodeLabel}>{n.label}</span>
+                  {n.sub && <span className={`mono ${styles.nodeSub}`}>{n.sub}</span>}
+                </span>
+              )}
             </div>
           ))}
         </div>

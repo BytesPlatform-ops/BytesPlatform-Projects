@@ -33,11 +33,6 @@
   transform-origin: left;
 }
 
-.since {
-  color: var(--muted);
-  text-align: right;
-}
-
 .list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -371,9 +366,6 @@
     flex-direction: column;
     gap: 8px;
     padding-bottom: 14px;
-  }
-  .since {
-    text-align: left;
   }
   .list {
     grid-template-columns: minmax(0, 1fr);

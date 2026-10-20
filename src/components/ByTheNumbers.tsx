@@ -54,7 +54,6 @@ export default function ByTheNumbers({ stats }: { stats: Stat[] }) {
           <span className={styles.rule} aria-hidden="true" />
           By the numbers
         </h2>
-        <span className={`mono ${styles.since}`}>Bytes Platform LLC · Denton, Texas</span>
       </div>
 
       <ol className={styles.list}>

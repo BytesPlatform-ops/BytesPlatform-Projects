@@ -91,11 +91,22 @@ const previews: Record<string, Preview> = {
         814,
         "Cascadia Health website homepage: the right care team, right when it matters",
       ),
-      phone: screen("/images/montage/cascadia-phone.jpg", 397, 827, "Cascadia Health homepage on mobile"),
+      phone: screen("/images/montage/cascadia-phone.jpg", 405, 835, "Cascadia Health homepage on mobile"),
     },
     related: ["Cascadia Health", "Quantiva HQ"],
   },
-  "CRM & ERP Systems": { visual: { kind: "pipeline" } },
+  "CRM & ERP Systems": {
+    visual: {
+      kind: "screens",
+      main: screen(
+        "/images/projects/sqush-crm-dashboard.jpg",
+        1911,
+        861,
+        "SQUSH LLC operations CRM dashboard: pending requests, active jobs, deliveries and invoices",
+      ),
+    },
+    related: ["SQUSH LLC"],
+  },
   "SEO & Organic Growth": {
     visual: { kind: "visibility" },
     related: ["The Benavente Group", "Team Smith Logistics", "Gilbert & Sons", "Jobco Supply"],

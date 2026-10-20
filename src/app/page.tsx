@@ -123,13 +123,6 @@ export default function ProjectsPage() {
       {/* ---- Projects ------------------------------------------------ */}
       <section className="container" id="work" aria-labelledby="work-title">
         <div className={styles.sectionHead} data-reveal>
-          <p className={styles.location}>
-            <span className={styles.locationHome}>
-              <span className={styles.locationDot} aria-hidden="true" />
-              Proudly Texas, Denton
-            </span>
-            <span className={`mono ${styles.locationReach}`}>USA · Middle East · Africa</span>
-          </p>
           <h2 id="work-title" className={styles.h2}>
             Selected work.
           </h2>

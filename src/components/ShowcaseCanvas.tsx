@@ -55,23 +55,23 @@ const flow = shot(
 /** Two phone slots, each rotating through its own set */
 const phoneSets: Shot[][] = [
   [
-    shot("/images/montage/cascadia-phone.jpg", 397, 827, "Cascadia Health homepage on mobile", "Cascadia Health"),
-    shot("/images/montage/gilbert-phone.jpg", 387, 816, "Gilbert & Sons roofing homepage on mobile", "Gilbert & Sons"),
+    shot("/images/montage/cascadia-phone.jpg", 405, 835, "Cascadia Health homepage on mobile", "Cascadia Health"),
+    shot("/images/montage/gilbert-phone.jpg", 412, 849, "Gilbert & Sons roofing homepage on mobile", "Gilbert & Sons"),
     shot(
       "/images/montage/twiph-phone.jpg",
-      369,
-      822,
+      379,
+      781,
       "This Week in Public Health homepage on mobile",
       "This Week in Public Health",
     ),
   ],
   [
-    shot("/images/montage/aegis-phone.jpg", 381, 822, "Aegis Creek homepage on mobile", "Aegis Creek"),
-    shot("/images/montage/sqush-phone.jpg", 380, 816, "SQUSH LLC homepage on mobile", "SQUSH LLC"),
+    shot("/images/montage/aegis-phone.jpg", 383, 790, "Aegis Creek homepage on mobile", "Aegis Creek"),
+    shot("/images/montage/sqush-phone.jpg", 404, 833, "SQUSH LLC homepage on mobile", "SQUSH LLC"),
     shot(
       "/images/montage/ontop-phone.jpg",
-      366,
-      816,
+      382,
+      788,
       "On Top Home Services homepage on mobile",
       "On Top Home Services",
     ),
@@ -89,7 +89,7 @@ const industries = [
   "B2B commerce",
 ];
 
-const SWAP_MS = 3400;
+const SWAP_MS = 4200;
 
 /** Wide-screen placement in % of the stage; `depth` drives scroll parallax */
 const layout = {
@@ -265,6 +265,8 @@ export default function ShowcaseCanvas({ total }: { total: number }) {
                     width={s.width}
                     height={s.height}
                     sizes="(max-width: 767px) 42vw, 13vw"
+                    // Hidden screens load up front, so each fades in fully drawn
+                    loading="eager"
                     className={styles.swap}
                     data-active={(swap + slot) % set.length === i || undefined}
                   />

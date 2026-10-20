@@ -1,7 +1,7 @@
 /* ---- About ---------------------------------------------------------------
-   Editorial heading and copy, then a compact regional footprint: routes
-   from Denton draw in, the three nodes land in sequence, and a slow flow
-   keeps moving along the routes afterwards. */
+   Editorial heading and copy, then a compact regional footprint: a route
+   sweeps across the US west to east and on to the delivery regions, the
+   nodes land in sequence, and a slow flow keeps moving along the routes. */
 
 .section {
   --gold: #c5ad6c;
@@ -50,14 +50,97 @@
 
 .copy {
   justify-self: end;
-  max-width: 46ch;
-  font-size: clamp(18px, 1.45vw, 22px);
-  line-height: 1.5;
-  letter-spacing: -0.01em;
-  color: var(--ink-2);
+  width: 100%;
+  max-width: 600px;
 }
-.short {
-  display: none;
+
+/* First clause in ink, the promise in a quieter tone */
+.lead {
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.lead span {
+  color: var(--muted);
+}
+
+/* Four steps on one rail; the rail draws in, then a pulse keeps moving along it */
+.steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(28px, 3vw, 40px);
+  padding-top: 22px;
+}
+.steps::before,
+.steps::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  border-radius: 2px;
+}
+.steps::before {
+  background: var(--line-strong);
+  transform-origin: left;
+}
+.steps::after {
+  background: linear-gradient(90deg, transparent, var(--brand), transparent);
+  background-size: 30% 100%;
+  background-repeat: no-repeat;
+  animation: stepsFlow 3.2s linear 1.8s infinite;
+}
+@keyframes stepsFlow {
+  from {
+    background-position: -60% 0;
+  }
+  to {
+    background-position: 160% 0;
+  }
+}
+
+.step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+/* A node on the rail above each step */
+.step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -27px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--ink);
+}
+.step:last-child::before {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 22%, transparent);
+}
+.stepIndex {
+  font-size: 10.5px;
+  color: var(--muted);
+}
+.stepTitle {
+  font-size: clamp(16px, 1.25vw, 19px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.stepBody {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
 }
 
 /* ---- Footprint --------------------------------------------------------- */
@@ -129,6 +212,18 @@
   animation: flow 5.5s linear calc(var(--i) * 1.4s) infinite;
 }
 
+/* Across the US: a longer, quicker gold sweep, always west to east */
+[data-us] .route {
+  stroke-opacity: 0.5;
+}
+[data-us] .flow {
+  stroke: var(--gold);
+  stroke-width: 2.6;
+  stroke-dasharray: 22 78;
+  animation-duration: 2.6s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
 @keyframes flow {
   to {
     stroke-dashoffset: 0;
@@ -172,8 +267,17 @@
   border-color: var(--gold);
   animation: pulse 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
 }
-.node:not([data-hub]) .pin::after {
+.node:not([data-hub]):not([data-dot]) .pin::after {
   animation: pulse 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) calc(1.2s + var(--i) * 0.6s) infinite;
+}
+/* The US coasts: small waypoints on the west-to-east sweep */
+.node[data-dot] .pin {
+  width: 8px;
+  height: 8px;
+  left: -4px;
+  top: -4px;
+  border-width: 1.5px;
+  border-color: var(--gold);
 }
 
 @keyframes pulse {
@@ -219,6 +323,15 @@
   font-size: 10px;
   color: var(--muted);
 }
+/* Coast labels: quieter than the regions */
+.node[data-dot] .nodeLabel {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
 
 /* Phone rail (hidden on wider screens) */
 .rail {
@@ -236,6 +349,16 @@
 [data-anim="ready"] .copy {
   opacity: 0;
   transform: translateY(16px);
+}
+[data-anim="ready"] .steps::before {
+  transform: scaleX(0);
+}
+[data-anim="ready"] .steps::after {
+  opacity: 0;
+}
+[data-anim="ready"] .step {
+  opacity: 0;
+  transform: translateY(10px);
 }
 [data-anim="ready"] .footprint {
   border-top-color: transparent;
@@ -270,14 +393,26 @@
     opacity 0.7s var(--ease) 0.35s,
     transform 0.7s var(--ease) 0.35s;
 }
+/* The rail draws left to right, each step lands as the line reaches it */
+[data-anim="in"] .steps::before {
+  transition: transform 1.2s var(--ease) 0.5s;
+}
+[data-anim="in"] .steps::after {
+  transition: opacity 0.6s var(--ease) 1.7s;
+}
+[data-anim="in"] .step {
+  transition:
+    opacity 0.6s var(--ease) calc(0.6s + var(--i) * 0.22s),
+    transform 0.6s var(--ease) calc(0.6s + var(--i) * 0.22s);
+}
 [data-anim="in"] .footprint {
   transition: border-color 0.8s var(--ease) 0.45s;
 }
 [data-anim="in"] .caption {
   transition: opacity 0.7s var(--ease) 0.5s;
 }
-/* Nodes land in sequence: Denton, then Africa, then the Middle East;
-   each route draws once its two ends are in place */
+/* Nodes land in sequence, west to east: the US coast to coast, then Africa,
+   then the Middle East; each route draws as its ends come in */
 [data-anim="in"] .route {
   transition: stroke-dashoffset 1.1s var(--ease) calc(0.9s + var(--i) * 0.25s);
 }
@@ -317,14 +452,24 @@
     padding-top: 52px;
     padding-bottom: 48px;
   }
-  .copy {
-    font-size: 16.5px;
+  .lead {
+    font-size: 17px;
   }
-  .long {
+  /* Phones: two by two, each step with its own node instead of one rail */
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 24px;
+    padding-top: 0;
+  }
+  .steps::before,
+  .steps::after {
     display: none;
   }
-  .short {
-    display: block;
+  .step {
+    padding-top: 22px;
+  }
+  .step::before {
+    top: 0;
   }
   .footprint {
     margin-top: 40px;
