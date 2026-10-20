@@ -1,0 +1,537 @@
+/* ---- Shared type ------------------------------------------------------ */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.eyebrowDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.h1 {
+  margin-top: 26px;
+  font-size: clamp(46px, 8.2vw, 124px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  font-weight: 600;
+  max-width: 14ch;
+}
+
+.h1 em {
+  font-style: normal;
+  color: var(--muted);
+}
+
+.h2 {
+  font-size: clamp(38px, 5.4vw, 80px);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+}
+
+/* ---- Hero ------------------------------------------------------------- */
+/* Open and light, like the rest of the page: the logo leads, a hairline
+   separates it from the headline, and a faint gold / blue light sits behind. */
+
+.hero {
+  --logo-gold: #c5ad6c;
+  padding-top: clamp(48px, 7vw, 104px);
+  padding-bottom: clamp(56px, 7vw, 104px);
+}
+
+/* Entrance, offset from --intro-delay so it plays as the page opens:
+     0.00  logo opens left to right
+     0.10  hairline draws; a gold glint runs along it at 0.85
+     0.18  Portfolio rule, label and line
+     0.22  eyebrow: dot lands, text opens
+     0.30  headline lines rise from their masks, 110ms apart
+     0.72  supporting paragraph */
+.heroStage {
+  --hair-top: calc(clamp(70px, 8.9vw, 126px) + clamp(22px, 2.8vw, 40px));
+  position: relative;
+  isolation: isolate;
+}
+
+/* While the intro is still loading, the hero's entrance waits: its animations
+   hold their first frame and start the moment the intro begins to open */
+:global(html[data-intro="run"]) .hero *,
+:global(html[data-intro="run"]) .hero *::before,
+:global(html[data-intro="run"]) .hero *::after {
+  animation-play-state: paused;
+}
+
+/* Soft light behind the type, very low strength, no edges */
+.heroGlow {
+  position: absolute;
+  inset: -80px 0;
+  z-index: -1;
+  pointer-events: none;
+  /* closest-side keeps each light fully faded inside the layer: no hard edges */
+  background:
+    radial-gradient(closest-side at 76% 34%, color-mix(in srgb, var(--logo-gold) 16%, transparent), transparent),
+    radial-gradient(closest-side at 22% 78%, color-mix(in srgb, var(--brand) 6%, transparent), transparent);
+  /* Very slow drift so the light never sits still */
+  animation:
+    heroFade 1.4s var(--ease) var(--intro-delay) both,
+    heroDrift 18s ease-in-out calc(var(--intro-delay) + 1.4s) infinite alternate;
+}
+/* Hairline under the logo, drawn in on load */
+.heroStage::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--hair-top);
+  height: 1px;
+  /* Gold at both ends: under the logo and under the Portfolio label */
+  background: linear-gradient(90deg, var(--logo-gold), var(--line) 40%, var(--line) 72%, var(--logo-gold));
+  transform-origin: left;
+  animation: heroLine 1.1s var(--ease) calc(var(--intro-delay) + 0.1s) both;
+}
+
+.heroGlint {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: calc(var(--hair-top) - 1px);
+  width: 22%;
+  height: 3px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--logo-gold), transparent);
+  filter: blur(0.5px);
+  opacity: 0;
+  animation: heroGlint 1.6s var(--ease) calc(var(--intro-delay) + 0.85s) both;
+}
+
+.heroMark {
+  position: relative;
+  display: block;
+  flex: none;
+  width: clamp(190px, 24vw, 340px);
+  /* Opens left to right. Backwards fill: no clip is left behind once it has
+     played, so the pulse ring can reach past the logo's edge */
+  animation: heroOpen 1s var(--ease) var(--intro-delay) backwards;
+}
+
+.heroLogo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* A soft band of light crosses the letters every few seconds. The logo
+   itself is the mask, so the light only ever touches the type. */
+.heroShine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask: var(--logo) center / 100% 100% no-repeat;
+  mask: var(--logo) center / 100% 100% no-repeat;
+}
+.heroShine > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 30%,
+    rgba(255, 255, 255, 0.62) 50%,
+    rgba(255, 255, 255, 0.08) 70%,
+    transparent 100%
+  );
+  transform: translateX(-110%);
+  animation: heroShine 6.5s cubic-bezier(0.45, 0, 0.25, 1) calc(var(--intro-delay) + 1.4s) infinite;
+}
+
+/* A ring breathes out of the logo's full stop, in brand blue */
+.heroPulse {
+  position: absolute;
+  /* The full stop's centre and size, measured on the logo artwork */
+  left: 95.8%;
+  top: 51.6%;
+  width: 5.3%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.heroPulse::before,
+.heroPulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--brand);
+  opacity: 0;
+  animation: heroPulse 3.6s cubic-bezier(0.2, 0.6, 0.35, 1) calc(var(--intro-delay) + 1s) infinite;
+}
+.heroPulse::after {
+  animation-delay: calc(var(--intro-delay) + 2.8s);
+}
+
+@keyframes heroShine {
+  0% {
+    transform: translateX(-110%);
+  }
+  /* Crosses in the first ~2s, then rests */
+  32%,
+  100% {
+    transform: translateX(240%);
+  }
+}
+@keyframes heroPulse {
+  0% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroShine,
+  .heroPulse {
+    display: none;
+  }
+}
+
+/* Logo on the left, the studio label opposite it, both sitting on the hairline */
+.heroTop {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.portfolio {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+  text-align: right;
+  /* Optical baseline with the logo's PLATFORM line */
+  padding-bottom: clamp(2px, 0.4vw, 6px);
+}
+.portfolioRule {
+  width: 36px;
+  height: 1px;
+  margin-bottom: 4px;
+  background: var(--logo-gold);
+  transform-origin: right;
+  animation: heroLine 0.8s var(--ease) calc(var(--intro-delay) + 0.18s) both;
+}
+.portfolioLabel {
+  color: var(--ink);
+  letter-spacing: 0.32em;
+  /* Trailing letter-spacing would push it off the right edge line */
+  margin-right: -0.32em;
+  /* Settles from wide tracking into place */
+  animation: heroTrack 0.9s var(--ease) calc(var(--intro-delay) + 0.28s) both;
+}
+.portfolioLine {
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--ink-2);
+  white-space: nowrap;
+  animation: heroOpenRight 0.9s var(--ease) calc(var(--intro-delay) + 0.38s) backwards;
+}
+
+.heroBody {
+  margin-top: clamp(44px, 5.6vw, 80px);
+}
+
+.heroMain {
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.heroEyebrow .eyebrowDot {
+  position: relative;
+  background: var(--logo-gold);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--logo-gold) 18%, transparent);
+  animation: heroDot 0.6s var(--ease) calc(var(--intro-delay) + 0.22s) both;
+}
+/* Then a slow, faint pulse: the page is live */
+.heroEyebrow .eyebrowDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--logo-gold);
+  opacity: 0;
+  animation: heroPing 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) calc(var(--intro-delay) + 1.6s) infinite;
+}
+.heroEyebrowText {
+  animation: heroOpen 0.8s var(--ease) calc(var(--intro-delay) + 0.3s) backwards;
+}
+
+.heroStage .h1 {
+  /* Sized to its column: the longest line is ~8.9em */
+  font-size: clamp(40px, 11.2cqi, 124px);
+  max-width: none;
+  margin-top: 22px;
+}
+
+/* Headline lines: each rises out of its own mask with a slight tilt */
+.heroLine {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders inside the mask */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.heroLine > * {
+  display: block;
+  transform-origin: 0 100%;
+  animation: heroLineUp 0.9s var(--ease) calc(var(--intro-delay) + 0.3s + var(--l) * 0.11s) both;
+}
+
+.lede {
+  margin-top: clamp(28px, 3.2vw, 44px);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.45;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 46ch;
+  animation: heroLede 0.9s var(--ease) calc(var(--intro-delay) + 0.72s) backwards;
+}
+
+@keyframes heroOpen {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-10px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+@keyframes heroOpenRight {
+  from {
+    clip-path: inset(0 0 0 100%);
+    transform: translateX(10px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+@keyframes heroTrack {
+  from {
+    opacity: 0;
+    letter-spacing: 0.7em;
+  }
+}
+@keyframes heroDot {
+  from {
+    transform: scale(0);
+  }
+}
+@keyframes heroPing {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+@keyframes heroLineUp {
+  from {
+    opacity: 0;
+    transform: translateY(105%) rotate(2.5deg);
+  }
+  40% {
+    opacity: 1;
+  }
+}
+@keyframes heroLede {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes heroFade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes heroDrift {
+  to {
+    transform: translate3d(-3%, 2%, 0) scale(1.06);
+  }
+}
+@keyframes heroGlint {
+  0% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(380%);
+  }
+}
+@keyframes heroLine {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---- Section head ----------------------------------------------------- */
+
+.sectionHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    ". location"
+    "title note";
+  gap: 32px;
+  align-items: end;
+  padding-bottom: clamp(20px, 2.6vw, 36px);
+}
+.sectionHead .h2 {
+  grid-area: title;
+}
+
+/* Where we are, where we work: small and quiet, above the note */
+.location {
+  grid-area: location;
+  justify-self: end;
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+  padding-bottom: 4px;
+  text-align: right;
+}
+.locationHome {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  /* Trailing letter-spacing would break the right edge */
+  margin-right: -0.08em;
+}
+.locationDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #c5ad6c;
+  box-shadow: 0 0 0 4px color-mix(in srgb, #c5ad6c 18%, transparent);
+}
+.locationReach {
+  font-size: clamp(11.5px, 0.95vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--ink-2);
+  margin-right: -0.22em;
+}
+
+.sectionNote {
+  grid-area: note;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 50ch;
+  justify-self: end;
+}
+
+/* ---- Responsive ------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+  .sectionHead {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "location"
+      "title"
+      "note";
+    gap: 16px;
+  }
+  .sectionNote {
+    justify-self: start;
+  }
+  .location {
+    justify-self: start;
+    justify-items: start;
+    text-align: left;
+    padding-bottom: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-top: 36px;
+  }
+  .heroStage {
+    --hair-top: calc(75px + 20px);
+  }
+  .heroMark {
+    width: 200px;
+    align-self: flex-start;
+  }
+  /* Phones: the label drops just below the hairline, still on the right */
+  .heroTop {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .portfolio {
+    align-self: flex-end;
+    gap: 8px;
+    margin-top: 42px;
+    padding-bottom: 0;
+  }
+  .portfolioRule {
+    width: 28px;
+    margin-bottom: 2px;
+  }
+  .portfolioLine {
+    font-size: 15.5px;
+  }
+  .heroBody {
+    margin-top: 28px;
+  }
+  .h1,
+  .heroStage .h1 {
+    font-size: clamp(38px, 11vw, 56px);
+    max-width: none;
+  }
+  .lede {
+    font-size: 16.5px;
+  }
+
+  /* Phones: the section note stays on desktop */
+  .sectionNote {
+    display: none;
+  }
+}

@@ -1,11 +1,13 @@
 /**
- * Project / case-study data for the BytesPak Projects page.
+ * Project / case-study data for the BytesPlatform Projects page.
  *
  * Every figure, technology and client fact below is taken from the
  * case-study PDFs in the "BytesPlatform Images / Case Studies" folder.
  * Nothing is estimated. If a case study does not support a claim it is
  * left out (see `disclosure` on each project).
  */
+
+import { main, withBase } from "@/lib/site";
 
 export type ProjectImageRole = "desktop" | "mobile" | "feature" | "secondary";
 
@@ -79,7 +81,7 @@ export interface Project {
   disclosure?: string;
   liveUrl: string;
   access?: ProjectAccess;
-  /** Internal URL of the case-study PDF (public/case-studies/<slug>.pdf), opened in a new tab */
+  /** Internal URL of the case study (public/case-studies/<slug>.pdf|html, under the base path), opened in a new tab */
   caseStudyUrl: string;
   caseStudyLabel: string;
   accent: string;
@@ -106,7 +108,7 @@ const img = (
   caption: string,
 ): ProjectImage => ({
   role,
-  src: `/images/projects/${file}`,
+  src: withBase(`/images/projects/${file}`),
   width,
   height,
   alt,
@@ -152,7 +154,7 @@ export const projects: Project[] = [
       ],
       emphasis: "app",
     },
-    caseStudyUrl: "/case-studies/quantiva-hq",
+    caseStudyUrl: withBase("/case-studies/quantiva-hq"),
     caseStudyLabel: "Read Case Study",
     accent: "#ff8a1f",
     accentSoft: "#ffb766",
@@ -200,7 +202,7 @@ export const projects: Project[] = [
       website: "https://intellimaint-ai.onrender.com/",
       emphasis: "even",
     },
-    caseStudyUrl: "/case-studies/intellimaint-ai",
+    caseStudyUrl: withBase("/case-studies/intellimaint-ai"),
     caseStudyLabel: "Read Case Study",
     accent: "#3ad3ff",
     accentSoft: "#8fe7ff",
@@ -241,7 +243,7 @@ export const projects: Project[] = [
     disclosure:
       "No leads, revenue, pipeline or ROI are claimed; conversion tracking was not in place during the period.",
     liveUrl: "https://aegiscreek.com/",
-    caseStudyUrl: "/case-studies/aegis-creek",
+    caseStudyUrl: withBase("/case-studies/aegis-creek"),
     caseStudyLabel: "Read Case Study",
     accent: "#d14bff",
     accentSoft: "#5ee1ff",
@@ -280,7 +282,7 @@ export const projects: Project[] = [
     ],
     metricsSource: "Google Search Console · 1 January – 26 March 2026, first quarter after launch",
     liveUrl: "https://teamsmithlogistics.com/",
-    caseStudyUrl: "/case-studies/team-smith-logistics",
+    caseStudyUrl: withBase("/case-studies/team-smith-logistics"),
     caseStudyLabel: "Read Case Study",
     accent: "#4f8dff",
     accentSoft: "#9ec2ff",
@@ -319,7 +321,7 @@ export const projects: Project[] = [
     ],
     metricsSource: "Google Search Console · 60+ days to 10 September 2026",
     liveUrl: "https://benaventegroup.com/",
-    caseStudyUrl: "/case-studies/the-benavente-group",
+    caseStudyUrl: withBase("/case-studies/the-benavente-group"),
     caseStudyLabel: "Read Case Study",
     accent: "#d4b068",
     accentSoft: "#efd9a4",
@@ -360,7 +362,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance metrics were supplied for this engagement. No staffing volumes, placements, fill rates, response times, revenue or conversion figures are claimed.",
     liveUrl: "https://cascadiahealthllc.com/",
-    caseStudyUrl: "/case-studies/cascadia-health",
+    caseStudyUrl: withBase("/case-studies/cascadia-health"),
     caseStudyLabel: "Read Case Study",
     accent: "#c27aa3",
     accentSoft: "#e6b9d2",
@@ -401,7 +403,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No clients, consultations, enrolments, policies, loans, traffic or rankings are claimed, and nothing here is financial, insurance or legal advice.",
     liveUrl: "https://goldwaycapital.com/",
-    caseStudyUrl: "/case-studies/goldway-capital",
+    caseStudyUrl: withBase("/case-studies/goldway-capital"),
     caseStudyLabel: "Read Case Study",
     accent: "#c9a24a",
     accentSoft: "#e6cf8f",
@@ -442,7 +444,7 @@ export const projects: Project[] = [
     disclosure:
       "No enquiry, project-value, conversion or search figures were supplied and none are claimed. Credentials are the client's own statements.",
     liveUrl: "https://tridentxyz.netlify.app/",
-    caseStudyUrl: "/case-studies/trident-foundation-systems",
+    caseStudyUrl: withBase("/case-studies/trident-foundation-systems"),
     caseStudyLabel: "Read Case Study",
     accent: "#c8794a",
     accentSoft: "#e8b08c",
@@ -483,7 +485,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No leads, calls, traffic, rankings, conversion rates or revenue are claimed; licensing and accreditation are the client's own statements.",
     liveUrl: "https://gilbertandsonsroofingandstucco.com/",
-    caseStudyUrl: "/case-studies/gilbert-and-sons",
+    caseStudyUrl: withBase("/case-studies/gilbert-and-sons"),
     caseStudyLabel: "Read Case Study",
     accent: "#d6403f",
     accentSoft: "#f19a92",
@@ -523,7 +525,7 @@ export const projects: Project[] = [
     metricsSource: "Case study, October 2026 · counts from the delivered site; no performance data was supplied",
     disclosure: "No views, followers, bookings, enquiries, revenue or traffic are claimed. None were supplied.",
     liveUrl: "https://itsrobdoesit.com/",
-    caseStudyUrl: "/case-studies/rob-does-it",
+    caseStudyUrl: withBase("/case-studies/rob-does-it"),
     caseStudyLabel: "Read Case Study",
     accent: "#e2b33c",
     accentSoft: "#f1d68a",
@@ -564,7 +566,7 @@ export const projects: Project[] = [
     disclosure:
       "No athletes, contract values, signings, client count, traffic or revenue are claimed. Experience and certification are the client's own statements.",
     liveUrl: "https://weiszsports.com/",
-    caseStudyUrl: "/case-studies/weisz-sports-management",
+    caseStudyUrl: withBase("/case-studies/weisz-sports-management"),
     caseStudyLabel: "Read Case Study",
     accent: "#4a73ff",
     accentSoft: "#a3b8ff",
@@ -604,7 +606,7 @@ export const projects: Project[] = [
     metricsSource: "Case study, October 2026 · counts from the delivered site; no performance data was supplied",
     disclosure: "No deliveries, response times, pricing, contracts, clients or metrics are claimed. None were supplied.",
     liveUrl: "https://squshllc.com/",
-    caseStudyUrl: "/case-studies/sqush-llc",
+    caseStudyUrl: withBase("/case-studies/sqush-llc"),
     caseStudyLabel: "Read Case Study",
     accent: "#e9b334",
     accentSoft: "#f5d98e",
@@ -645,7 +647,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No clients, contracts, certifications, revenue, traffic, rankings or conversion rates are claimed.",
     liveUrl: "https://aminsconsult.com/",
-    caseStudyUrl: "/case-studies/amins-consult",
+    caseStudyUrl: withBase("/case-studies/amins-consult"),
     caseStudyLabel: "Read Case Study",
     accent: "#4d8dff",
     accentSoft: "#a8c6ff",
@@ -686,7 +688,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No bookings, customers, reviews, ratings, revenue, traffic or rankings are claimed.",
     liveUrl: "https://www.dawgteamapparelusa.com/",
-    caseStudyUrl: "/case-studies/dawg-team-apparel-usa",
+    caseStudyUrl: withBase("/case-studies/dawg-team-apparel-usa"),
     caseStudyLabel: "Read Case Study",
     accent: "#e0444b",
     accentSoft: "#f4a2a5",
@@ -727,7 +729,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No rankings, project counts, lead volumes or revenue are claimed; experience and accreditation statements are the client's own.",
     liveUrl: "https://empaintingtx.com/",
-    caseStudyUrl: "/case-studies/em-painting-tx",
+    caseStudyUrl: withBase("/case-studies/em-painting-tx"),
     caseStudyLabel: "Read Case Study",
     accent: "#3f6fe0",
     accentSoft: "#9fb8f2",
@@ -768,7 +770,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No bookings, placements, clients, revenue, conversion figures or rankings are claimed.",
     liveUrl: "https://www.royaltywithapurposellc.com/",
-    caseStudyUrl: "/case-studies/royalty-with-a-purpose",
+    caseStudyUrl: withBase("/case-studies/royalty-with-a-purpose"),
     caseStudyLabel: "Read Case Study",
     accent: "#8fa9d8",
     accentSoft: "#c9d6ee",
@@ -809,7 +811,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No fleet size, passenger volume, safety statistics, on-time figures, ratings or rankings are claimed.",
     liveUrl: "https://safetravelcharters.com/",
-    caseStudyUrl: "/case-studies/safe-travel-charters",
+    caseStudyUrl: withBase("/case-studies/safe-travel-charters"),
     caseStudyLabel: "Read Case Study",
     accent: "#4a90e2",
     accentSoft: "#a6c9f2",
@@ -850,7 +852,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No lead volume, revenue, rankings, traffic, conversion figures or verified review figures are claimed.",
     liveUrl: "https://ontophomeservices.com/",
-    caseStudyUrl: "/case-studies/on-top-home-services",
+    caseStudyUrl: withBase("/case-studies/on-top-home-services"),
     caseStudyLabel: "Read Case Study",
     accent: "#6b9bff",
     accentSoft: "#b4cbff",
@@ -891,7 +893,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No order volumes, customers, revenue, conversion rates, inventory levels, rankings or company certifications are claimed.",
     liveUrl: "https://jobcosupply.com/",
-    caseStudyUrl: "/case-studies/jobco-supply",
+    caseStudyUrl: withBase("/case-studies/jobco-supply"),
     caseStudyLabel: "Read Case Study",
     accent: "#8b7cf6",
     accentSoft: "#c7befb",
@@ -932,7 +934,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No subscriber, user, engagement, traffic or ranking figures are claimed, and no AI model or health outcome is claimed.",
     liveUrl: "https://thisweekinpublichealth.com/",
-    caseStudyUrl: "/case-studies/this-week-in-public-health",
+    caseStudyUrl: withBase("/case-studies/this-week-in-public-health"),
     caseStudyLabel: "Read Case Study",
     accent: "#f0893a",
     accentSoft: "#f8c493",
@@ -973,7 +975,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No lead volume, tests booked, installations, customers, revenue, rankings or review figures are claimed.",
     liveUrl: "https://www.cfwsllc.com/",
-    caseStudyUrl: "/case-studies/cfws-llc",
+    caseStudyUrl: withBase("/case-studies/cfws-llc"),
     caseStudyLabel: "Read Case Study",
     accent: "#8fd14f",
     accentSoft: "#c6eb9a",
@@ -1014,7 +1016,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No project count, clients, contract value, revenue, lead volume or ranking is claimed, and no certification of any standard is claimed.",
     liveUrl: "https://5dccs.com/",
-    caseStudyUrl: "/case-studies/5dccs",
+    caseStudyUrl: withBase("/case-studies/5dccs"),
     caseStudyLabel: "Read Case Study",
     accent: "#f2c230",
     accentSoft: "#f8dd85",
@@ -1055,7 +1057,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No federal award, contract value, agency, customer, certification or ranking is claimed; experience statements are the client's own.",
     liveUrl: "https://nexusallianceinc.com/",
-    caseStudyUrl: "/case-studies/nexus-alliance",
+    caseStudyUrl: withBase("/case-studies/nexus-alliance"),
     caseStudyLabel: "Read Case Study",
     accent: "#86b84f",
     accentSoft: "#c2dd9f",
@@ -1096,7 +1098,7 @@ export const projects: Project[] = [
     disclosure:
       "No performance data was supplied. No sales, users, leads or rankings are claimed, no medical benefit or coverage is claimed, and no accessibility conformance level is asserted.",
     liveUrl: "https://www.fairpathconsultants.com/",
-    caseStudyUrl: "/case-studies/fairpath-consultants",
+    caseStudyUrl: withBase("/case-studies/fairpath-consultants"),
     caseStudyLabel: "Read Case Study",
     accent: "#c2a878",
     accentSoft: "#e2d3b6",
@@ -1115,15 +1117,24 @@ export const projects: Project[] = [
 /**
  * Capabilities listed in the About section. Descriptions state what the work
  * covers, never a credential: no accreditation, contractor status or
- * eInvoicing ASP status is claimed.
+ * eInvoicing ASP status is claimed. `href` points at the matching service page
+ * on the main BytesPlatform website, where one exists.
  */
-export const capabilities = [
-  { title: "AI Automation & Intelligent Workflows", body: "Repetitive operations turned into reliable, monitored automated workflows." },
-  { title: "AI Agents & Business Assistants", body: "Assistants grounded in your own documents, data and processes." },
-  { title: "Custom SaaS & Product Development", body: "Software products taken from first release through to scale." },
-  { title: "Web & Mobile App Development", body: "Production apps for iOS, Android and the web." },
-  { title: "CRM & ERP Systems", body: "Customer and operations platforms configured around how your teams work." },
-  { title: "Government Opportunity & Proposal Technology", body: "Tools for finding, qualifying and responding to public-sector opportunities." },
+export interface Capability {
+  title: string;
+  body: string;
+  href?: string;
+}
+
+export const capabilities: Capability[] = [
+  { title: "AI Automation & Intelligent Workflows", body: "Repetitive operations turned into reliable, monitored automated workflows.", href: main.service("ai-automation") },
+  { title: "AI Agents & Business Assistants", body: "Assistants grounded in your own documents, data and processes.", href: main.service("generative-ai") },
+  { title: "Custom SaaS & Product Development", body: "Software products taken from first release through to scale.", href: main.service("saas-product-development") },
+  { title: "Web & Mobile App Development", body: "Production apps for iOS, Android and the web.", href: main.service("web-mobile-app-development") },
+  { title: "CRM & ERP Systems", body: "Customer and operations platforms configured around how your teams work.", href: main.service("crm-erp-systems") },
+  { title: "SEO & Organic Growth", body: "Technical SEO, content and local search that compound into qualified demand.", href: main.service("seo") },
+  { title: "AI Search & Generative Engine Optimization", body: "Visibility where buyers now ask: ChatGPT, Gemini, Perplexity and AI search results." },
+  { title: "Government Opportunity & Proposal Technology", body: "Tools for finding, qualifying and responding to public-sector opportunities.", href: main.service("government-proposal-technology") },
   { title: "Public-Sector Digital Solutions", body: "Accessible, secure digital services for public-sector organisations." },
-  { title: "UAE eInvoicing & Business System Integration", body: "eInvoicing integration, ERP readiness, data mapping and business-system implementation." },
+  { title: "UAE eInvoicing & Business System Integration", body: "eInvoicing integration, ERP readiness, data mapping and business-system implementation.", href: main.service("e-invoicing-integration") },
 ];

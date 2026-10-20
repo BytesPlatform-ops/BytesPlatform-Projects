@@ -217,6 +217,14 @@
   .drawerRoot[data-open="true"] .drawer {
     transform: none;
   }
+  /* Phones: the menu takes the whole screen */
+  @media (max-width: 600px) {
+    .drawer {
+      width: 100%;
+      box-shadow: none;
+      padding-inline: var(--pad);
+    }
+  }
   .drawerHead {
     display: flex;
     align-items: center;

@@ -1,16 +1,21 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { BRAND, main, withBase } from "@/lib/site";
 import styles from "./SiteHeader.module.css";
 
+// Work and Capabilities are sections of this page; About and Contact belong to
+// the main BytesPlatform website. Plain <a> so the anchors also resolve from
+// the 404 page.
 const nav = [
-  { href: "/projects", label: "Work" },
-  { href: "/projects#capabilities", label: "Capabilities" },
-  { href: "https://bytesplatform.com/about", label: "About" },
-  { href: "https://bytesplatform.com/contact", label: "Contact" },
+  { href: withBase("#work"), label: "Work" },
+  { href: withBase("#capabilities"), label: "Capabilities" },
+  { href: main.about, label: "About" },
+  { href: main.contact, label: "Contact" },
 ];
+/** The full-screen mobile menu also leads back to the main site's home */
+const mobileNav = [{ href: main.home, label: "Home" }, ...nav];
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -76,10 +81,10 @@ export default function SiteHeader() {
         aria-label="Menu"
       >
         <div className={styles.drawerHead}>
-          <Link href="/projects" className={styles.brand} onClick={close} tabIndex={open ? 0 : -1}>
+          <a href={main.home} className={styles.brand} onClick={close} tabIndex={open ? 0 : -1}>
             <span className={styles.brandMark} aria-hidden="true" />
-            BytesPak
-          </Link>
+            {BRAND}
+          </a>
           <button
             ref={closeRef}
             type="button"
@@ -93,8 +98,8 @@ export default function SiteHeader() {
         </div>
 
         <nav aria-label="Mobile" className={styles.drawerNav}>
-          {nav.map((item, i) => (
-            <Link
+          {mobileNav.map((item, i) => (
+            <a
               key={item.label}
               href={item.href}
               className={styles.sheetLink}
@@ -104,11 +109,11 @@ export default function SiteHeader() {
             >
               <span className="mono">0{i + 1}</span>
               {item.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
-        <a href="https://bytesplatform.com/contact" className={styles.sheetCta} onClick={close} tabIndex={open ? 0 : -1}>
+        <a href={main.contact} className={styles.sheetCta} onClick={close} tabIndex={open ? 0 : -1}>
           Start a project ↗
         </a>
       </div>
@@ -121,20 +126,20 @@ export default function SiteHeader() {
         Skip to content
       </a>
       <div className={`container ${styles.inner}`}>
-        <Link href="/projects" className={styles.brand} aria-label="BytesPak home">
+        <a href={main.home} className={styles.brand} aria-label={`${BRAND} home`}>
           <span className={styles.brandMark} aria-hidden="true" />
-          BytesPak
-        </Link>
+          {BRAND}
+        </a>
 
         <nav className={styles.nav} aria-label="Primary">
           {nav.map((item) => (
-            <Link key={item.label} href={item.href} className={styles.navLink}>
+            <a key={item.label} href={item.href} className={styles.navLink}>
               <span>{item.label}</span>
-            </Link>
+            </a>
           ))}
         </nav>
 
-        <a href="https://bytesplatform.com/contact" className={styles.cta}>
+        <a href={main.contact} className={styles.cta}>
           Start a project
           <i aria-hidden="true">↗</i>
         </a>

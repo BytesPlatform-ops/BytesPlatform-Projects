@@ -4,15 +4,26 @@ import { GeistMono } from "geist/font/mono";
 import "@/styles/globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import PageIntro from "@/components/PageIntro";
+import { introScript } from "@/lib/intro";
+import { BRAND, PROJECTS_URL, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bytesplatform.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "BytesPak",
-    template: "%s — BytesPak",
+    default: `Projects — ${BRAND}`,
+    template: `%s — ${BRAND}`,
   },
   description:
-    "BytesPak combines product strategy, UI/UX, web and mobile engineering, AI and automation, and growth to design and build digital products that hold up in production.",
+    "BytesPlatform combines product strategy, UI/UX, web and mobile engineering, AI and automation, SEO and growth to design and build digital products that hold up in production.",
+  applicationName: BRAND,
+  openGraph: {
+    type: "website",
+    siteName: BRAND,
+    url: PROJECTS_URL,
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
@@ -23,8 +34,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    // The intro script sets data-intro on <html> before first paint
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+      </head>
       <body>
+        <PageIntro />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />

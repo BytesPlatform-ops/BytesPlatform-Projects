@@ -8,7 +8,7 @@ export default function NotFound() {
         Page not found.
       </h1>
       <p style={{ marginTop: 24 }}>
-        <Link href="/projects">← Back to projects</Link>
+        <Link href="/">← Back to projects</Link>
       </p>
     </section>
   );

@@ -1,3 +1,4 @@
+import { BRAND, main } from "@/lib/site";
 import styles from "./SiteFooter.module.css";
 
 export default function SiteFooter() {
@@ -14,7 +15,7 @@ export default function SiteFooter() {
             <br />
             worth showing.
           </h2>
-          <a href="https://bytesplatform.com/contact" className={styles.ctaLink}>
+          <a href={main.contact} className={styles.ctaLink}>
             <span>Start a conversation</span>
             <span className={styles.ctaCircle} aria-hidden="true">
               ↗
@@ -24,7 +25,7 @@ export default function SiteFooter() {
 
         <div className={styles.cols}>
           <div>
-            <p className="mono">BytesPak</p>
+            <p className="mono">{BRAND}</p>
             <p className={styles.small}>
               Product strategy, UI/UX, web and mobile engineering, AI and automation, growth and SEO.
             </p>
@@ -42,17 +43,19 @@ export default function SiteFooter() {
           <div>
             <p className="mono">Company</p>
             <p className={styles.small}>
-              <a href="https://bytesplatform.com/">bytesplatform.com</a>
+              <a href={main.home}>bytesplatform.com</a>
               <br />
-              <a href="https://bytesplatform.com/services">Services</a>
+              <a href={main.about}>About</a>
               <br />
-              <a href="https://bytesplatform.com/insights">Insights</a>
+              <a href={`${main.home}#services`}>Services</a>
+              <br />
+              <a href={main.blogs}>Insights</a>
             </p>
           </div>
         </div>
 
         <div className={styles.legal}>
-          <span>© {year} BytesPak. All rights reserved.</span>
+          <span>© {year} {BRAND}. All rights reserved.</span>
           <span>Selected work · figures sourced from client case studies</span>
         </div>
       </div>

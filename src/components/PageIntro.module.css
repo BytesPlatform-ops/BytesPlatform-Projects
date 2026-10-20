@@ -1,0 +1,231 @@
+/* Brand intro. Phases are set on <html> by the head script (src/lib/intro.ts).
+
+   data-intro="run"   (from first paint, while the page loads)
+     0.00–0.50  BYTES rises into place, the white dot lands beside it
+     count      000 → 100 at the bottom left, driven by the script
+
+   data-intro="play"  (once the count reads 100)
+     0.00–0.20  the word tilts, very slightly
+     0.20–0.45  the letters close in on the dot; the dot swells a touch
+     0.35–0.90  the page opens through the dot: a circular window grows from
+                its centre (--intro-x / --intro-y, measured by the script)
+
+   The window is a radial gradient whose radius is a typed custom property,
+   so a single layer repaints and nothing else moves. */
+
+@property --intro-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.overlay {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --close: cubic-bezier(0.7, 0, 0.3, 1);
+  --intro-r: 0px;
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  color: #fff;
+  pointer-events: none;
+  /* Black everywhere except a circle at the dot, which shows the page */
+  background: radial-gradient(
+    circle at var(--intro-x, 50%) var(--intro-y, 50%),
+    transparent var(--intro-r),
+    #000 calc(var(--intro-r) + 1px)
+  );
+}
+
+:global(html[data-intro="run"]) .overlay,
+:global(html[data-intro="play"]) .overlay {
+  display: block;
+}
+/* Failsafe: never leave the page covered, whatever happens to the script */
+:global(html[data-intro="run"]) .overlay {
+  animation: away 0s linear 6s forwards;
+}
+:global(html[data-intro="play"]) .overlay {
+  animation: open 0.55s cubic-bezier(0.65, 0, 0.3, 1) 0.35s both;
+}
+
+.word {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(4.5rem, 15vw, 13rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+/* Letters and dot share a baseline, like a full stop */
+.lockup {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.mask {
+  display: inline-flex;
+  overflow: hidden;
+  /* Room for the glyphs inside the mask */
+  padding: 0.06em 0.02em 0.08em;
+  margin: -0.06em -0.02em -0.08em;
+  /* Tilts and closes toward the dot beside it */
+  transform-origin: 100% 70%;
+}
+:global(html[data-intro="play"]) .mask {
+  animation: close 0.45s linear both;
+}
+
+.char {
+  display: inline-block;
+}
+:global(html[data-intro="run"]) .char,
+:global(html[data-intro="play"]) .char {
+  animation: rise 0.45s var(--ease-out) calc(var(--i) * 32ms) both;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.2em;
+  height: 0.2em;
+  margin-left: 0.05em;
+  border-radius: 50%;
+  background: #fff;
+}
+:global(html[data-intro="run"]) .dot {
+  animation: land 0.3s var(--ease-out) 0.28s both;
+}
+:global(html[data-intro="play"]) .dot {
+  animation:
+    land 0.3s var(--ease-out) 0.28s both,
+    focus 0.6s linear 0.05s both;
+}
+
+/* Progress, bottom left: the count and a line that grows with it */
+.progress {
+  position: absolute;
+  left: var(--pad);
+  bottom: clamp(22px, 3.4vw, 44px);
+  display: grid;
+  gap: 12px;
+  width: clamp(120px, 14vw, 180px);
+}
+.count {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.count::before {
+  content: attr(data-n);
+}
+.count:not([data-n])::before {
+  content: "000";
+}
+.bar {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.85);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+:global(html[data-intro="play"]) .progress {
+  animation: fade 0.2s linear 0.3s both;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes land {
+  from {
+    transform: scale(0);
+  }
+}
+
+/* play 0.00 → 0.45s */
+@keyframes close {
+  0% {
+    transform: rotate(0deg) scaleX(1);
+    animation-timing-function: var(--ease-out);
+  }
+  44% {
+    transform: rotate(-6deg) scaleX(1);
+    opacity: 1;
+    animation-timing-function: var(--close);
+  }
+  100% {
+    transform: rotate(-6deg) scaleX(0);
+    opacity: 0;
+  }
+}
+
+/* play 0.05 → 0.65s: swells as the letters arrive, then gives way to the
+   window opening beneath it */
+@keyframes focus {
+  0%,
+  25% {
+    transform: scale(1);
+    animation-timing-function: var(--close);
+  }
+  60% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* play 0.35 → 0.90s */
+@keyframes open {
+  0% {
+    --intro-r: 0px;
+  }
+  99% {
+    --intro-r: 120vmax;
+    visibility: visible;
+  }
+  100% {
+    --intro-r: 120vmax;
+    visibility: hidden;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes away {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Phones: the same sequence with a smaller wordmark */
+@media (max-width: 767px) {
+  .word {
+    font-size: clamp(3.5rem, 18vw, 5rem);
+  }
+  .progress {
+    bottom: max(28px, env(safe-area-inset-bottom));
+  }
+  .count {
+    font-size: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    display: none !important;
+  }
+}

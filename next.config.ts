@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { basePath } from "./src/lib/site";
 
 /** Case studies with a PDF in public/case-studies/<slug>.pdf */
 const CASE_STUDIES = [
@@ -34,6 +35,10 @@ const HTML_CASE_STUDIES = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Served at https://bytesplatform.com/projects as its own zone. Pages,
+  // /_next assets, images and case studies all live under this prefix, so the
+  // main site only has to forward /projects/* here.
+  basePath,
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [375, 430, 640, 768, 1024, 1280, 1440, 1920, 2560],
@@ -41,9 +46,11 @@ const nextConfig: NextConfig = {
     qualities: [75, 90, 92],
   },
   async redirects() {
-    return [{ source: "/", destination: "/projects", permanent: false }];
+    // Only reachable on this app's own host (local dev / preview deployments):
+    // on bytesplatform.com the root belongs to the main website.
+    return [{ source: "/", destination: basePath, basePath: false, permanent: false }];
   },
-  // Case studies live on our own domain: /case-studies/<slug> serves
+  // Case studies live on our own domain: /projects/case-studies/<slug> serves
   // public/case-studies/<slug>.pdf (browser PDF viewer) or <slug>.html
   async rewrites() {
     return [
@@ -55,7 +62,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: `/case-studies/:slug(${CASE_STUDIES})`,
-        headers: [{ key: "Content-Disposition", value: 'inline; filename="BytesPak-:slug-case-study.pdf"' }],
+        headers: [{ key: "Content-Disposition", value: 'inline; filename="BytesPlatform-:slug-case-study.pdf"' }],
       },
     ];
   },
