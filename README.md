@@ -4,7 +4,7 @@ Production-ready Projects page built with **Next.js 15 (App Router) + TypeScript
 No UI libraries, no animation libraries: the whole hover system is CSS, plus ~40 lines of JS for
 mouse parallax and scroll reveal.
    
-## Run
+## Run. 
   
 ```bash. 
 npm install. 
