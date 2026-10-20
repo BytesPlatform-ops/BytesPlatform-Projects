@@ -5,7 +5,7 @@ No UI libraries, no animation libraries: the whole hover system is CSS, plus ~40
 mouse parallax and scroll reveal.
 
 ## Run
-
+  
 ```bash
 npm install
 npm run dev      # http://localhost:3000/projects  (/ redirects there)
