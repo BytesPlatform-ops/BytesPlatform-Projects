@@ -7,7 +7,7 @@ mouse parallax and scroll reveal.
 ## Run
   
 ```bash. 
-npm install
+npm install. 
 npm run dev      # http://localhost:3000/projects  (/ redirects there)
 npm run build && npm start
 ```
