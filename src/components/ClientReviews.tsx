@@ -11,6 +11,9 @@ import styles from "./ClientReviews.module.css";
 
 const TRUSTPILOT_URL = "https://www.trustpilot.com/review/bytesplatform.com";
 
+/** The Trustpilot star */
+const TP_STAR = "M12 2l2.6 7.4H22l-6 4.5 2.3 7.6L12 16.9l-6.3 4.6L8 13.9 2 9.4h7.4z";
+
 interface Review {
   title: string;
   quote: string;
@@ -102,7 +105,15 @@ export default function ClientReviews() {
                     {r.dateLabel}
                   </time>
                 </div>
-                <h3 className={styles.title}>{r.title}</h3>
+                <div className={styles.titleRow}>
+                  <h3 className={styles.title}>{r.title}</h3>
+                  {/* Trustpilot mark: white star on its green tile */}
+                  <span className={styles.tpMark} aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d={TP_STAR} />
+                    </svg>
+                  </span>
+                </div>
                 <blockquote className={styles.quote}>
                   <p>“{r.quote}”</p>
                 </blockquote>
@@ -120,7 +131,7 @@ export default function ClientReviews() {
         <span>Read all reviews on</span>
         <span className={styles.tpBrand}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2l2.6 7.4H22l-6 4.5 2.3 7.6L12 16.9l-6.3 4.6L8 13.9 2 9.4h7.4z" />
+            <path d={TP_STAR} />
           </svg>
           Trustpilot
         </span>

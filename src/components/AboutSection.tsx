@@ -203,7 +203,7 @@ export default function AboutSection() {
         </div>
         <div className={styles.copy}>
           <p className={styles.lead}>
-            A Texas-based product and engineering company. <span>One team takes your idea from first sketch to a
+            A product and engineering company built for the long run. <span>One team takes your idea from first sketch to a
             product that scales, without ever changing hands.</span>
           </p>
           <p className={styles.body}>
