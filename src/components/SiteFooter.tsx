@@ -34,9 +34,10 @@ export default function SiteFooter() {
             <p className="mono">Contact</p>
             <p className={styles.small}>
               <a href="mailto:info@bytesplatform.com">info@bytesplatform.com</a>
-              <br />
-              <a href="tel:+18333230371">833-323-0371</a>
-              <br />
+              <span className={styles.phone}>
+                <span className={`mono ${styles.phoneLabel}`}>Phone · Toll free</span>
+                <a href="tel:+18333230371">+1 833 323 0371</a>
+              </span>
               Denton, Texas
             </p>
           </div>

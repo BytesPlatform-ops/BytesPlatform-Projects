@@ -54,7 +54,7 @@
      then a secondary stagger, once the headline has landed:
      0.62  eyebrow dot lands, Portfolio rule draws
      0.68  eyebrow text and Portfolio label
-     0.76  "This is just as showing off."
+     0.76  "This is just us showing off."
      0.84  supporting paragraph */
 .heroStage {
   --hair-top: calc(clamp(70px, 8.9vw, 126px) + clamp(22px, 2.8vw, 40px));

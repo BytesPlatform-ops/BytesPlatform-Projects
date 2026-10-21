@@ -79,7 +79,7 @@ export default function ProjectsPage() {
             <p className={styles.portfolio}>
               <span className={styles.portfolioRule} aria-hidden="true" />
               <span className={`mono ${styles.portfolioLabel}`}>Portfolio</span>
-              <span className={styles.portfolioLine}>This is just as showing off.</span>
+              <span className={styles.portfolioLine}>This is just us showing off.</span>
             </p>
           </div>
           <div className={styles.heroBody}>

@@ -126,9 +126,18 @@ export default function SiteHeader() {
         Skip to content
       </a>
       <div className={`container ${styles.inner}`}>
-        <a href={main.home} className={styles.brand} aria-label={`${BRAND} home`}>
+        {/* The brand leads back to the main BytesPlatform website */}
+        <a href={main.home} className={styles.brand} data-main aria-label={`${BRAND}: back to the main site`}>
           <span className={styles.brandMark} aria-hidden="true" />
-          {BRAND}
+          <span className={styles.brandName}>{BRAND}</span>
+          <span className={styles.brandArrow} aria-hidden="true">
+            <svg viewBox="0 0 12 12">
+              <path d="M3.5 8.5l5-5M4.5 3.5h4v4" />
+            </svg>
+          </span>
+          <span className={`mono ${styles.brandHint}`} aria-hidden="true">
+            Main site
+          </span>
         </a>
 
         <nav className={styles.nav} aria-label="Primary">
