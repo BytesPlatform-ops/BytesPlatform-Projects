@@ -7,8 +7,8 @@ import styles from "./AboutSection.module.css";
 /**
  * About: editorial heading and copy, then the regional footprint: the outline
  * of the contiguous USA with Denton, Texas pinned as headquarters, routes from
- * Denton out to major US cities, and on to the Middle East and Africa. The US
- * is drawn to scale; the delivery regions are schematic.
+ * Denton out to every state, and on to the Middle East and Africa. The US is
+ * drawn to scale; the delivery regions are schematic.
  */
 
 /** Simplified outline of the contiguous US as [longitude, latitude] */
@@ -40,56 +40,98 @@ const usPath = `M${US_OUTLINE.map(([lon, lat]) => geo(lon, lat).join(" ")).join(
 
 const DENTON = geo(-97.13, 33.21);
 
-/** US cities linked to headquarters (Seattle, Los Angeles, Denver, Chicago,
- *  New York, Atlanta), shown as unlabelled dots */
-const cities: { key: string; lon: number; lat: number }[] = [
-  { key: "seattle", lon: -122.33, lat: 47.6 },
-  { key: "la", lon: -118.24, lat: 34.05 },
-  { key: "denver", lon: -104.99, lat: 39.74 },
-  { key: "chicago", lon: -87.63, lat: 41.88 },
-  { key: "nyc", lon: -74.0, lat: 40.7 },
-  { key: "atlanta", lon: -84.39, lat: 33.75 },
+/** The 48 contiguous states, each at its approximate centre, linked to
+ *  headquarters and shown as unlabelled dots */
+const states: { key: string; lon: number; lat: number }[] = [
+  { key: "al", lon: -86.8, lat: 32.8 }, { key: "az", lon: -111.7, lat: 34.3 },
+  { key: "ar", lon: -92.4, lat: 34.9 }, { key: "ca", lon: -119.5, lat: 37.2 },
+  { key: "co", lon: -105.5, lat: 39.0 }, { key: "ct", lon: -72.7, lat: 41.6 },
+  { key: "de", lon: -75.5, lat: 39.0 }, { key: "fl", lon: -81.7, lat: 28.4 },
+  { key: "ga", lon: -83.4, lat: 32.7 }, { key: "id", lon: -114.6, lat: 44.4 },
+  { key: "il", lon: -89.2, lat: 40.0 }, { key: "in", lon: -86.3, lat: 39.9 },
+  { key: "ia", lon: -93.5, lat: 42.1 }, { key: "ks", lon: -98.4, lat: 38.5 },
+  { key: "ky", lon: -85.3, lat: 37.5 }, { key: "la", lon: -92.0, lat: 31.0 },
+  { key: "me", lon: -69.2, lat: 45.4 }, { key: "md", lon: -76.8, lat: 39.0 },
+  { key: "ma", lon: -71.8, lat: 42.3 }, { key: "mi", lon: -84.7, lat: 43.6 },
+  { key: "mn", lon: -94.3, lat: 46.3 }, { key: "ms", lon: -89.7, lat: 32.7 },
+  { key: "mo", lon: -92.5, lat: 38.4 }, { key: "mt", lon: -109.6, lat: 47.0 },
+  { key: "ne", lon: -99.8, lat: 41.5 }, { key: "nv", lon: -116.9, lat: 39.3 },
+  { key: "nh", lon: -71.6, lat: 43.7 }, { key: "nj", lon: -74.7, lat: 40.1 },
+  { key: "nm", lon: -106.1, lat: 34.4 }, { key: "ny", lon: -75.5, lat: 42.9 },
+  { key: "nc", lon: -79.4, lat: 35.6 }, { key: "nd", lon: -100.5, lat: 47.5 },
+  { key: "oh", lon: -82.8, lat: 40.3 }, { key: "ok", lon: -97.5, lat: 35.6 },
+  { key: "or", lon: -120.6, lat: 43.9 }, { key: "pa", lon: -77.8, lat: 40.9 },
+  { key: "ri", lon: -71.5, lat: 41.7 }, { key: "sc", lon: -80.9, lat: 33.9 },
+  { key: "sd", lon: -100.2, lat: 44.4 }, { key: "tn", lon: -86.3, lat: 35.9 },
+  { key: "tx", lon: -99.3, lat: 31.3 }, { key: "ut", lon: -111.7, lat: 39.3 },
+  { key: "vt", lon: -72.7, lat: 44.0 }, { key: "va", lon: -78.8, lat: 37.5 },
+  { key: "wa", lon: -120.5, lat: 47.4 }, { key: "wv", lon: -80.6, lat: 38.6 },
+  { key: "wi", lon: -89.8, lat: 44.6 }, { key: "wy", lon: -107.5, lat: 43.0 },
 ];
+
+type Pt = [number, number];
+
+/** Each state in the drawing, with its distance from Denton as 0–1 so the
+ *  hops can ripple outward from headquarters */
+const statePts = (() => {
+  const pts = states.map((s) => {
+    const p = geo(s.lon, s.lat);
+    return { key: s.key, p, dist: Math.hypot(p[0] - DENTON[0], p[1] - DENTON[1]) };
+  });
+  const max = Math.max(...pts.map((s) => s.dist));
+  return pts.map((s) => ({ ...s, t: s.dist / max }));
+})();
+
+type Layout = "wide" | "compact";
+
+/** The visible window of the drawing: the full width on larger screens; on
+ *  phones a tighter crop, with the delivery regions drawn in closer */
+const views: Record<Layout, { x: number; y: number; w: number; h: number }> = {
+  wide: { x: 0, y: 0, w: 1000, h: 220 },
+  compact: { x: 20, y: -10, w: 680, h: 250 },
+};
+
+/** Schematic spots for the delivery regions, per layout */
+const regions: Record<Layout, { africa: Pt; mideast: Pt }> = {
+  wide: { africa: [590, 158], mideast: [830, 92] },
+  compact: { africa: [470, 115], mideast: [470, 20] },
+};
 
 interface Node {
   key: string;
   label?: string;
   sub?: string;
-  /** Position in the 1000 × 220 drawing */
+  /** Position in the drawing */
   x: number;
   y: number;
   /** Which side of the pin the label sits on */
-  place?: "under" | "below" | "above";
+  place?: "under" | "below" | "above" | "right";
   hub?: boolean;
-  /** A US city: a small unlabelled dot */
+  /** A US state: a small unlabelled dot */
   city?: boolean;
   /** Entrance order */
   i: number;
 }
 
-const nodes: Node[] = [
-  {
-    key: "usa",
-    label: "USA",
-    sub: "Headquarters · Denton, Texas",
-    x: DENTON[0],
-    y: DENTON[1],
-    place: "under",
-    hub: true,
-    i: 0,
-  },
-  ...cities.map((c, k): Node => {
-    const [x, y] = geo(c.lon, c.lat);
-    return { key: c.key, x, y, city: true, i: 1 + k * 0.35 };
-  }),
-  { key: "africa", label: "Africa", sub: "Delivery region", x: 590, y: 158, place: "below", i: 4 },
-  { key: "mideast", label: "Middle East", sub: "Delivery region", x: 830, y: 92, place: "above", i: 5 },
-];
-
-/** Order on the phone rail: the hub first, then outward */
-const railOrder = ["usa", "mideast", "africa"];
-
-type Pt = [number, number];
+const nodesFor = (layout: Layout): Node[] => {
+  const r = regions[layout];
+  const side = layout === "compact" ? "right" : undefined;
+  return [
+    {
+      key: "usa",
+      label: "USA",
+      sub: "Headquarters · Denton, Texas",
+      x: DENTON[0],
+      y: DENTON[1],
+      place: "under",
+      hub: true,
+      i: 0,
+    },
+    ...statePts.map((s): Node => ({ key: s.key, x: s.p[0], y: s.p[1], city: true, i: 1 + s.t * 2.2 })),
+    { key: "africa", label: "Africa", sub: "Delivery region", x: r.africa[0], y: r.africa[1], place: side ?? "below", i: 4 },
+    { key: "mideast", label: "Middle East", sub: "Delivery region", x: r.mideast[0], y: r.mideast[1], place: side ?? "above", i: 5 },
+  ];
+};
 
 /** A gentle arc from a to b, bowing up the drawing */
 const arc = (a: Pt, b: Pt, bend = 0.2): Pt[] => {
@@ -104,24 +146,26 @@ const arc = (a: Pt, b: Pt, bend = 0.2): Pt[] => {
 };
 
 /** Routes as cubic curves: start, two controls, end. All leave Denton: out to
- *  the US cities first, then on to the delivery regions. `d` staggers them */
-const routes: { key: string; pts: Pt[]; d: number; local?: boolean }[] = [
-  ...nodes
-    .filter((n) => n.city)
-    .map((n, k) => ({ key: `to-${n.key}`, pts: arc(DENTON, [n.x, n.y]), d: k * 0.12, local: true })),
-  { key: "to-africa", pts: [DENTON, [320, 50], [480, 60], [590, 158]], d: 0.9 },
-  { key: "to-mideast", pts: [DENTON, [380, -12], [660, -6], [830, 92]], d: 1.15 },
-  {
-    key: "africa-mideast",
-    pts: [
-      [590, 158],
-      [660, 140],
-      [760, 128],
-      [830, 92],
-    ],
-    d: 1.4,
-  },
-];
+ *  every state first, nearest to farthest, then on to the delivery regions.
+ *  `d` staggers them */
+const routesFor = (layout: Layout): { key: string; pts: Pt[]; d: number; local?: boolean }[] => {
+  const { africa, mideast } = regions[layout];
+  const local = statePts.map((s) => ({ key: `to-${s.key}`, pts: arc(DENTON, s.p), d: s.t * 0.8, local: true }));
+  if (layout === "compact") {
+    return [
+      ...local,
+      { key: "to-africa", pts: arc(DENTON, africa, 0.25), d: 0.9 },
+      { key: "to-mideast", pts: arc(DENTON, mideast, 0.3), d: 1.15 },
+      { key: "africa-mideast", pts: arc(africa, mideast, 0.25), d: 1.4 },
+    ];
+  }
+  return [
+    ...local,
+    { key: "to-africa", pts: [DENTON, [320, 50], [480, 60], africa], d: 0.9 },
+    { key: "to-mideast", pts: [DENTON, [380, -12], [660, -6], mideast], d: 1.15 },
+    { key: "africa-mideast", pts: [africa, [660, 140], [760, 128], mideast], d: 1.4 },
+  ];
+};
 
 /** The delivery path, beside the heading */
 const steps = [
@@ -162,6 +206,12 @@ export default function AboutSection() {
             A Texas-based product and engineering company. <span>One team takes your idea from first sketch to a
             product that scales, without ever changing hands.</span>
           </p>
+          <p className={styles.body}>
+            From our headquarters in Denton, strategists, designers and engineers work side by side, so the people
+            who shape your product are the same people who build and ship it. We partner with founders and growing
+            businesses across the United States, the Middle East and Africa, and we stay on after launch to measure,
+            refine and keep what we built together moving forward.
+          </p>
           {/* Strategy to scale, as the four steps the heading promises */}
           <ol className={styles.steps}>
             {steps.map((s, i) => (
@@ -182,66 +232,59 @@ export default function AboutSection() {
           <span className={`mono ${styles.captionReach}`}>USA · Middle East · Africa</span>
         </figcaption>
 
-        <div className={styles.map}>
-          <svg className={styles.svg} viewBox="0 0 1000 220" aria-hidden="true">
-            <defs>
-              <pattern id="us-dots" width="4.2" height="4.2" patternUnits="userSpaceOnUse">
-                <circle className={styles.patternDot} cx="2.1" cy="2.1" r="0.95" />
-              </pattern>
-            </defs>
-            {/* The contiguous US, to scale: a soft fill, fine dots and a hairline edge */}
-            <g className={styles.country}>
-              <path className={styles.countryFill} d={usPath} />
-              <path className={styles.countryDots} d={usPath} fill="url(#us-dots)" />
-              <path className={styles.countryEdge} d={usPath} />
-            </g>
-            {routes.map((r) => (
-              <g key={r.key} style={{ "--d": `${r.d}s` } as CSSProperties} data-local={r.local || undefined}>
-                <path className={styles.route} d={pathFor(r.pts)} pathLength={1} />
-                <path className={styles.flow} d={pathFor(r.pts)} pathLength={100} />
-              </g>
-            ))}
-          </svg>
+        {/* Two crops of the same drawing: the full width, and a tighter one for phones */}
+        {(["wide", "compact"] as const).map((layout) => {
+          const v = views[layout];
+          return (
+            <div key={layout} className={styles.map} data-layout={layout}>
+              <svg className={styles.svg} viewBox={`${v.x} ${v.y} ${v.w} ${v.h}`} aria-hidden="true">
+                <defs>
+                  <pattern id={`us-dots-${layout}`} width="4.2" height="4.2" patternUnits="userSpaceOnUse">
+                    <circle className={styles.patternDot} cx="2.1" cy="2.1" r="0.95" />
+                  </pattern>
+                </defs>
+                {/* The contiguous US, to scale: a soft fill, fine dots and a hairline edge */}
+                <g className={styles.country}>
+                  <path className={styles.countryFill} d={usPath} />
+                  <path className={styles.countryDots} d={usPath} fill={`url(#us-dots-${layout})`} />
+                  <path className={styles.countryEdge} d={usPath} />
+                </g>
+                {routesFor(layout).map((r) => (
+                  <g key={r.key} style={{ "--d": `${r.d}s` } as CSSProperties} data-local={r.local || undefined}>
+                    <path className={styles.route} d={pathFor(r.pts)} pathLength={1} />
+                    <path className={styles.flow} d={pathFor(r.pts)} pathLength={100} />
+                  </g>
+                ))}
+              </svg>
 
-          {/* Nodes and labels in HTML so the type stays readable at any width */}
-          {nodes.map((n) => (
-            <div
-              key={n.key}
-              className={styles.node}
-              data-hub={n.hub || undefined}
-              data-city={n.city || undefined}
-              data-place={n.place}
-              style={{ left: `${n.x / 10}%`, top: `${(n.y / 220) * 100}%`, "--i": n.i } as CSSProperties}
-            >
-              <span className={styles.pin} aria-hidden="true" />
-              {n.label && (
-                <span className={styles.nodeText}>
-                  <span className={styles.nodeLabel}>{n.label}</span>
-                  {n.sub && <span className={`mono ${styles.nodeSub}`}>{n.sub}</span>}
-                </span>
-              )}
+              {/* Nodes and labels in HTML so the type stays readable at any width */}
+              {nodesFor(layout).map((n) => (
+                <div
+                  key={n.key}
+                  className={styles.node}
+                  data-hub={n.hub || undefined}
+                  data-city={n.city || undefined}
+                  data-place={n.place}
+                  style={
+                    {
+                      left: `${((n.x - v.x) / v.w) * 100}%`,
+                      top: `${((n.y - v.y) / v.h) * 100}%`,
+                      "--i": n.i,
+                    } as CSSProperties
+                  }
+                >
+                  <span className={styles.pin} aria-hidden="true" />
+                  {n.label && (
+                    <span className={styles.nodeText}>
+                      <span className={styles.nodeLabel}>{n.label}</span>
+                      {n.sub && <span className={`mono ${styles.nodeSub}`}>{n.sub}</span>}
+                    </span>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Phones: the same routes as a vertical rail, every label full size */}
-        <ol className={styles.rail}>
-          {railOrder.map((key, i) => {
-            const n = nodes.find((node) => node.key === key)!;
-            return (
-              <li
-                key={n.key}
-                className={styles.railStop}
-                data-hub={n.hub || undefined}
-                style={{ "--i": i } as CSSProperties}
-              >
-                <span className={styles.railPin} aria-hidden="true" />
-                <span className={styles.railLabel}>{n.label}</span>
-                <span className={`mono ${styles.railSub}`}>{n.sub}</span>
-              </li>
-            );
-          })}
-        </ol>
+          );
+        })}
       </figure>
     </section>
   );

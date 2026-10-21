@@ -88,22 +88,30 @@ export default function ClientReviews() {
       <ol className={styles.list}>
         {reviews.map((r, i) => (
           <li key={r.name} className={styles.review} style={{ "--i": i } as CSSProperties}>
-            <article>
-              <div className={styles.top}>
-                <Stars />
-                <time className={`mono ${styles.date}`} dateTime={r.date}>
-                  {r.dateLabel}
-                </time>
-              </div>
-              <h3 className={styles.title}>{r.title}</h3>
-              <blockquote className={styles.quote}>
-                <p>“{r.quote}”</p>
-              </blockquote>
-              <p className={styles.author}>
-                <strong>{r.name}</strong>
-                <span>{r.role}</span>
-              </p>
-            </article>
+            <a
+              className={styles.reviewLink}
+              href={TRUSTPILOT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${r.title}, review by ${r.name} on Trustpilot (opens in a new tab)`}
+            >
+              <article>
+                <div className={styles.top}>
+                  <Stars />
+                  <time className={`mono ${styles.date}`} dateTime={r.date}>
+                    {r.dateLabel}
+                  </time>
+                </div>
+                <h3 className={styles.title}>{r.title}</h3>
+                <blockquote className={styles.quote}>
+                  <p>“{r.quote}”</p>
+                </blockquote>
+                <p className={styles.author}>
+                  <strong>{r.name}</strong>
+                  <span>{r.role}</span>
+                </p>
+              </article>
+            </a>
           </li>
         ))}
       </ol>

@@ -65,6 +65,13 @@
 .lead span {
   color: var(--muted);
 }
+.body {
+  margin-top: 16px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+}
 
 /* Four steps on one rail; the rail draws in, then a pulse keeps moving along it */
 .steps {
@@ -183,6 +190,10 @@
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+/* The phone crop (hidden on wider screens) */
+.map[data-layout="compact"] {
+  display: none;
+}
 
 .svg {
   position: absolute;
@@ -224,6 +235,12 @@
 
 /* The highlight: each whole route softly lights up in brand blue and fades
    back, one after another out from Denton. No moving dash */
+/* The hops to the states: quieter, so the many of them read as one spray */
+[data-local] .route {
+  stroke-opacity: 0.16;
+  stroke-width: 0.9;
+}
+
 .flow {
   fill: none;
   stroke: var(--brand);
@@ -233,6 +250,10 @@
 }
 .section:not([data-anim="ready"]) .flow {
   animation: flow 6s ease-in-out calc(2.2s + var(--d) * 1.6) infinite;
+}
+
+[data-local] .flow {
+  stroke-width: 1.1;
 }
 
 @keyframes flow {
@@ -289,12 +310,12 @@
 .node:not([data-hub]):not([data-city]) .pin::after {
   animation: pulse 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) calc(1.2s + var(--i) * 0.6s) infinite;
 }
-/* US cities: small, unlabelled dots at the end of each hop */
+/* US states: small, unlabelled dots at the end of each hop */
 .node[data-city] .pin {
-  width: 6px;
-  height: 6px;
-  left: -3px;
-  top: -3px;
+  width: 5px;
+  height: 5px;
+  left: -2.5px;
+  top: -2.5px;
   border: 0;
   background: var(--brand);
   box-shadow: 0 0 0 2px var(--bg);
@@ -342,6 +363,12 @@
   transform: translateX(-50%);
   text-align: center;
 }
+/* Phones: to the right of the pin, clear of the routes arriving from the left */
+.node[data-place="right"] .nodeText {
+  left: 14px;
+  top: 0;
+  transform: translateY(-50%);
+}
 .nodeLabel {
   font-size: clamp(14px, 1.15vw, 16px);
   font-weight: 600;
@@ -351,11 +378,6 @@
   font-size: 10px;
   color: var(--muted);
 }
-/* Phone rail (hidden on wider screens) */
-.rail {
-  display: none;
-}
-
 /* ---- Entrance ---------------------------------------------------------- */
 
 [data-anim="ready"] .rule {
@@ -496,118 +518,46 @@
     padding-top: 20px;
     gap: 8px;
   }
-  /* The curved drawing gives way to a vertical rail */
-  .map {
+  /* The tighter crop, with the delivery regions drawn in closer */
+  .map[data-layout="wide"] {
     display: none;
   }
-  .rail {
-    position: relative;
-    display: grid;
-    gap: 26px;
-    padding: 26px 0 28px;
+  .map[data-layout="compact"] {
+    display: block;
+    aspect-ratio: 680 / 250;
+    margin: 18px 0 22px;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
-  /* The line linking the stops, with a pulse travelling down it */
-  .rail::before,
-  .rail::after {
-    content: "";
-    position: absolute;
-    left: 7px;
-    top: 34px;
-    bottom: 44px;
-    width: 2px;
-    transform-origin: top;
+  .map[data-layout="compact"] .node[data-hub] .nodeText {
+    left: -10px;
+    top: 12px;
+    padding: 3px 5px;
   }
-  .rail::before {
-    background: var(--line-strong);
-  }
-  .rail::after {
-    background: linear-gradient(transparent, var(--brand), transparent);
-    background-size: 100% 40%;
-    background-repeat: no-repeat;
-    animation: railFlow 2.8s linear 1.6s infinite;
-  }
-  .railStop {
-    position: relative;
-    display: grid;
-    gap: 4px;
-    padding-left: 34px;
-  }
-  .railPin {
-    position: absolute;
-    left: 2px;
-    top: 4px;
+  .map[data-layout="compact"] .node[data-hub] .pin {
     width: 12px;
     height: 12px;
-    border-radius: 50%;
-    background: var(--bg);
-    border: 2px solid var(--ink);
+    left: -6px;
+    top: -6px;
+    box-shadow: 0 0 0 3px var(--bg);
   }
-  .railStop[data-hub] .railPin {
-    left: 0;
-    top: 2px;
-    width: 16px;
-    height: 16px;
-    background: var(--ink);
-    box-shadow: 0 0 0 4px var(--bg);
+  .map[data-layout="compact"] .node[data-city] .pin {
+    width: 3.5px;
+    height: 3.5px;
+    left: -1.75px;
+    top: -1.75px;
+    box-shadow: 0 0 0 1px var(--bg);
   }
-  .railPin::after {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    border: 1.5px solid var(--brand);
-    opacity: 0;
-    animation: pulse 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) calc(1.2s + var(--i) * 0.6s) infinite;
+  .map[data-layout="compact"] .pin {
+    width: 10px;
+    height: 10px;
+    left: -5px;
+    top: -5px;
   }
-  .railStop[data-hub] .railPin::after {
-    border-color: var(--gold);
+  .map[data-layout="compact"] .nodeLabel {
+    font-size: 13px;
   }
-  .railLabel {
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.025em;
-  }
-  .railSub {
-    color: var(--muted);
-  }
-
-  [data-anim="ready"] .rail::before {
-    transform: scaleY(0);
-  }
-  [data-anim="ready"] .rail::after {
-    opacity: 0;
-  }
-  [data-anim="ready"] .railPin {
-    transform: scale(0);
-  }
-  [data-anim="ready"] .railLabel,
-  [data-anim="ready"] .railSub {
-    opacity: 0;
-    transform: translateX(-8px);
-  }
-  [data-anim="in"] .rail::before {
-    transition: transform 1s var(--ease) 0.55s;
-  }
-  [data-anim="in"] .rail::after {
-    transition: opacity 0.6s var(--ease) 1.5s;
-  }
-  [data-anim="in"] .railPin {
-    transition: transform 0.5s var(--ease) calc(0.55s + var(--i) * 0.14s);
-  }
-  [data-anim="in"] .railLabel,
-  [data-anim="in"] .railSub {
-    transition:
-      opacity 0.6s var(--ease) calc(0.65s + var(--i) * 0.14s),
-      transform 0.6s var(--ease) calc(0.65s + var(--i) * 0.14s);
-  }
-}
-
-@keyframes railFlow {
-  from {
-    background-position: 0 -60%;
-  }
-  to {
-    background-position: 0 160%;
+  .map[data-layout="compact"] .nodeSub {
+    font-size: 8.5px;
   }
 }
