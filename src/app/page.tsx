@@ -9,10 +9,10 @@ import ByTheNumbers, { type Stat } from "@/components/ByTheNumbers";
 import CapabilityExplorer from "@/components/CapabilityExplorer";
 import ClientReviews from "@/components/ClientReviews";
 import HeroHeadline from "@/components/HeroHeadline";
-import { BRAND, PROJECTS_URL, SITE_URL, withBase } from "@/lib/site";
+import { BRAND, PROJECTS_URL, withBase } from "@/lib/site";
 import styles from "./projects.module.css";
 
-const ogImage = `${SITE_URL}${withBase("/images/projects/quantiva-01-desktop.jpg")}`;
+const ogImage = `${PROJECTS_URL}${withBase("/images/projects/quantiva-01-desktop.jpg")}`;
 
 export const metadata: Metadata = {
   // The page shares the root segment with the layout, so its title template does not apply

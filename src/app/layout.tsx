@@ -6,10 +6,10 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import PageIntro from "@/components/PageIntro";
 import { introScript } from "@/lib/intro";
-import { BRAND, PROJECTS_URL, SITE_URL } from "@/lib/site";
+import { BRAND, PROJECTS_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(PROJECTS_URL),
   title: {
     default: `Projects — ${BRAND}`,
     template: `%s — ${BRAND}`,

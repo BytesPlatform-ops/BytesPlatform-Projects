@@ -1,17 +1,17 @@
 /**
  * Site identity and routing.
  *
- * The Projects experience is served at https://bytesplatform.com/projects as
- * its own Next.js zone: every page, asset and image of this app lives under
- * `basePath`, and anything that belongs to the main website links out to it.
+ * The Projects experience is served at the root of its own subdomain,
+ * https://portfolio.bytesplatform.com, and anything that belongs to the main
+ * website links out to it.
  */
 
 export const SITE_URL = "https://bytesplatform.com";
-export const basePath = "/projects";
+export const basePath = "";
 export const BRAND = "BytesPlatform";
 
 /** Public URL of this app's root page */
-export const PROJECTS_URL = `${SITE_URL}${basePath}`;
+export const PROJECTS_URL = "https://portfolio.bytesplatform.com";
 
 /**
  * Prefix a public-folder path with the base path. next/link adds it on its

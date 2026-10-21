@@ -35,9 +35,8 @@ const HTML_CASE_STUDIES = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Served at https://bytesplatform.com/projects as its own zone. Pages,
-  // /_next assets, images and case studies all live under this prefix, so the
-  // main site only has to forward /projects/* here.
+  // Served at the root of https://portfolio.bytesplatform.com, so basePath is
+  // empty; it stays wired up in case the app moves under a prefix again.
   basePath,
   images: {
     formats: ["image/avif", "image/webp"],
@@ -45,12 +44,7 @@ const nextConfig: NextConfig = {
     // Every quality passed to next/image: showcase frames (90) and the viewer (92)
     qualities: [75, 90, 92],
   },
-  async redirects() {
-    // Only reachable on this app's own host (local dev / preview deployments):
-    // on bytesplatform.com the root belongs to the main website.
-    return [{ source: "/", destination: basePath, basePath: false, permanent: false }];
-  },
-  // Case studies live on our own domain: /projects/case-studies/<slug> serves
+  // Case studies live on our own domain: /case-studies/<slug> serves
   // public/case-studies/<slug>.pdf (browser PDF viewer) or <slug>.html
   async rewrites() {
     return [

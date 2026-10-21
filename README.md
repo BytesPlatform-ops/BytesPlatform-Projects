@@ -8,14 +8,14 @@ mouse parallax and scroll reveal.
   
 ```bash. 
 npm install. 
-npm run dev      # http://localhost:3000/projects  (/ redirects there)
+npm run dev      # http://localhost:3000
 npm run build && npm start
 ```
 
 ## Structure. 
 
 ```
-src/lib/site.ts                         brand, base path (/projects) and main-site routes
+src/lib/site.ts                         brand, public URLs and main-site routes
 src/app/layout.tsx                      global shell: Geist fonts, brand intro, header, footer
 src/app/page.tsx                        the Projects page (hero, at a glance, about, numbers, capabilities, case studies)
 src/app/projects.module.css
@@ -37,25 +37,14 @@ public/images/projects/                 project images (4 per project)
 public/images/montage/                  phone screens cropped from the mobile composites
 ```
 
-## Deploying at bytesplatform.com/projects
+## Deploying at portfolio.bytesplatform.com
 
-The app runs with `basePath: "/projects"` (set in `src/lib/site.ts`), so its pages, `/_next` assets,
-images and case studies all live under `/projects`. Deploy it on its own and have the main site
-forward that path to it (Next.js multi-zones), e.g. in the main site's `next.config`:
+The app is served at the root of its own subdomain (`basePath` is empty in `src/lib/site.ts`).
+Deploy it as a standalone Next.js app (e.g. Vercel) and point a `portfolio` CNAME record at it.
 
-```ts
-async rewrites() {
-  return [
-    { source: "/projects", destination: "https://<projects-deployment>/projects" },
-    { source: "/projects/:path*", destination: "https://<projects-deployment>/projects/:path*" },
-  ];
-}
-```
-
-Canonical and Open Graph URLs point at `https://bytesplatform.com/projects`. Header, footer and
-capability links that belong to the main website point at its existing routes (`main` in `site.ts`).
-Plain `<a>` tags, `next/image` `src` values and metadata URLs need `withBase()`; `next/link` adds the
-prefix itself.
+Canonical and Open Graph URLs point at `https://portfolio.bytesplatform.com` (`PROJECTS_URL`).
+Header, footer and capability links that belong to the main website point at its existing routes
+on `https://bytesplatform.com` (`main` in `site.ts`).
 
 ## Editing content
 
