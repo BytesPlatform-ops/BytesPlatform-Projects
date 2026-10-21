@@ -10,7 +10,7 @@ export interface Stat {
   label: string;
   /** Short mono kicker above the figure */
   kicker: string;
-  viz: "timeline" | "delivery" | "team";
+  viz: "timeline" | "delivery" | "team" | "sectors";
 }
 
 const DURATION = 1300;
@@ -77,6 +77,7 @@ export default function ByTheNumbers({ stats }: { stats: Stat[] }) {
               {s.viz === "timeline" && <Timeline />}
               {s.viz === "delivery" && <Delivery />}
               {s.viz === "team" && <Team />}
+              {s.viz === "sectors" && <Sectors />}
             </div>
           </li>
         ))}
@@ -172,6 +173,31 @@ function Team() {
       ))}
       <circle className={styles.now} cx={CX} cy={CY} r="6" />
       <circle className={styles.ring} cx={CX} cy={CY} r="6" />
+    </svg>
+  );
+}
+
+/** 8+: the industries served, as tiles that light up one after another */
+const SECTORS = ["Fintech", "AI", "Health", "Property", "Logistics", "Public", "Local", "B2B"];
+
+function Sectors() {
+  const w = 70;
+  const h = 32;
+  const gap = 6;
+  return (
+    <svg viewBox="0 0 300 88" className={styles.svg}>
+      {SECTORS.map((name, i) => {
+        const x = 1 + (i % 4) * (w + gap);
+        const y = 6 + Math.floor(i / 4) * (h + gap);
+        return (
+          <g key={name} className={styles.sector} style={v(i)}>
+            <rect x={x} y={y} width={w} height={h} rx="5" />
+            <text x={x + w / 2} y={y + h / 2 + 3} textAnchor="middle">
+              {name}
+            </text>
+          </g>
+        );
+      })}
     </svg>
   );
 }

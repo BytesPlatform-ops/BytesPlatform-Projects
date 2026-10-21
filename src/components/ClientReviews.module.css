@@ -1,0 +1,188 @@
+/* ---- Client reviews ------------------------------------------------------
+   Same head as By the numbers; then two columns of cards on hairlines, and a
+   quiet link out to Trustpilot. Cards rise in turn on entry. */
+
+.section {
+  --gold: #c5ad6c;
+  padding-top: clamp(8px, 2vw, 24px);
+  padding-bottom: clamp(56px, 7vw, 112px);
+}
+
+.head {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
+}
+
+.rule {
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+  transform-origin: left;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(32px, 3.4vw, 48px);
+  row-gap: clamp(40px, 5vw, 72px);
+  margin-top: clamp(28px, 3vw, 40px);
+}
+
+.review {
+  padding-top: clamp(20px, 2vw, 26px);
+  border-top: 1px solid var(--line);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.stars {
+  display: inline-flex;
+  gap: 3px;
+}
+.stars svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--brand);
+}
+
+.date {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.title {
+  margin-top: clamp(22px, 2.4vw, 34px);
+  font-size: clamp(24px, 2.2vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.quote {
+  margin: 14px 0 0;
+  max-width: 60ch;
+  font-size: clamp(16px, 1.2vw, 18px);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+}
+
+.author {
+  display: grid;
+  gap: 2px;
+  margin-top: clamp(24px, 2.6vw, 36px);
+  font-size: 14.5px;
+}
+.author strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+.author span {
+  color: var(--muted);
+}
+
+/* Link out: a pill with the Trustpilot star */
+.trustpilot {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: 14px 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 15px;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition:
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+}
+.tpBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tpBrand svg {
+  width: 17px;
+  height: 17px;
+  fill: #00b67a;
+}
+.trustpilot i {
+  font-style: normal;
+  font-size: 13px;
+  transition: transform 0.3s var(--ease);
+}
+.trustpilot:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .trustpilot:hover {
+    border-color: var(--ink);
+    background-color: color-mix(in srgb, var(--ink) 3%, transparent);
+  }
+  .trustpilot:hover i {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* ---- Entrance ---------------------------------------------------------- */
+
+[data-anim="ready"] .rule {
+  transform: scaleX(0);
+}
+[data-anim="ready"] .review,
+[data-anim="ready"] .trustpilot {
+  opacity: 0;
+  transform: translateY(18px);
+}
+[data-anim="in"] .rule {
+  transition: transform 0.8s var(--ease) 0.05s;
+}
+[data-anim="in"] .review {
+  transition:
+    opacity 0.7s var(--ease) calc(0.1s + var(--i) * 0.1s),
+    transform 0.8s var(--ease) calc(0.1s + var(--i) * 0.1s);
+}
+[data-anim="in"] .trustpilot {
+  transition:
+    opacity 0.7s var(--ease) 0.55s,
+    transform 0.8s var(--ease) 0.55s,
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+}
+
+/* ---- Responsive -------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .section {
+    padding-bottom: 56px;
+  }
+  .list {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 36px;
+  }
+  .title {
+    margin-top: 18px;
+  }
+  .trustpilot {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}

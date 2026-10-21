@@ -175,8 +175,9 @@
 }
 
 /* Phone slots: screens soft-crossfade into one another, the second phone a
-   beat behind the first. Shown whole, never cropped; any slack between
-   proportions falls into the dark bezel */
+   beat behind the first. Each screen sits inset in the bezel with its own,
+   smaller corner radius, so the frame's curve never trims its edges; any
+   slack between proportions falls into the dark bezel */
 .phone .card img {
   object-fit: contain;
 }
@@ -185,6 +186,12 @@
   inset: 0;
   opacity: 0;
   transition: opacity 1.2s cubic-bezier(0.45, 0, 0.25, 1);
+}
+.phone .swap {
+  inset: clamp(3px, 0.4vw, 6px);
+  width: calc(100% - 2 * clamp(3px, 0.4vw, 6px));
+  height: calc(100% - 2 * clamp(3px, 0.4vw, 6px));
+  border-radius: clamp(10px, 1.25vw, 18px);
 }
 .swap[data-active] {
   opacity: 1;
@@ -370,6 +377,12 @@
     box-shadow:
       0 0 0 3px #0b0d11,
       0 20px 34px -22px rgba(11, 13, 17, 0.5);
+  }
+  .phone .swap {
+    inset: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    border-radius: 14px;
   }
   /* Phones: the screens speak for themselves, no labels over them */
   .tag {

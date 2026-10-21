@@ -35,7 +35,7 @@
 
 .list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .module {
@@ -79,7 +79,7 @@
 
 .figure {
   margin-top: clamp(28px, 3.4vw, 52px);
-  font-size: clamp(64px, 8vw, 128px);
+  font-size: clamp(64px, 6.4vw, 108px);
   font-weight: 600;
   line-height: 0.85;
   letter-spacing: -0.06em;
@@ -231,6 +231,41 @@
   }
 }
 
+/* Industries: eight tiles; a highlight walks across them, one at a time */
+.sector rect {
+  fill: var(--ink);
+  fill-opacity: 0.04;
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    fill-opacity 0.35s var(--ease),
+    stroke 0.35s var(--ease);
+}
+.svg .sector text {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+[data-done] .sector rect {
+  animation: sectorLit 6.4s ease-in-out calc(1.4s + var(--n) * 0.8s) infinite;
+}
+@keyframes sectorLit {
+  0%,
+  22%,
+  100% {
+    fill: var(--ink);
+    fill-opacity: 0.04;
+    stroke: var(--line-strong);
+  }
+  8%,
+  14% {
+    fill: var(--brand);
+    fill-opacity: 0.12;
+    stroke: var(--brand);
+  }
+}
+
 /* A few members of the wider team breathe, out of step with each other */
 [data-done] .member:nth-child(3n) {
   animation: breathe 3.2s ease-in-out calc(1.4s + var(--n) * 0.35s) infinite;
@@ -301,8 +336,20 @@
   transform: scaleY(0);
 }
 [data-anim]:not([data-done]) .orbit,
-[data-anim]:not([data-done]) .base {
+[data-anim]:not([data-done]) .base,
+[data-anim]:not([data-done]) .sector {
   opacity: 0;
+}
+[data-anim]:not([data-done]) .sector rect {
+  transform: scale(0.85);
+}
+[data-done] .sector {
+  transition: opacity 0.4s var(--ease) calc(0.1s + var(--n) * 0.07s);
+}
+[data-done] .sector rect {
+  transition:
+    transform 0.5s var(--ease) calc(0.1s + var(--n) * 0.07s),
+    fill-opacity 0.35s var(--ease);
 }
 
 [data-done] .base,
@@ -349,6 +396,17 @@
 }
 
 /* ---- Responsive -------------------------------------------------------- */
+
+/* Mid widths: two by two, so the figures keep their size */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .module:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
 
 @media (max-width: 1023px) {
   .figure {

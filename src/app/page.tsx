@@ -7,6 +7,8 @@ import ShowcaseCanvas from "@/components/ShowcaseCanvas";
 import AboutSection from "@/components/AboutSection";
 import ByTheNumbers, { type Stat } from "@/components/ByTheNumbers";
 import CapabilityExplorer from "@/components/CapabilityExplorer";
+import ClientReviews from "@/components/ClientReviews";
+import HeroHeadline from "@/components/HeroHeadline";
 import { BRAND, PROJECTS_URL, SITE_URL, withBase } from "@/lib/site";
 import styles from "./projects.module.css";
 
@@ -36,6 +38,7 @@ const stats: Stat[] = [
   { value: 2, suffix: "+", label: "Years of continual excellence", kicker: "Track record", viz: "timeline" },
   { value: 300, suffix: "+", label: "Successful projects deployed", kicker: "Delivery", viz: "delivery" },
   { value: 90, suffix: "+", label: "Employees", kicker: "Team", viz: "team" },
+  { value: 8, suffix: "+", label: "Industries served", kicker: "Reach", viz: "sectors" },
 ];
 
 export default function ProjectsPage() {
@@ -87,18 +90,8 @@ export default function ProjectsPage() {
                   Selected work · {String(total).padStart(2, "0")} case studies
                 </span>
               </p>
-              {/* Each line rises out of its own mask, one after another */}
-              <h1 id="hero-title" className={styles.h1}>
-                <span className={styles.heroLine} style={{ "--l": 0 } as React.CSSProperties}>
-                  <span>Products, platforms</span>
-                </span>{" "}
-                <span className={styles.heroLine} style={{ "--l": 1 } as React.CSSProperties}>
-                  <span>and growth systems,</span>
-                </span>{" "}
-                <span className={styles.heroLine} style={{ "--l": 2 } as React.CSSProperties}>
-                  <em>built end to end.</em>
-                </span>
-              </h1>
+              {/* Kinetic headline: masked line reveal, then subtly alive */}
+              <HeroHeadline className={styles.h1} />
               <p className={styles.lede}>
                 BytesPlatform designs and engineers digital products, AI systems and search-driven growth. Every project
                 below is shown through its real interfaces and the figures its case study can defend.
@@ -116,6 +109,9 @@ export default function ProjectsPage() {
 
       {/* ---- By the numbers ------------------------------------------ */}
       <ByTheNumbers stats={stats} />
+
+      {/* ---- Client reviews ------------------------------------------ */}
+      <ClientReviews />
 
       {/* ---- Capabilities -------------------------------------------- */}
       <CapabilityExplorer capabilities={capabilities} />

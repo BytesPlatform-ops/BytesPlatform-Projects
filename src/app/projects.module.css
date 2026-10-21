@@ -42,6 +42,7 @@
 
 .hero {
   --logo-gold: #c5ad6c;
+  --hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
   padding-top: clamp(48px, 7vw, 104px);
   padding-bottom: clamp(56px, 7vw, 104px);
 }
@@ -49,10 +50,12 @@
 /* Entrance, offset from --intro-delay so it plays as the page opens:
      0.00  logo opens left to right
      0.10  hairline draws; a gold glint runs along it at 0.85
-     0.18  Portfolio rule, label and line
-     0.22  eyebrow: dot lands, text opens
-     0.30  headline lines rise from their masks, 110ms apart
-     0.72  supporting paragraph */
+     0.10  headline lines rise from their masks, 110ms apart (HeroHeadline)
+     then a secondary stagger, once the headline has landed:
+     0.62  eyebrow dot lands, Portfolio rule draws
+     0.68  eyebrow text and Portfolio label
+     0.76  "This is just showing off."
+     0.84  supporting paragraph */
 .heroStage {
   --hair-top: calc(clamp(70px, 8.9vw, 126px) + clamp(22px, 2.8vw, 40px));
   position: relative;
@@ -230,7 +233,7 @@
   margin-bottom: 4px;
   background: var(--logo-gold);
   transform-origin: right;
-  animation: heroLine 0.8s var(--ease) calc(var(--intro-delay) + 0.18s) both;
+  animation: heroLine 0.7s var(--hero-ease) calc(var(--intro-delay) + 0.62s) both;
 }
 .portfolioLabel {
   font-size: clamp(13px, 1.1vw, 16px);
@@ -240,7 +243,7 @@
   /* Trailing letter-spacing would push it off the right edge line */
   margin-right: -0.32em;
   /* Settles from wide tracking into place */
-  animation: heroTrack 0.9s var(--ease) calc(var(--intro-delay) + 0.28s) both;
+  animation: heroTrack 0.8s var(--hero-ease) calc(var(--intro-delay) + 0.68s) both;
 }
 .portfolioLine {
   font-size: clamp(26px, 2.8vw, 44px);
@@ -249,7 +252,7 @@
   letter-spacing: -0.035em;
   color: var(--ink);
   white-space: nowrap;
-  animation: heroOpenRight 0.9s var(--ease) calc(var(--intro-delay) + 0.38s) backwards;
+  animation: heroOpenRight 0.8s var(--hero-ease) calc(var(--intro-delay) + 0.76s) backwards;
 }
 
 .heroBody {
@@ -265,7 +268,7 @@
   position: relative;
   background: var(--logo-gold);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--logo-gold) 18%, transparent);
-  animation: heroDot 0.6s var(--ease) calc(var(--intro-delay) + 0.22s) both;
+  animation: heroDot 0.6s var(--hero-ease) calc(var(--intro-delay) + 0.62s) both;
 }
 /* Then a slow, faint pulse: the page is live */
 .heroEyebrow .eyebrowDot::after {
@@ -278,28 +281,15 @@
   animation: heroPing 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) calc(var(--intro-delay) + 1.6s) infinite;
 }
 .heroEyebrowText {
-  animation: heroOpen 0.8s var(--ease) calc(var(--intro-delay) + 0.3s) backwards;
+  animation: heroOpen 0.7s var(--hero-ease) calc(var(--intro-delay) + 0.68s) backwards;
 }
 
 .heroStage .h1 {
-  /* Sized to its column: the longest line is ~8.9em */
-  font-size: clamp(40px, 11.2cqi, 124px);
+  /* Sized to its column with room to breathe: the longest line is ~8.9em at
+     rest and ~9.5em at its heaviest (breath + keyword lift + cursor) */
+  font-size: clamp(40px, 10.4cqi, 124px);
   max-width: none;
   margin-top: 22px;
-}
-
-/* Headline lines: each rises out of its own mask with a slight tilt */
-.heroLine {
-  display: block;
-  overflow: hidden;
-  /* Room for descenders inside the mask */
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
-}
-.heroLine > * {
-  display: block;
-  transform-origin: 0 100%;
-  animation: heroLineUp 0.9s var(--ease) calc(var(--intro-delay) + 0.3s + var(--l) * 0.11s) both;
 }
 
 .lede {
@@ -309,7 +299,7 @@
   letter-spacing: -0.012em;
   color: var(--ink-2);
   max-width: 46ch;
-  animation: heroLede 0.9s var(--ease) calc(var(--intro-delay) + 0.72s) backwards;
+  animation: heroLede 0.8s var(--hero-ease) calc(var(--intro-delay) + 0.84s) backwards;
 }
 
 @keyframes heroOpen {
@@ -351,15 +341,6 @@
   100% {
     opacity: 0;
     transform: scale(3);
-  }
-}
-@keyframes heroLineUp {
-  from {
-    opacity: 0;
-    transform: translateY(105%) rotate(2.5deg);
-  }
-  40% {
-    opacity: 1;
   }
 }
 @keyframes heroLede {

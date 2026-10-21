@@ -96,8 +96,9 @@ const layout = {
   dashboard: { x: 49, y: 3, w: 46, depth: -0.5, z: 1 },
   desktop: { x: 3, y: 11, w: 55, depth: 0.25, z: 2 },
   flow: { x: 13, y: 63, w: 31, depth: 0.8, z: 3 },
-  phoneA: { x: 61, y: 40, w: 12.5, depth: -0.9, z: 4 },
-  phoneB: { x: 76.5, y: 49, w: 12.5, depth: 0.55, z: 4 },
+  // Below the app dashboard, clear of it at every point of the parallax
+  phoneA: { x: 61, y: 52.5, w: 11, depth: -0.6, z: 4 },
+  phoneB: { x: 76.5, y: 57, w: 11, depth: 0.25, z: 4 },
 };
 
 const place = (k: keyof typeof layout, i: number, s: Shot) =>

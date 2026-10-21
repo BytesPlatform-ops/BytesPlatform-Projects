@@ -1,0 +1,224 @@
+/* ---- Hero headline: controlled kinetic type ------------------------------
+   Timeline, offset from --intro-delay:
+     0.10  line 1 rises from its mask; keywords settle into weight
+     0.21  line 2
+     0.32  line 3, slower and heavier; its blue full stop lands at ~0.95
+     ~1.1  alive: a wave through each keyword, then a slow breath (~5s),
+           a 2–3px drift and an occasional keyword lift
+   Registered properties so weight and tracking interpolate smoothly. */
+
+@property --hb {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --kw-e {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --cw {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.title {
+  --e: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Base cut, and how far the breath moves it */
+  --w: 600;
+  font-weight: var(--w);
+}
+
+/* Each line is its own mask */
+.line {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders inside the mask */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.inner {
+  display: block;
+  font-weight: calc(var(--w) + var(--hb) * 14);
+  letter-spacing: calc(-0.055em + var(--hb) * 0.004em);
+  animation: lineIn 0.8s var(--e) calc(var(--intro-delay) + 0.1s + var(--l) * 0.11s) both;
+}
+/* The last line arrives slower and settles heavier */
+.line[data-last] .inner {
+  --w: 620;
+  /* Longhands, not the shorthand: the shorthand would reset play-state and
+     slip past the hold the brand intro puts on the hero */
+  animation-name: lineIn, lastWeight;
+  animation-duration: 0.95s, 1.1s;
+  animation-fill-mode: both, backwards;
+}
+
+/* Keywords: settle from a lighter, looser cut; then breathe, lift and lean */
+.kw {
+  display: inline-block;
+  --kw-w: calc(var(--w) + var(--hb) * 18 + var(--kw-e) * 70 + var(--kw-h, 0) * 55);
+  font-weight: var(--kw-w);
+  letter-spacing: calc(-0.055em + var(--hb) * 0.004em + var(--kw-e) * 0.008em);
+  translate: var(--kw-x, 0px) var(--kw-y, 0px);
+  transition: --kw-e 1.5s var(--e);
+  animation: kwSettle 1s var(--e) calc(var(--intro-delay) + 0.18s + var(--l) * 0.11s) backwards;
+}
+.kw[data-emph] {
+  --kw-e: 1;
+}
+.ch {
+  display: inline-block;
+}
+/* The last word of a keyword and its punctuation never part */
+.keep {
+  white-space: nowrap;
+}
+/* Wide screens: each line is one line, whatever weight it is breathing at */
+@media (min-width: 1024px) {
+  .inner {
+    white-space: nowrap;
+  }
+}
+/* One restrained wave through the letters: a lift of weight and 0.03em */
+.kw[data-wave] .ch {
+  font-weight: calc(var(--kw-w) + var(--cw) * 90);
+  animation: chWave 0.75s var(--e) calc(var(--c) * 32ms) both;
+}
+
+/* The full stop, as the logo's round dot in brand blue: lands last, then
+   circles very slightly. The glyph stays in place (transparent) for copy. */
+.stop {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  animation: stopIn 0.6s var(--e) calc(var(--intro-delay) + 0.85s) backwards;
+}
+.stop::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: var(--stop-bottom, 0.11em);
+  width: 0.13em;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% 0;
+  background: var(--brand);
+}
+
+/* ---- Alive ------------------------------------------------------------- */
+
+.title[data-alive] {
+  animation: breathe 5.2s ease-in-out infinite alternate;
+}
+.title[data-alive] .line {
+  animation: drift 5.6s ease-in-out calc(var(--l) * -1.4s) infinite alternate;
+}
+.title[data-alive] .stop {
+  animation: orbit 6s linear infinite;
+}
+.title[data-paused],
+.title[data-paused] .line,
+.title[data-paused] .stop {
+  animation-play-state: paused;
+}
+
+@keyframes lineIn {
+  from {
+    transform: translateY(108%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes lastWeight {
+  from {
+    font-weight: 440;
+    letter-spacing: -0.03em;
+  }
+}
+@keyframes kwSettle {
+  from {
+    font-weight: 420;
+    letter-spacing: -0.02em;
+  }
+}
+@keyframes chWave {
+  0%,
+  100% {
+    --cw: 0;
+    transform: none;
+  }
+  45% {
+    --cw: 1;
+    transform: translateY(-0.03em);
+  }
+}
+@keyframes stopIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.4em) scale(0.6);
+  }
+}
+@keyframes breathe {
+  to {
+    --hb: 1;
+  }
+}
+@keyframes drift {
+  to {
+    translate: 0 -3px;
+  }
+}
+@keyframes orbit {
+  0% {
+    translate: 0 0;
+  }
+  25% {
+    translate: 1.5px -1px;
+  }
+  50% {
+    translate: 0 -2px;
+  }
+  75% {
+    translate: -1.5px -1px;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+/* Phones: the mask reveal and a light drift only, no weight breathing */
+@media (max-width: 1023px) {
+  .title[data-alive] {
+    animation: none;
+  }
+  .title[data-alive] .line {
+    animation-name: driftSmall;
+  }
+  /* No cursor lean or wave here: keywords flow as plain text and wrap freely */
+  .kw,
+  .ch {
+    display: inline;
+  }
+  .kw {
+    transition: none;
+  }
+  .kw[data-emph] {
+    --kw-e: 0;
+  }
+}
+@keyframes driftSmall {
+  to {
+    translate: 0 -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner,
+  .line[data-last] .inner,
+  .kw,
+  .stop {
+    animation: none;
+  }
+}
