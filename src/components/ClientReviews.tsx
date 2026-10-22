@@ -22,6 +22,8 @@ interface Review {
   /** Month of the review, ISO (YYYY-MM) and as shown */
   date: string;
   dateLabel: string;
+  /** The reviewer's Trustpilot profile */
+  url: string;
 }
 
 const reviews: Review[] = [
@@ -33,6 +35,7 @@ const reviews: Review[] = [
     role: "Business owner",
     date: "2026-09",
     dateLabel: "Sep 2026",
+    url: "https://www.trustpilot.com/users/6ad2919170b39bb32ffb36aa",
   },
   {
     title: "Professional, responsive, and committed",
@@ -42,6 +45,7 @@ const reviews: Review[] = [
     role: "Custom platform client",
     date: "2026-09",
     dateLabel: "Sep 2026",
+    url: "https://www.trustpilot.com/users/6a9c1302186db6423b39911b",
   },
   {
     title: "A true technology partner",
@@ -51,6 +55,7 @@ const reviews: Review[] = [
     role: "Founder, QuantivaHQ",
     date: "2026-08",
     dateLabel: "Aug 2026",
+    url: "https://www.trustpilot.com/users/6a91e13becc1642aeb0833ab",
   },
   {
     title: "Concept to finished product, faster than expected",
@@ -60,6 +65,7 @@ const reviews: Review[] = [
     role: "GovCon software platform",
     date: "2026-08",
     dateLabel: "Aug 2026",
+    url: "https://www.trustpilot.com/users/6a900903ecc1642aeb0557ed",
   },
 ];
 
@@ -93,7 +99,7 @@ export default function ClientReviews() {
           <li key={r.name} className={styles.review} style={{ "--i": i } as CSSProperties}>
             <a
               className={styles.reviewLink}
-              href={TRUSTPILOT_URL}
+              href={r.url}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${r.title}, review by ${r.name} on Trustpilot (opens in a new tab)`}
